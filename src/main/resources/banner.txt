@@ -1,0 +1,9 @@
+${AnsiColor.BRIGHT_BLUE}█████████████████████████████████████████████████████████████████████████████████████
+//  ._________________________
+//  |   \_   _____/\__    ___/		${AnsiColor.GREEN}Zhijiang Chen (zhijiang.chen at chen dot me)${AnsiColor.BRIGHT_BLUE}
+//  |   ||    __)    |    |   		${AnsiColor.GREEN}Sixiao Wei (whwsx910 at gmail dot com)${AnsiColor.BRIGHT_BLUE}
+//  |   ||     \     |    |   
+//  |___|\___  /     |____|         	${AnsiColor.GREEN}\Intelligent Fusion Technology, Inc./ ${AnsiColor.BRIGHT_BLUE}
+//           \/
+█████████████████████████████████████████████████████████████████████████████████████
+${AnsiColor.BRIGHT_BLUE}:: IFT SSA :: Running Spring Boot ${spring-boot.version} :: \ö/${AnsiColor.BLACK}
