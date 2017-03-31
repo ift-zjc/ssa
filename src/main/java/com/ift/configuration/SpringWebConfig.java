@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Description;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 @ComponentScan
 public class SpringWebConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
@@ -37,16 +38,18 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter implements Applicat
     /* Static Resources, i18n Messages, Formatters (Conversion Service)     */
     /* ******************************************************************** */
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        super.addResourceHandlers(registry);
-        registry.addResourceHandler("/images/**").addResourceLocations("/images/");
-        registry.addResourceHandler("/css/**").addResourceLocations("/css/");
-        registry.addResourceHandler("/js/**").addResourceLocations("/js/");
-    }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        super.addResourceHandlers(registry);
+//        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+//        registry.addResourceHandler("/images/**").addResourceLocations("/images/");
+//        registry.addResourceHandler("/css/**").addResourceLocations("/css/");
+//        registry.addResourceHandler("/js/**").addResourceLocations("/resources/static/js/");
+//    }
 
 
     @Bean
+    @Description("Spring Messaging Resolver")
     public ResourceBundleMessageSource messageSource(){
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("i18n/messages");

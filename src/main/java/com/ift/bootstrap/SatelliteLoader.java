@@ -26,5 +26,9 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
         satellite.setName("Satellite 1");
         satelliteService.saveSatellite(satellite);
 
+        satellite = new Satellite();
+        satellite.setName("Satellite 2");
+        satelliteService.saveSatellite(satellite);
+
     }
 }

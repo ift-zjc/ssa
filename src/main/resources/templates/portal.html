@@ -4,35 +4,62 @@
     <meta charset="UTF-8" />
     <title th:text="#{title.portal}">Title</title>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+    <script th:src="@{Cesium/Cesium.js}"></script>
+    <script th:src="@{js/portal.js}"></script>
+    <style>
+        @import url(/Cesium/Widgets/widgets.css);
+        #cesiumContainer {
+            width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+        }
+    </style>
 
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <p></p>
         <div class="row">
-            <div class="col-lg-8">
-
+            <div class="col-lg-10">
+                <div class="panel panel-default">
+                    <div id="cesiumContainer"></div>
+                </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Control Panel</h3>
                     </div>
                     <div class="panel-body">
-                        <form action="#" th:action="@{/}" th:object="${satelliteFormObj}" method="post">
-                            <select th:field="*{satellite}">
-                                <option th:each="satellite: ${allSatellites}"
-                                        th:value="${satellite}"
-                                        th:text="#{${satelliteFormObj.satellite}}">Wireframe</option>
-                            </select>
+                        <form action="#" th:action="@{/satelliteDataRequest}" th:object="${satellite}" method="post" id="formSatellitesRefresh">
+                            <div class="form-group">
+                                <select th:field="*{satelliteList}" class="selectpicker" multiple th:title="#{placeholder.select.satellites}">
+                                    <option th:each="sat: ${satellite.satelliteList}"
+                                            th:value="${sat.id}"
+                                            th:text="${sat.name}">Satellite Name</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Refresh Satellites</button>
+                            </div>
                         </form>
                     </div>
                 </div>
