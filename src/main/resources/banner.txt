@@ -6,4 +6,4 @@ ${AnsiColor.BRIGHT_BLUE}██████████████████�
 //  |___|\___  /     |____|         	${AnsiColor.GREEN}\Intelligent Fusion Technology, Inc./ ${AnsiColor.BRIGHT_BLUE}
 //           \/
 █████████████████████████████████████████████████████████████████████████████████████
-${AnsiColor.BRIGHT_BLUE}:: IFT SSA :: Running Spring Boot ${spring-boot.version} :: \ö/${AnsiColor.BLACK}
+${AnsiColor.BRIGHT_BLUE}:: IFT SASS :: Running Spring Boot ${spring-boot.version} :: \ö/${AnsiColor.BLACK}

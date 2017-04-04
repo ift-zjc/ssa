@@ -2,31 +2,28 @@ package com.ift.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ift.domain.czml.*;
-import com.ift.services.SatelliteService;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by chen3 on 3/30/17.
+ * Created by chen3 on 4/4/17.
  */
 
-@RestController
-public class CzmlDataController {
+@Controller
+public class MessageController {
 
-    private static final Logger LOGGER = Logger.getLogger(CzmlDataController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(MessageController.class.getName());
 
-    @Autowired
-    SatelliteService satelliteService;
+    @MessageMapping("/data/satellite")
+    @SendTo("/topic/satellite/data")
+    public String satelliteData() throws Exception {
+        Thread.sleep(1000); // simulated delay
 
-    @PostMapping(value = "/satelliteDataRequest", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String satelliteDataRequest(Model model){
 
         List<CzmlObj> czmlObjs = new ArrayList<CzmlObj>();
         // First element must with id = document
@@ -131,7 +128,6 @@ public class CzmlDataController {
             LOGGER.error(ex);
         }
         return jsonStr;
-
     }
 
     /**
@@ -147,5 +143,4 @@ public class CzmlDataController {
 
         return positionList;
     }
-
 }

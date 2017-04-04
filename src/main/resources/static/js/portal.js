@@ -7,6 +7,9 @@ $(function(){
 
     viewer = new Cesium.Viewer('cesiumContainer');
 
+    // Connect to websocket
+    connect();
+
     ajaxInit();
 });
 
@@ -25,4 +28,19 @@ function ajaxInit() {
 
         return false;
     })
+}
+
+/**
+ * Web socket connect to /sass-websocket
+ */
+function connect() {
+    var socket = new SockJS('/sass-websocket');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        // setConnected(true);
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/satellite/data', function (greeting) {
+            console.log(JSON.parse(greeting.body));
+        });
+    });
 }
