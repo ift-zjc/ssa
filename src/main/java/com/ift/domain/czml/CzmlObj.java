@@ -11,6 +11,8 @@ import java.util.ArrayList;
  */
 public class CzmlObj implements Serializable {
 
+    private String paraData;
+
     private String id;
     private String name;
     private String parent;                  // The ID of the parent object, if any.
@@ -112,5 +114,13 @@ public class CzmlObj implements Serializable {
 
     public void setDelete(boolean delete) {
         this.delete = delete;
+    }
+
+    public String getParaData() {
+        return paraData;
+    }
+
+    public void setParaData(String paraData) {
+        this.paraData = paraData;
     }
 }
