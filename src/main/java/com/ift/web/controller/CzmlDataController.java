@@ -6,6 +6,7 @@ import com.ift.services.SatelliteService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,9 @@ public class CzmlDataController {
 
     @Autowired
     SatelliteService satelliteService;
+
+    @Autowired
+    private SimpMessagingTemplate webSocket;
 
     @PostMapping(value = "/satelliteDataRequest", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String satelliteDataRequest(Model model){
@@ -130,6 +134,13 @@ public class CzmlDataController {
         }catch(Exception ex){
             LOGGER.error(ex);
         }
+
+        /**
+         * Write to websocket channel: /topic/statllite/data
+         */
+        // webSocket.convertAndSend("/topic/satellite/data", jsonStr);
+
+
         return jsonStr;
 
     }

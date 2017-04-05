@@ -40,7 +40,9 @@ function connect() {
         // setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/satellite/data', function (greeting) {
-            console.log(JSON.parse(greeting.body));
+            data = JSON.parse(greeting.body);
+
+            viewer.dataSources.add(Cesium.CzmlDataSource.load(data));
         });
     });
 }
