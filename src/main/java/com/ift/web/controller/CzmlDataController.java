@@ -31,6 +31,10 @@ public class CzmlDataController {
     private SimpMessagingTemplate webSocket;
 
 
+    /**
+     * Data receiver from MatLab
+     * @param datas
+     */
     @PostMapping(value = "/satelliteDataFeeder")
     public void satelliteDataFeeder(@RequestParam String datas){
 

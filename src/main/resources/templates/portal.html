@@ -27,7 +27,9 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
+    <script th:src="@{js/multivariate-normal.min.js}"></script>
     <script th:src="@{Cesium/Cesium.js}"></script>
+    <script th:src="@{js/bootstrap.file-input.js}"></script>
     <script th:src="@{js/portal.js}"></script>
     <style>
         @import url(/Cesium/Widgets/widgets.css);
@@ -41,29 +43,61 @@
     <div class="container-fluid">
         <p></p>
         <div class="row">
-            <div class="col-lg-10">
+            <div class="col-lg-9">
                 <div class="panel panel-default">
                     <div id="cesiumContainer"></div>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Control Panel</h3>
                     </div>
                     <div class="panel-body">
-                        <form action="#" th:action="@{/satelliteDataRequest}" th:object="${satellite}" method="post" id="formSatellitesRefresh">
+                        <form id="fileUploadForm" method="POST" enctype="multipart/form-data" action="/upload_config_file" class="form-inline">
                             <div class="form-group">
-                                <select th:field="*{satelliteList}" class="selectpicker" multiple th:title="#{placeholder.select.satellites}">
-                                    <option th:each="sat: ${satellite.satelliteList}"
-                                            th:value="${sat.id}"
-                                            th:text="${sat.name}">Satellite Name</option>
-                                </select>
+                                <input th:type="file" th:name="file" title="Select Configuration File">
                             </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Refresh Satellites</button>
-                            </div>
+                            <button th:type="submit" class="btn btn-primary" th:id="btnFileUploadSubmit">Upload Configuration File</button>
                         </form>
+                        <!--<form action="#" th:action="@{/satelliteDataRequest}" th:object="${satellite}" method="post" id="formSatellitesRefresh">-->
+                            <!--<div class="form-group">-->
+                                <!--<select th:field="*{satelliteList}" class="selectpicker" multiple th:title="#{placeholder.select.satellites}">-->
+                                    <!--<option th:each="sat: ${satellite.satelliteList}"-->
+                                            <!--th:value="${sat.id}"-->
+                                            <!--th:text="${sat.name}">Satellite Name</option>-->
+                                <!--</select>-->
+
+                                <!--<div class="btn btn-warning">Default Satellite Orbits</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<div class="input-group">-->
+                                    <!--<span class="input-group-addon" id="x">X</span>-->
+                                    <!--<input th:type="text" class="form-control" placeholder="x coordinate">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<div class="input-group">-->
+                                    <!--<span class="input-group-addon" id="y">Y</span>-->
+                                    <!--<input th:type="text" class="form-control" placeholder="y coordinate">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<div class="input-group">-->
+                                    <!--<span class="input-group-addon" id="z">Z</span>-->
+                                    <!--<input th:type="text" class="form-control" placeholder="z coordinate">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<div class="input-group">-->
+                                    <!--<span class="input-group-addon" id="time">Time</span>-->
+                                    <!--<input th:type="text" class="form-control" placeholder="Time">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<button type="submit" class="btn btn-primary btn-block">Predictive Satellite Orbits</button>-->
+                            <!--</div>-->
+                        <!--</form>-->
                     </div>
                 </div>
             </div>
