@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiController {
 
 
+    /**
+     * Accept data form external source
+     * Data format: json
+     */
     @RequestMapping(value = "/feedSatelliteData", method = RequestMethod.POST)
     public void SatelliteData(){
 

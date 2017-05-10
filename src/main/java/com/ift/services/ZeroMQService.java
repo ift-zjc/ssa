@@ -34,7 +34,10 @@ public class ZeroMQService {
 
         socket.send(jsonData);
 
+        socket.close();
         context.term();
         context.close();
+
+        context = null;
     }
 }
