@@ -1,0 +1,12 @@
+[
+{
+	"sid": "abc", "x":10,"y":20,"z":23,"time":1000000,"speed":234,"uncertainty":{
+	"xy":2,
+	"xz":3
+}},
+{
+	"sid": "abcd", "x":10,"y":20,"z":23,"time":1000000,"speed":234,"uncertainty":{
+	"xy":2,
+	"xz":3
+}}
+]

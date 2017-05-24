@@ -33,6 +33,8 @@ public class ZeroMQService {
         socket.connect(zeromqServerUrl);
 
         socket.send(jsonData);
+//        byte[] reply = socket.recv(0);
+//        System.out.print(new String(reply));
 
         socket.close();
         context.term();

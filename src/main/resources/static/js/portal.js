@@ -7,6 +7,7 @@ var viewer;
 
 $(function(){
 
+    Cesium.BingMapsApi.defaultKey = 'Ak8mO9f0VpoByuNwmMcVvFka1GCZ3Bh8VrpqNLqGtIgsuUYjTrJdw7kDZwAwlC7E';
     viewer = new Cesium.Viewer('cesiumContainer');
 
 
