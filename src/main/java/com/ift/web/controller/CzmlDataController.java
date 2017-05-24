@@ -63,7 +63,7 @@ public class CzmlDataController {
         czmlObj.setId("test satellite");
         czmlObj.setName("Test Satellite");
         czmlObj.setDescription("Click me");
-        czmlObj.setAvailability("2016-03-15T10:00:00Z/2016-03-20T10:00:00Z");
+        czmlObj.setAvailability(new String[]{"2016-03-15T10:00:00Z/2016-03-20T10:00:00Z"});
         Billboard billboard = new Billboard();
         billboard.setImage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADJSURBVDhPnZHRDcMgEEMZjVEYpaNklIzSEfLfD4qNnXAJSFWfhO7w2Zc0Tf9QG2rXrEzSUeZLOGm47WoH95x3Hl3jEgilvDgsOQUTqsNl68ezEwn1vae6lceSEEYvvWNT/Rxc4CXQNGadho1NXoJ+9iaqc2xi2xbt23PJCDIB6TQjOC6Bho/sDy3fBQT8PrVhibU7yBFcEPaRxOoeTwbwByCOYf9VGp1BYI1BA+EeHhmfzKbBoJEQwn1yzUZtyspIQUha85MpkNIXB7GizqDEECsAAAAASUVORK5CYII=");
         billboard.setScale(1.5d);
@@ -176,7 +176,7 @@ public class CzmlDataController {
         czmlObj.setId("test satellite");
         czmlObj.setName("Test Satellite");
         czmlObj.setDescription("Click me");
-        czmlObj.setAvailability("2016-03-15T10:00:00Z/2016-03-20T10:00:00Z");
+        czmlObj.setAvailability(new String[]{"2016-03-15T10:00:00Z/2016-03-20T10:00:00Z"});
         Billboard billboard = new Billboard();
         billboard.setImage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADJSURBVDhPnZHRDcMgEEMZjVEYpaNklIzSEfLfD4qNnXAJSFWfhO7w2Zc0Tf9QG2rXrEzSUeZLOGm47WoH95x3Hl3jEgilvDgsOQUTqsNl68ezEwn1vae6lceSEEYvvWNT/Rxc4CXQNGadho1NXoJ+9iaqc2xi2xbt23PJCDIB6TQjOC6Bho/sDy3fBQT8PrVhibU7yBFcEPaRxOoeTwbwByCOYf9VGp1BYI1BA+EeHhmfzKbBoJEQwn1yzUZtyspIQUha85MpkNIXB7GizqDEECsAAAAASUVORK5CYII=");
         billboard.setScale(1.5d);

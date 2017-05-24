@@ -18,11 +18,20 @@ public class CzmlObj implements Serializable {
     private String parent;                  // The ID of the parent object, if any.
     private String description;             // An HTML description of the object.
     private Clock clock;
-    private String availability;
+    private String[] availability;
     private String version;
     private Billboard billboard;
     private Position position;
     private Path path;
+    private PolyLine polyLine;
+
+    public PolyLine getPolyLine() {
+        return polyLine;
+    }
+
+    public void setPolyLine(PolyLine polyLine) {
+        this.polyLine = polyLine;
+    }
 
     public Path getPath() {
         return path;
@@ -92,11 +101,11 @@ public class CzmlObj implements Serializable {
         this.clock = clock;
     }
 
-    public String getAvailability() {
+    public String[] getAvailability() {
         return availability;
     }
 
-    public void setAvailability(String availability) {
+    public void setAvailability(String[] availability) {
         this.availability = availability;
     }
 
@@ -123,4 +132,7 @@ public class CzmlObj implements Serializable {
     public void setParaData(String paraData) {
         this.paraData = paraData;
     }
+
 }
+
+
