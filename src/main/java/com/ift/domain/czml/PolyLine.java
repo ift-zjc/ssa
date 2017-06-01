@@ -10,8 +10,18 @@ public class PolyLine {
     private boolean followSurface;
     private Positions positions;
     private int width = 1;
+    private String[] availability;
     private ShowInterval[] show;
     private Material material;
+
+
+    public String[] getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(String[] availability) {
+        this.availability = availability;
+    }
 
     public boolean isFollowSurface() {
         return followSurface;

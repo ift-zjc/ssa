@@ -4,11 +4,36 @@
 
 
 var viewer;
+var czml;
 
 $(function(){
 
+    czml = [{
+        "id": "document",
+        "name": "SSA Project Data Visualization",
+        "version": "1.0",
+        "clock":{
+            "interval":"2012-03-15T10:00:00Z/2012-03-16T10:00:00Z",
+            "currentTime":"2012-03-15T10:00:00Z",
+            "multiplier":60,
+            "range":"LOOP_STOP",
+            "step":"SYSTEM_CLOCK_MULTIPLIER"
+        }
+    }];
+
     Cesium.BingMapsApi.defaultKey = 'Ak8mO9f0VpoByuNwmMcVvFka1GCZ3Bh8VrpqNLqGtIgsuUYjTrJdw7kDZwAwlC7E';
-    viewer = new Cesium.Viewer('cesiumContainer');
+    var terrainProvider = new Cesium.CesiumTerrainProvider({
+        url : 'https://assets.agi.com/stk-terrain/world',
+        requestVertexNormals : true
+    });
+    viewer = new Cesium.Viewer('cesiumContainer', {
+        terrainProvider : terrainProvider,
+        baseLayerPicker : false
+    });
+
+    viewer.dataSources.add(Cesium.CzmlDataSource.load(czml)).then(function(ds) {
+        viewer.trackedEntity = ds.entities.getById('path');
+    });
 
 
     // means of our three dimensions
@@ -94,13 +119,34 @@ function ajaxInit() {
 function connect() {
     var socket = new SockJS('/sass-websocket');
     stompClient = Stomp.over(socket);
+
     stompClient.connect({}, function (frame) {
         // setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/satellite/data', function (greeting) {
-            data = JSON.parse(greeting.body);
 
-            viewer.dataSources.add(Cesium.CzmlDataSource.load(data));
+        // Subscribe to matedata feeder
+        stompClient.subscribe('/topic/satellite/matedata', function (matedata) {
+            data = JSON.parse(matedata.body);
+            czml.push(data);
         });
+
+        // Subscribe to satellite data feeder
+        stompClient.subscribe('/topic/satellite/satellitedata', function (satellitedata){
+            data = JSON.parse(satellitedata.body);
+
+            // Add to czml.
+            // Find data object for this satelliteId
+            for(var i = 0; i < czml.length; i++){
+                if(czml[i].id == data.satelliteId){
+                    // Push data
+                    czml[i].position.cartesian.push.apply(czml[i].position.cartesian, data.satelliteData);
+                }
+            }
+
+            // Reload CZML file if completed
+            if(data.completed){
+                viewer.dataSources.add(Cesium.CzmlDataSource.load(czml));
+            }
+        })
     });
 }
