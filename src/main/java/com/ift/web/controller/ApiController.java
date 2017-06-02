@@ -73,6 +73,78 @@ public class ApiController {
 
 
     /**
+     * Relational data
+     * @param obj1
+     * @param obj2
+     * @param name
+     * @param availability
+     * @param desc
+     * @return
+     */
+    @PostMapping(value = "/feedRelationData")
+    public @ResponseBody ResponseEntity<?> RelationalData(@RequestParam("object1Id") String obj1,
+                                                          @RequestParam("object2Id") String obj2,
+                                                          @RequestParam("name") String name,
+                                                          @RequestParam("availability") String availability,
+                                                          @RequestParam("desc") String desc){
+        LOGGER.info("New relationship data received");
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", obj1+"/"+obj2);
+        jsonObject.addProperty("name", name);
+        jsonObject.addProperty("description", desc);
+        jsonObject.addProperty("availability", availability);
+
+        JsonObject polyLineObj = new JsonObject();
+        polyLineObj.addProperty("width", 1);
+        polyLineObj.addProperty("followSurface", false);
+
+        // Show
+        JsonArray showObject = new JsonArray();
+        JsonObject showIntervalObject = new JsonObject();
+        showIntervalObject.addProperty("interval", availability);
+        showIntervalObject.addProperty("boolean", true);
+
+        showObject.add(showIntervalObject);
+        polyLineObj.add("show", showObject);
+
+        // Material
+//        JsonObject materialObj = new JsonObject();
+//
+////        materialObj.add("solidColor", )
+//        JsonArray rgbaArray = computeJsonArray(0, 255,255,255);
+//        JsonObject colorObj = new JsonObject();
+//        colorObj.add("rgba", rgbaArray);
+//        JsonObject solidColorObj = new JsonObject();
+//        solidColorObj.add("color", solidColorObj);
+//        materialObj.add("solidColor", solidColorObj);
+//
+//        polyLineObj.add("material", materialObj);
+
+        // Positions
+        JsonObject positionsObj = new JsonObject();
+        JsonArray referencesObj = new JsonArray();
+        referencesObj.add(new JsonPrimitive(obj1+"#position"));
+        referencesObj.add(new JsonPrimitive(obj2+"#position"));
+        positionsObj.add("references", referencesObj);
+
+        polyLineObj.add("positions", positionsObj);
+
+
+
+        jsonObject.add("polyline", polyLineObj);
+        String jsonStr = (new Gson()).toJson(jsonObject);
+
+        /**
+         * Write to websocket channel: /topic/statllite/data
+         */
+        webSocket.convertAndSend("/topic/satellite/relatedata", jsonStr);
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+
+    /**
      * Receiving Satellite data
      * @param cartesianData
      * @param completeFlag
@@ -120,5 +192,20 @@ public class ApiController {
         }
 
         return positionList;
+    }
+
+    /**
+     * Format Integer json Array
+     * @param data
+     * @return
+     */
+    private JsonArray computeJsonArray(Integer... data){
+        JsonArray jsonArray = new JsonArray();
+        for (int element : data
+             ) {
+            jsonArray.add(new JsonPrimitive(element));
+        }
+
+        return jsonArray;
     }
 }
