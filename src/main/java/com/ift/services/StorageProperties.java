@@ -15,7 +15,7 @@ public class StorageProperties {
     /**
      * Folder location for storing files
      */
-    private String location = "/Users/chen3/Desktop/tmp";
+    private String location = "/root/ssa/uploads";
 
     public String getLocation() {
         return location;
