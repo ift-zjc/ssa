@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class StorageProperties {
 
     /**
-     * Folder location for storing files
+     * Folder location for storing files location
      */
     private String location = "/root/ssa/uploads";
 
