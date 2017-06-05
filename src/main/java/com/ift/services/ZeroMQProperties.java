@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("zeromq")
 public class ZeroMQProperties {
 
-    private String url = "tcp://10.0.0.2:7575";
+    private String url = "tcp://192.168.1.10:7575";
 
     public String getUrl() {
         return url;
