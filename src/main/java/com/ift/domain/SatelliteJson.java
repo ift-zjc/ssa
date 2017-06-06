@@ -13,10 +13,13 @@ public class SatelliteJson {
     private float x;                                // Satellite location x
     private float y;                                // Satellite location y
     private float z;                                // Satellite location z
+    private float vx;
+    private float vy;
+    private float vz;
     private String time;                            // Current time in millisecond
     private float speed;                            // Current satellite speed
-    private int p_period;                           // propagation period (sec)
-    private int p_steps;                            // how many times
+    private int propagation_period;                           // propagation period (sec)
+    private int propagation_steps;                            // how many times
 
     @SerializedName("uncertainty")
     private SatelliteJsonUncertainty uncertainty;   // Uncertainty, 6x6 array
@@ -102,20 +105,44 @@ public class SatelliteJson {
         this.speed = speed;
     }
 
-    public int getP_period() {
-        return p_period;
+    public float getVx() {
+        return vx;
     }
 
-    public void setP_period(int p_period) {
-        this.p_period = p_period;
+    public void setVx(float vx) {
+        this.vx = vx;
     }
 
-    public int getP_steps() {
-        return p_steps;
+    public float getVy() {
+        return vy;
     }
 
-    public void setP_steps(int p_steps) {
-        this.p_steps = p_steps;
+    public void setVy(float vy) {
+        this.vy = vy;
+    }
+
+    public float getVz() {
+        return vz;
+    }
+
+    public void setVz(float vz) {
+        this.vz = vz;
+    }
+
+    public int getPropagation_period() {
+        return propagation_period;
+    }
+
+    public void setPropagation_period(int propagation_period) {
+        this.propagation_period = propagation_period;
+    }
+
+    public int getPropagation_steps() {
+        return propagation_steps;
+    }
+
+    public void setPropagation_steps(int propagation_steps) {
+        this.propagation_steps = propagation_steps;
     }
 
     public SatelliteJsonUncertainty getSatelliteJsonUncertainty() {
