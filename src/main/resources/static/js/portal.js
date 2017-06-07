@@ -184,7 +184,7 @@ function connect() {
         stompClient.subscribe('/topic/satellite/relatedata', function (refdata){
             data = JSON.parse(refdata.body);
             czml.push(data);
-        })
+        });
 
         // Subscribe to satellite data feeder
         stompClient.subscribe('/topic/satellite/satellitedata', function (satellitedata){
@@ -198,6 +198,11 @@ function connect() {
                     czml[i].position.cartesian.push.apply(czml[i].position.cartesian, data.satelliteData);
                 }
             }
+        });
+
+        // Subscribe to data flag completed feeder
+        stopmClient.subscribe('/topic/satellite/datacompleted', function (completedFlag){
+            data = JSON.parse(satellitedata.body);
 
             // Reload CZML file if completed
             if(data.completed){

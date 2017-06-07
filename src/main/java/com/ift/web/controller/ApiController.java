@@ -147,13 +147,12 @@ public class ApiController {
     /**
      * Receiving Satellite data
      * @param cartesianData
-     * @param completeFlag
      * @return
      */
     @PostMapping(value = "/feedSatelliteData")
     public @ResponseBody ResponseEntity<?> SatelliteData(@RequestParam("satelliteId") String satelliteId,
-                                                         @RequestParam("cartesianData") List<Double> cartesianData,
-                                                         @RequestParam("completeFlag") boolean completeFlag){
+                                                         @RequestParam("cartesianData") List<Double> cartesianData
+                                                         /*@RequestParam("completeFlag") boolean completeFlag*/){
 
         LOGGER.info("Receiving satellite data");
 
@@ -168,7 +167,9 @@ public class ApiController {
         }
         jsonObject.addProperty("satelliteId", satelliteId);
         jsonObject.add("satelliteData", cartesianDataArray);
-        jsonObject.addProperty("completed", completeFlag);
+
+        // Move to seperated API
+//        jsonObject.addProperty("completed", completeFlag);
 
 
         String jsonStr = (new Gson()).toJson(jsonObject);
@@ -178,6 +179,29 @@ public class ApiController {
          */
         webSocket.convertAndSend("/topic/satellite/satellitedata", jsonStr);
         return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    /**
+     * Data transferring completed
+     * @param completeFlag
+     * @return
+     */
+    @PostMapping(value = "/feedCompleteFlagData")
+    public @ResponseBody ResponseEntity<?> CompleteFlag(@RequestParam("completeFlag") boolean completeFlag){
+
+        LOGGER.info("Received complete flag, ready to redraw");
+
+        // Creating Json object.
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("completed", completeFlag);
+
+        String jsonStr = (new Gson()).toJson(jsonObject);
+
+        /**
+         * Write to websocket channel: /topic/satellite/datacompleted
+         */
+        webSocket.convertAndSend("/topic/satellite/datacompleted", jsonStr);
+        return new ResponseEntity<Object>(null, HttpStatus.MULTI_STATUS.OK);
     }
 
     /**
