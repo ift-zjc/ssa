@@ -20,6 +20,7 @@ public class SatelliteJson {
     private float speed;                            // Current satellite speed
     private int propagation_period;                           // propagation period (sec)
     private int propagation_steps;                            // how many times
+    private String display_type;                    // image or dots
 
     @SerializedName("uncertainty")
     private SatelliteJsonUncertainty uncertainty;   // Uncertainty, 6x6 array
@@ -159,5 +160,13 @@ public class SatelliteJson {
 
     public void setBaseStationList(List<BaseStation> baseStationList) {
         this.baseStationList = baseStationList;
+    }
+
+    public String getDisplay_type() {
+        return display_type;
+    }
+
+    public void setDisplay_type(String display_type) {
+        this.display_type = display_type;
     }
 }
