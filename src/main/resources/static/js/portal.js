@@ -66,10 +66,461 @@ $(function(){
         },
         "position":{
             "cartesian":[
-                1216469.9357990976,-4736121.71856379,4081386.8856866374
+                1492313.11200032,-4457468.17767595,4296533.27301498
             ]
         }
-    }];
+    },
+        {
+            "id": "Station2",
+            "name": "Station 2",
+            "description": "Ground station #1",
+            "billboard":{
+                "eyeOffset":{
+                    "cartesian":[
+                        0,0,0
+                    ]
+                },
+                "horizontalOrigin":"CENTER",
+                "image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACvSURBVDhPrZDRDcMgDAU9GqN0lIzijw6SUbJJygUeNQgSqepJTyHG91LVVpwDdfxM3T9TSl1EXZvDwii471fivK73cBFFQNTT/d2KoGpfGOpSIkhUpgUMxq9DFEsWv4IXhlyCnhBFnZcFEEuYqbiUlNwWgMTdrZ3JbQFoEVG53rd8ztG9aPJMnBUQf/VFraBJeWnLS0RfjbKyLJA8FkT5seDYS1Qwyv8t0B/5C2ZmH2/eTGNNBgMmAAAAAElFTkSuQmCC",
+                "pixelOffset":{
+                    "cartesian2":[
+                        0,0
+                    ]
+                },
+                "scale":1.5,
+                "show":true,
+                "verticalOrigin":"CENTER"
+            },
+            "label":{
+                "fillColor":{
+                    "rgba":[
+                        0,255,255,255
+                    ]
+                },
+                "font":"11pt Lucida Console",
+                "horizontalOrigin":"LEFT",
+                "outlineColor":{
+                    "rgba":[
+                        0,0,0,255
+                    ]
+                },
+                "outlineWidth":2,
+                "pixelOffset":{
+                    "cartesian2":[
+                        12,0
+                    ]
+                },
+                "show":true,
+                "style":"FILL_AND_OUTLINE",
+                "text":"Station #1",
+                "verticalOrigin":"CENTER"
+            },
+            "position":{
+                "cartesian":[
+                    -3852771.95796462,398145.251432722,5050382.17942545
+                ]
+            }
+        },{
+            "id": "Station3",
+            "name": "Station 3",
+            "description": "Ground station #1",
+            "billboard":{
+                "eyeOffset":{
+                    "cartesian":[
+                        0,0,0
+                    ]
+                },
+                "horizontalOrigin":"CENTER",
+                "image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACvSURBVDhPrZDRDcMgDAU9GqN0lIzijw6SUbJJygUeNQgSqepJTyHG91LVVpwDdfxM3T9TSl1EXZvDwii471fivK73cBFFQNTT/d2KoGpfGOpSIkhUpgUMxq9DFEsWv4IXhlyCnhBFnZcFEEuYqbiUlNwWgMTdrZ3JbQFoEVG53rd8ztG9aPJMnBUQf/VFraBJeWnLS0RfjbKyLJA8FkT5seDYS1Qwyv8t0B/5C2ZmH2/eTGNNBgMmAAAAAElFTkSuQmCC",
+                "pixelOffset":{
+                    "cartesian2":[
+                        0,0
+                    ]
+                },
+                "scale":1.5,
+                "show":true,
+                "verticalOrigin":"CENTER"
+            },
+            "label":{
+                "fillColor":{
+                    "rgba":[
+                        0,255,255,255
+                    ]
+                },
+                "font":"11pt Lucida Console",
+                "horizontalOrigin":"LEFT",
+                "outlineColor":{
+                    "rgba":[
+                        0,0,0,255
+                    ]
+                },
+                "outlineWidth":2,
+                "pixelOffset":{
+                    "cartesian2":[
+                        12,0
+                    ]
+                },
+                "show":true,
+                "style":"FILL_AND_OUTLINE",
+                "text":"Station #1",
+                "verticalOrigin":"CENTER"
+            },
+            "position":{
+                "cartesian":[
+                    362352.839260321,5484433.46615372,3224938.64357144
+                ]
+            }
+        },{
+            "id": "Station4",
+            "name": "Station 4",
+            "description": "Ground station #1",
+            "billboard":{
+                "eyeOffset":{
+                    "cartesian":[
+                        0,0,0
+                    ]
+                },
+                "horizontalOrigin":"CENTER",
+                "image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACvSURBVDhPrZDRDcMgDAU9GqN0lIzijw6SUbJJygUeNQgSqepJTyHG91LVVpwDdfxM3T9TSl1EXZvDwii471fivK73cBFFQNTT/d2KoGpfGOpSIkhUpgUMxq9DFEsWv4IXhlyCnhBFnZcFEEuYqbiUlNwWgMTdrZ3JbQFoEVG53rd8ztG9aPJMnBUQf/VFraBJeWnLS0RfjbKyLJA8FkT5seDYS1Qwyv8t0B/5C2ZmH2/eTGNNBgMmAAAAAElFTkSuQmCC",
+                "pixelOffset":{
+                    "cartesian2":[
+                        0,0
+                    ]
+                },
+                "scale":1.5,
+                "show":true,
+                "verticalOrigin":"CENTER"
+            },
+            "label":{
+                "fillColor":{
+                    "rgba":[
+                        0,255,255,255
+                    ]
+                },
+                "font":"11pt Lucida Console",
+                "horizontalOrigin":"LEFT",
+                "outlineColor":{
+                    "rgba":[
+                        0,0,0,255
+                    ]
+                },
+                "outlineWidth":2,
+                "pixelOffset":{
+                    "cartesian2":[
+                        12,0
+                    ]
+                },
+                "show":true,
+                "style":"FILL_AND_OUTLINE",
+                "text":"Station #1",
+                "verticalOrigin":"CENTER"
+            },
+            "position":{
+                "cartesian":[
+                    1839616.05824961,1111041.50316454,5985032.84766784
+                ]
+            }
+        },{
+            "id": "Station5",
+            "name": "Station 5",
+            "description": "Ground station #1",
+            "billboard":{
+                "eyeOffset":{
+                    "cartesian":[
+                        0,0,0
+                    ]
+                },
+                "horizontalOrigin":"CENTER",
+                "image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACvSURBVDhPrZDRDcMgDAU9GqN0lIzijw6SUbJJygUeNQgSqepJTyHG91LVVpwDdfxM3T9TSl1EXZvDwii471fivK73cBFFQNTT/d2KoGpfGOpSIkhUpgUMxq9DFEsWv4IXhlyCnhBFnZcFEEuYqbiUlNwWgMTdrZ3JbQFoEVG53rd8ztG9aPJMnBUQf/VFraBJeWnLS0RfjbKyLJA8FkT5seDYS1Qwyv8t0B/5C2ZmH2/eTGNNBgMmAAAAAElFTkSuQmCC",
+                "pixelOffset":{
+                    "cartesian2":[
+                        0,0
+                    ]
+                },
+                "scale":1.5,
+                "show":true,
+                "verticalOrigin":"CENTER"
+            },
+            "label":{
+                "fillColor":{
+                    "rgba":[
+                        0,255,255,255
+                    ]
+                },
+                "font":"11pt Lucida Console",
+                "horizontalOrigin":"LEFT",
+                "outlineColor":{
+                    "rgba":[
+                        0,0,0,255
+                    ]
+                },
+                "outlineWidth":2,
+                "pixelOffset":{
+                    "cartesian2":[
+                        12,0
+                    ]
+                },
+                "show":true,
+                "style":"FILL_AND_OUTLINE",
+                "text":"Station #1",
+                "verticalOrigin":"CENTER"
+            },
+            "position":{
+                "cartesian":[
+                    -1538494.37727313,-5141106.22069336,3437876.94586717
+                ]
+            }
+        },{
+            "id": "Station6",
+            "name": "Station 6",
+            "description": "Ground station #1",
+            "billboard":{
+                "eyeOffset":{
+                    "cartesian":[
+                        0,0,0
+                    ]
+                },
+                "horizontalOrigin":"CENTER",
+                "image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACvSURBVDhPrZDRDcMgDAU9GqN0lIzijw6SUbJJygUeNQgSqepJTyHG91LVVpwDdfxM3T9TSl1EXZvDwii471fivK73cBFFQNTT/d2KoGpfGOpSIkhUpgUMxq9DFEsWv4IXhlyCnhBFnZcFEEuYqbiUlNwWgMTdrZ3JbQFoEVG53rd8ztG9aPJMnBUQf/VFraBJeWnLS0RfjbKyLJA8FkT5seDYS1Qwyv8t0B/5C2ZmH2/eTGNNBgMmAAAAAElFTkSuQmCC",
+                "pixelOffset":{
+                    "cartesian2":[
+                        0,0
+                    ]
+                },
+                "scale":1.5,
+                "show":true,
+                "verticalOrigin":"CENTER"
+            },
+            "label":{
+                "fillColor":{
+                    "rgba":[
+                        0,255,255,255
+                    ]
+                },
+                "font":"11pt Lucida Console",
+                "horizontalOrigin":"LEFT",
+                "outlineColor":{
+                    "rgba":[
+                        0,0,0,255
+                    ]
+                },
+                "outlineWidth":2,
+                "pixelOffset":{
+                    "cartesian2":[
+                        12,0
+                    ]
+                },
+                "show":true,
+                "style":"FILL_AND_OUTLINE",
+                "text":"Station #1",
+                "verticalOrigin":"CENTER"
+            },
+            "position":{
+                "cartesian":[
+                    1907294.90566883,6030810.46906155,-817118.701669131
+                ]
+            }
+        },{
+            "id": "Station7",
+            "name": "Station 7",
+            "description": "Ground station #1",
+            "billboard":{
+                "eyeOffset":{
+                    "cartesian":[
+                        0,0,0
+                    ]
+                },
+                "horizontalOrigin":"CENTER",
+                "image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACvSURBVDhPrZDRDcMgDAU9GqN0lIzijw6SUbJJygUeNQgSqepJTyHG91LVVpwDdfxM3T9TSl1EXZvDwii471fivK73cBFFQNTT/d2KoGpfGOpSIkhUpgUMxq9DFEsWv4IXhlyCnhBFnZcFEEuYqbiUlNwWgMTdrZ3JbQFoEVG53rd8ztG9aPJMnBUQf/VFraBJeWnLS0RfjbKyLJA8FkT5seDYS1Qwyv8t0B/5C2ZmH2/eTGNNBgMmAAAAAElFTkSuQmCC",
+                "pixelOffset":{
+                    "cartesian2":[
+                        0,0
+                    ]
+                },
+                "scale":1.5,
+                "show":true,
+                "verticalOrigin":"CENTER"
+            },
+            "label":{
+                "fillColor":{
+                    "rgba":[
+                        0,255,255,255
+                    ]
+                },
+                "font":"11pt Lucida Console",
+                "horizontalOrigin":"LEFT",
+                "outlineColor":{
+                    "rgba":[
+                        0,0,0,255
+                    ]
+                },
+                "outlineWidth":2,
+                "pixelOffset":{
+                    "cartesian2":[
+                        12,0
+                    ]
+                },
+                "show":true,
+                "style":"FILL_AND_OUTLINE",
+                "text":"Station #1",
+                "verticalOrigin":"CENTER"
+            },
+            "position":{
+                "cartesian":[
+                    -5466072.00649440,-2403990.61827738, 2242473.32662179
+                ]
+            }
+        },{
+            "id": "Station81",
+            "name": "Station 8",
+            "description": "Ground station #1",
+            "billboard":{
+                "eyeOffset":{
+                    "cartesian":[
+                        0,0,0
+                    ]
+                },
+                "horizontalOrigin":"CENTER",
+                "image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACvSURBVDhPrZDRDcMgDAU9GqN0lIzijw6SUbJJygUeNQgSqepJTyHG91LVVpwDdfxM3T9TSl1EXZvDwii471fivK73cBFFQNTT/d2KoGpfGOpSIkhUpgUMxq9DFEsWv4IXhlyCnhBFnZcFEEuYqbiUlNwWgMTdrZ3JbQFoEVG53rd8ztG9aPJMnBUQf/VFraBJeWnLS0RfjbKyLJA8FkT5seDYS1Qwyv8t0B/5C2ZmH2/eTGNNBgMmAAAAAElFTkSuQmCC",
+                "pixelOffset":{
+                    "cartesian2":[
+                        0,0
+                    ]
+                },
+                "scale":1.5,
+                "show":true,
+                "verticalOrigin":"CENTER"
+            },
+            "label":{
+                "fillColor":{
+                    "rgba":[
+                        0,255,255,255
+                    ]
+                },
+                "font":"11pt Lucida Console",
+                "horizontalOrigin":"LEFT",
+                "outlineColor":{
+                    "rgba":[
+                        0,0,0,255
+                    ]
+                },
+                "outlineWidth":2,
+                "pixelOffset":{
+                    "cartesian2":[
+                        12,0
+                    ]
+                },
+                "show":true,
+                "style":"FILL_AND_OUTLINE",
+                "text":"Station #1",
+                "verticalOrigin":"CENTER"
+            },
+            "position":{
+                "cartesian":[
+                    -6161038.23150228,1339944.69084834,959470.404438937
+                ]
+            }
+        },{
+            "id": "Station9",
+            "name": "Station 9",
+            "description": "Ground station #1",
+            "billboard":{
+                "eyeOffset":{
+                    "cartesian":[
+                        0,0,0
+                    ]
+                },
+                "horizontalOrigin":"CENTER",
+                "image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACvSURBVDhPrZDRDcMgDAU9GqN0lIzijw6SUbJJygUeNQgSqepJTyHG91LVVpwDdfxM3T9TSl1EXZvDwii471fivK73cBFFQNTT/d2KoGpfGOpSIkhUpgUMxq9DFEsWv4IXhlyCnhBFnZcFEEuYqbiUlNwWgMTdrZ3JbQFoEVG53rd8ztG9aPJMnBUQf/VFraBJeWnLS0RfjbKyLJA8FkT5seDYS1Qwyv8t0B/5C2ZmH2/eTGNNBgMmAAAAAElFTkSuQmCC",
+                "pixelOffset":{
+                    "cartesian2":[
+                        0,0
+                    ]
+                },
+                "scale":1.5,
+                "show":true,
+                "verticalOrigin":"CENTER"
+            },
+            "label":{
+                "fillColor":{
+                    "rgba":[
+                        0,255,255,255
+                    ]
+                },
+                "font":"11pt Lucida Console",
+                "horizontalOrigin":"LEFT",
+                "outlineColor":{
+                    "rgba":[
+                        0,0,0,255
+                    ]
+                },
+                "outlineWidth":2,
+                "pixelOffset":{
+                    "cartesian2":[
+                        12,0
+                    ]
+                },
+                "show":true,
+                "style":"FILL_AND_OUTLINE",
+                "text":"Station #1",
+                "verticalOrigin":"CENTER"
+            },
+            "position":{
+                "cartesian":[
+                    5064157.08250969,-498329.723659565,3832443.72700354
+                ]
+            }
+        },{
+            "id": "Station10",
+            "name": "Station 10",
+            "description": "Ground station #1",
+            "billboard":{
+                "eyeOffset":{
+                    "cartesian":[
+                        0,0,0
+                    ]
+                },
+                "horizontalOrigin":"CENTER",
+                "image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACvSURBVDhPrZDRDcMgDAU9GqN0lIzijw6SUbJJygUeNQgSqepJTyHG91LVVpwDdfxM3T9TSl1EXZvDwii471fivK73cBFFQNTT/d2KoGpfGOpSIkhUpgUMxq9DFEsWv4IXhlyCnhBFnZcFEEuYqbiUlNwWgMTdrZ3JbQFoEVG53rd8ztG9aPJMnBUQf/VFraBJeWnLS0RfjbKyLJA8FkT5seDYS1Qwyv8t0B/5C2ZmH2/eTGNNBgMmAAAAAElFTkSuQmCC",
+                "pixelOffset":{
+                    "cartesian2":[
+                        0,0
+                    ]
+                },
+                "scale":1.5,
+                "show":true,
+                "verticalOrigin":"CENTER"
+            },
+            "label":{
+                "fillColor":{
+                    "rgba":[
+                        0,255,255,255
+                    ]
+                },
+                "font":"11pt Lucida Console",
+                "horizontalOrigin":"LEFT",
+                "outlineColor":{
+                    "rgba":[
+                        0,0,0,255
+                    ]
+                },
+                "outlineWidth":2,
+                "pixelOffset":{
+                    "cartesian2":[
+                        12,0
+                    ]
+                },
+                "show":true,
+                "style":"FILL_AND_OUTLINE",
+                "text":"Station #1",
+                "verticalOrigin":"CENTER"
+            },
+            "position":{
+                "cartesian":[
+                    -2419893.91337704,5402150.22161756,-2367224.44151113
+                ]
+            }
+        }];
 
     Cesium.BingMapsApi.defaultKey = 'Ak8mO9f0VpoByuNwmMcVvFka1GCZ3Bh8VrpqNLqGtIgsuUYjTrJdw7kDZwAwlC7E';
     var terrainProvider = new Cesium.CesiumTerrainProvider({
