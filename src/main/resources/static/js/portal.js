@@ -73,7 +73,7 @@ $(function(){
         {
             "id": "Station2",
             "name": "Station 2",
-            "description": "Ground station #1",
+            "description": "Ground station #2",
             "billboard":{
                 "eyeOffset":{
                     "cartesian":[
@@ -112,7 +112,7 @@ $(function(){
                 },
                 "show":true,
                 "style":"FILL_AND_OUTLINE",
-                "text":"Station #1",
+                "text":"Station #2",
                 "verticalOrigin":"CENTER"
             },
             "position":{
@@ -123,7 +123,7 @@ $(function(){
         },{
             "id": "Station3",
             "name": "Station 3",
-            "description": "Ground station #1",
+            "description": "Ground station #3",
             "billboard":{
                 "eyeOffset":{
                     "cartesian":[
@@ -162,7 +162,7 @@ $(function(){
                 },
                 "show":true,
                 "style":"FILL_AND_OUTLINE",
-                "text":"Station #1",
+                "text":"Station #3",
                 "verticalOrigin":"CENTER"
             },
             "position":{
@@ -173,7 +173,7 @@ $(function(){
         },{
             "id": "Station4",
             "name": "Station 4",
-            "description": "Ground station #1",
+            "description": "Ground station #4",
             "billboard":{
                 "eyeOffset":{
                     "cartesian":[
@@ -212,7 +212,7 @@ $(function(){
                 },
                 "show":true,
                 "style":"FILL_AND_OUTLINE",
-                "text":"Station #1",
+                "text":"Station #4",
                 "verticalOrigin":"CENTER"
             },
             "position":{
@@ -223,7 +223,7 @@ $(function(){
         },{
             "id": "Station5",
             "name": "Station 5",
-            "description": "Ground station #1",
+            "description": "Ground station #5",
             "billboard":{
                 "eyeOffset":{
                     "cartesian":[
@@ -262,7 +262,7 @@ $(function(){
                 },
                 "show":true,
                 "style":"FILL_AND_OUTLINE",
-                "text":"Station #1",
+                "text":"Station #5",
                 "verticalOrigin":"CENTER"
             },
             "position":{
@@ -273,7 +273,7 @@ $(function(){
         },{
             "id": "Station6",
             "name": "Station 6",
-            "description": "Ground station #1",
+            "description": "Ground station #6",
             "billboard":{
                 "eyeOffset":{
                     "cartesian":[
@@ -312,7 +312,7 @@ $(function(){
                 },
                 "show":true,
                 "style":"FILL_AND_OUTLINE",
-                "text":"Station #1",
+                "text":"Station #6",
                 "verticalOrigin":"CENTER"
             },
             "position":{
@@ -323,7 +323,7 @@ $(function(){
         },{
             "id": "Station7",
             "name": "Station 7",
-            "description": "Ground station #1",
+            "description": "Ground station #7",
             "billboard":{
                 "eyeOffset":{
                     "cartesian":[
@@ -362,7 +362,7 @@ $(function(){
                 },
                 "show":true,
                 "style":"FILL_AND_OUTLINE",
-                "text":"Station #1",
+                "text":"Station #7",
                 "verticalOrigin":"CENTER"
             },
             "position":{
@@ -373,7 +373,7 @@ $(function(){
         },{
             "id": "Station81",
             "name": "Station 8",
-            "description": "Ground station #1",
+            "description": "Ground station #8",
             "billboard":{
                 "eyeOffset":{
                     "cartesian":[
@@ -412,7 +412,7 @@ $(function(){
                 },
                 "show":true,
                 "style":"FILL_AND_OUTLINE",
-                "text":"Station #1",
+                "text":"Station #8",
                 "verticalOrigin":"CENTER"
             },
             "position":{
@@ -423,7 +423,7 @@ $(function(){
         },{
             "id": "Station9",
             "name": "Station 9",
-            "description": "Ground station #1",
+            "description": "Ground station #9",
             "billboard":{
                 "eyeOffset":{
                     "cartesian":[
@@ -462,7 +462,7 @@ $(function(){
                 },
                 "show":true,
                 "style":"FILL_AND_OUTLINE",
-                "text":"Station #1",
+                "text":"Station #9",
                 "verticalOrigin":"CENTER"
             },
             "position":{
@@ -473,7 +473,7 @@ $(function(){
         },{
             "id": "Station10",
             "name": "Station 10",
-            "description": "Ground station #1",
+            "description": "Ground station #10",
             "billboard":{
                 "eyeOffset":{
                     "cartesian":[
@@ -512,7 +512,7 @@ $(function(){
                 },
                 "show":true,
                 "style":"FILL_AND_OUTLINE",
-                "text":"Station #1",
+                "text":"Station #10",
                 "verticalOrigin":"CENTER"
             },
             "position":{
