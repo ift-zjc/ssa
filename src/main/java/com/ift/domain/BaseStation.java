@@ -5,26 +5,26 @@ package com.ift.domain;
  */
 public class BaseStation {
 
-    private String id;
-    private String name;
+    private String bsid;
+    private String bsname;
     private float x;
     private float y;
     private float z;
 
-    public String getId() {
-        return id;
+    public String getBsid() {
+        return bsid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setBsid(String bsid) {
+        this.bsid = bsid;
     }
 
-    public String getName() {
-        return name;
+    public String getBsname() {
+        return bsname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBsname(String bsname) {
+        this.bsname = bsname;
     }
 
     public float getX() {

@@ -48,11 +48,11 @@ public class FileUploadController {
                                    RedirectAttributes redirectAttributes){
 
         // Parse JSON file
-        Type jsonArrayType = new TypeToken<List<SatelliteJson>>(){}.getType();
-        Gson gson = new GsonBuilder().create();
+//        Type jsonSatelliteType = new TypeToken<SatelliteJson>(){}.getType();
+//        Gson gson = new GsonBuilder().create();
         try {
-            JsonReader jsonReader = new JsonReader(new BufferedReader(new FileReader(multipartToFile(file))));
-            List<SatelliteJson> satelliteJsonDataList = gson.fromJson(jsonReader, jsonArrayType);
+//            JsonReader jsonReader = new JsonReader(new BufferedReader(new FileReader(multipartToFile(file))));
+//            SatelliteJson satelliteJsonData = gson.fromJson(jsonReader, jsonSatelliteType);
 
             // Send data to zero mq
             zeroMQService.sendData(file.getBytes());
