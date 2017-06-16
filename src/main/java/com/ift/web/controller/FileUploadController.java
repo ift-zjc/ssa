@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.google.gson.stream.JsonReader;
 
+import javax.xml.ws.Response;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -48,19 +49,21 @@ public class FileUploadController {
                                    RedirectAttributes redirectAttributes){
 
         // Parse JSON file
-//        Type jsonSatelliteType = new TypeToken<SatelliteJson>(){}.getType();
-//        Gson gson = new GsonBuilder().create();
+        Type jsonSatelliteType = new TypeToken<SatelliteJson>(){}.getType();
+        Gson gson = new GsonBuilder().create();
         try {
+            String jsonContent = new String(file.getBytes());
 //            JsonReader jsonReader = new JsonReader(new BufferedReader(new FileReader(multipartToFile(file))));
-//            SatelliteJson satelliteJsonData = gson.fromJson(jsonReader, jsonSatelliteType);
+            SatelliteJson satelliteJsonData = gson.fromJson(jsonContent, jsonSatelliteType);
 
             // Send data to zero mq
             zeroMQService.sendData(file.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        storageService.store(file);
+//        storageService.store(file);
 
+        //TODO send data to front end with base station data.
         return new ResponseEntity("Successfully uploaded - " +
                 file.getOriginalFilename(), new HttpHeaders(), HttpStatus.OK);
     }

@@ -11,67 +11,25 @@ public class SatelliteJson {
 
 
     @SerializedName("satellites")
-    private List<SatelliteJsonItem> satelliteJsonItem;
+    private List<SatelliteJsonItem> satellites;
 
-    @SerializedName("uncertainty")
-    private SatelliteJsonUncertainty uncertainty;   // Uncertainty, 6x6 array
 
     @SerializedName("basestations")
-    private List<BaseStation> baseStationList;
+    private List<BaseStation> basestations;
 
-    private class SatelliteJsonUncertainty {
-        private float xx;
-        private float xy;
-        private float xz;
-
-        public float getXx() {
-            return xx;
-        }
-
-        public void setXx(float xx) {
-            this.xx = xx;
-        }
-
-        public float getXy() {
-            return xy;
-        }
-
-        public void setXy(float xy) {
-            this.xy = xy;
-        }
-
-        public float getXz() {
-            return xz;
-        }
-
-        public void setXz(float xz) {
-            this.xz = xz;
-        }
+    public List<SatelliteJsonItem> getSatellites() {
+        return satellites;
     }
 
-
-    public SatelliteJsonUncertainty getSatelliteJsonUncertainty() {
-        return uncertainty;
+    public void setSatellites(List<SatelliteJsonItem> satellites) {
+        this.satellites = satellites;
     }
 
-    public void setSatelliteJsonUncertanty(SatelliteJsonUncertainty satelliteJsonUncertainty) {
-        this.uncertainty = satelliteJsonUncertainty;
+    public List<BaseStation> getBasestations() {
+        return basestations;
     }
 
-    public List<BaseStation> getBaseStationList() {
-        return baseStationList;
-    }
-
-    public void setBaseStationList(List<BaseStation> baseStationList) {
-        this.baseStationList = baseStationList;
-    }
-
-
-    public List<SatelliteJsonItem> getSatelliteJsonItem() {
-        return satelliteJsonItem;
-    }
-
-    public void setSatelliteJsonItem(List<SatelliteJsonItem> satelliteJsonItem) {
-        this.satelliteJsonItem = satelliteJsonItem;
+    public void setBasestations(List<BaseStation> basestations) {
+        this.basestations = basestations;
     }
 }
