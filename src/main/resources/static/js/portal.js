@@ -648,11 +648,26 @@ function connect() {
                     // Push data
                     czml[i].position.cartesian.push.apply(czml[i].position.cartesian, data.satelliteData);
                 }
+
+                // Generate random data (100 for now)
+                for(var j = 1; j<=100; j++){
+                    if(czml[i].id == (data.satelliteId + "_" + j)){
+                        // Get coordinate
+                        var coorDataArray = data.satelliteData.split(",");
+                        // Loop each 4 as set
+                        for(var k = 0; k<coorDataArray.length; k++){
+                            // 4 as set
+                            if ((k % 4) == 0){
+
+                            }
+                        }
+                    }
+                }
             }
         });
 
         // Subscribe to data flag completed feeder
-        stopmClient.subscribe('/topic/satellite/datacompleted', function (completedFlag){
+        stompClient.subscribe('/topic/satellite/datacompleted', function (completedFlag){
             data = JSON.parse(satellitedata.body);
 
             // Reload CZML file if completed
