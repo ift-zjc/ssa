@@ -625,10 +625,31 @@ function connect() {
         // setConnected(true);
         console.log('Connected: ' + frame);
 
-        // Subscribe to matedata feeder
+        // Subscribe to metadata feeder
+        // 100 random point's metadata added.
         stompClient.subscribe('/topic/satellite/matedata', function (matedata) {
             data = JSON.parse(matedata.body);
             czml.push(data);
+
+            for(var index = 1; index <=100; index++){
+                nodeData = {
+                    "id":data.id+"__"+index,
+                    "availability":data.availability,
+                    "description":"demo points",
+                    "name": "demo point",
+                    "billboard":{
+                        "horizontalOrigin": "CENTER",
+                    },
+                    "position":{
+                        "interpolationAlgorithm": "LAGRANGE",
+                        "interpolationDegree": 5,
+                        "referenceFrame": "INERTIAL",
+                        "epoch": czml[i].position.epoch,
+                        "cartesian": []
+                    }
+                };
+                czml.push(nodeData);
+            }
         });
 
         // Subscribe to relation data feeder
@@ -655,11 +676,12 @@ function connect() {
                         // Get coordinate
                         var coorDataArray = data.satelliteData.split(",");
                         // Loop each 4 as set
-                        for(var k = 0; k<coorDataArray.length; k++){
-                            // 4 as set
-                            if ((k % 4) == 0){
-
-                            }
+                        var setData = [];
+                        for(var k = 0; k<coorDataArray.length; k=k+4){
+                            setData[0] = coorDataArray[k];
+                            setData[1] = coorDataArray[k+1];
+                            setData[2] = coorDataArray[k+2];
+                            setData[3] = coorDataArray[k+3];
                         }
                     }
                 }
