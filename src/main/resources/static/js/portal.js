@@ -543,9 +543,9 @@ $(function(){
     // covariance between dimensions. This examples makes the first and third
     // dimensions highly correlated, and the second dimension independent.
     var covarianceMatrix = [
-        [ 1.0, 0.0, 0.9 ],
-        [ 0.0, 1.0, 0.0 ],
-        [ 0.9, 0.0, 1.0 ],
+        [ 1124.0, 0.0, 0.9 ],
+        [ 0.0, 1211.0, 0.0 ],
+        [ 0.9, 0.0, 1928.0 ],
     ];
 
     var distribution = window.MultivariateNormal.default(meanVector, covarianceMatrix);
@@ -614,6 +614,13 @@ function ajaxInit() {
     });
 }
 
+// dimensions highly correlated, and the second dimension independent.
+var covarianceMatrix = [
+    [ 1.0, 0.0, 0.9 ],
+    [ 0.0, 1.0, 0.0 ],
+    [ 0.9, 0.0, 1.0 ],
+];
+
 /**
  * Web socket connect to /sass-websocket
  */
@@ -679,9 +686,18 @@ function connect() {
                         var setData = [];
                         for(var k = 0; k<coorDataArray.length; k=k+4){
                             setData[0] = coorDataArray[k];
-                            setData[1] = coorDataArray[k+1];
-                            setData[2] = coorDataArray[k+2];
-                            setData[3] = coorDataArray[k+3];
+
+                            // Get distribution
+                            var meanVector = [coorDataArray[k+1], coorDataArray[k+2], coorDataArray[k+3]];
+                            var distribution = MultivariateNormal (meanVector, covarianceMatrix);
+                            var result = distribution.sample();
+                            console.log(distribution.sample());
+                            setData[1] = result[0];
+                            setData[2] = result[1];
+                            setData[3] = result[2];
+
+                            // Push to array
+                            czml[i].position.cartesian.push.apply(czml[i].position.cartesian, setData);
                         }
                     }
                 }
