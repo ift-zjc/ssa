@@ -706,7 +706,7 @@ function connect() {
 
         // Subscribe to data flag completed feeder
         stompClient.subscribe('/topic/satellite/datacompleted', function (completedFlag){
-            data = JSON.parse(satellitedata.body);
+            data = JSON.parse(completedFlag.body);
 
             // Reload CZML file if completed
             if(data.completed){
