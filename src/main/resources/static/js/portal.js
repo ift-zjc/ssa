@@ -638,25 +638,6 @@ function connect() {
             data = JSON.parse(matedata.body);
             czml.push(data);
 
-            for(var index = 1; index <=100; index++){
-                nodeData = {
-                    "id":data.id+"__"+index,
-                    "availability":data.availability,
-                    "description":"demo points",
-                    "name": "demo point",
-                    "billboard":{
-                        "horizontalOrigin": "CENTER",
-                    },
-                    "position":{
-                        "interpolationAlgorithm": "LAGRANGE",
-                        "interpolationDegree": 5,
-                        "referenceFrame": "INERTIAL",
-                        "epoch": czml[index].position.epoch,
-                        "cartesian": []
-                    }
-                };
-                czml.push(nodeData);
-            }
         });
 
         // Subscribe to relation data feeder
@@ -676,29 +657,6 @@ function connect() {
                 if(czml[i].id == data.satelliteId){
                     // Push data
                     czml[i].position.cartesian.push.apply(czml[i].position.cartesian, data.satelliteData);
-                }
-
-                // Generate random data (100 for now)
-                for(var j = 1; j<=100; j++){
-                    if(czml[i].id == (data.satelliteId + "__" + j)){
-
-                        // Loop each 4 as set
-                        var setData = [];
-                        for(var k = 0; k<data.satelliteData.length-1; k=k+4){
-                            setData[0] = data.satelliteData[k];
-
-                            // Get distribution
-                            var meanVector = [data.satelliteData[k+1], data.satelliteData[k+2], data.satelliteData[k+3]];
-                            var distribution = window.MultivariateNormal.default(meanVector, covarianceMatrix);
-                            var result = distribution.sample();
-                            setData[1] = result[0];
-                            setData[2] = result[1];
-                            setData[3] = result[2];
-
-                            // Push to array
-                            czml[i].position.cartesian.push.apply(czml[i].position.cartesian, setData);
-                        }
-                    }
                 }
             }
 
