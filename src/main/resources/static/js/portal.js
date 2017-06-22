@@ -667,6 +667,7 @@ function connect() {
 
         // Subscribe to satellite data feeder
         stompClient.subscribe('/topic/satellite/satellitedata', function (satellitedata){
+            console.log("Data received");
             data = JSON.parse(satellitedata.body);
 
             // Add to czml.
@@ -690,7 +691,6 @@ function connect() {
                             var meanVector = [data.satelliteData[k+1], data.satelliteData[k+2], data.satelliteData[k+3]];
                             var distribution = window.MultivariateNormal.default(meanVector, covarianceMatrix);
                             var result = distribution.sample();
-                            console.log(distribution.sample());
                             setData[1] = result[0];
                             setData[2] = result[1];
                             setData[3] = result[2];
@@ -701,6 +701,8 @@ function connect() {
                     }
                 }
             }
+
+            console.log("data process completed");
         });
 
         // Subscribe to data flag completed feeder
