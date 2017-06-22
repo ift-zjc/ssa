@@ -684,11 +684,11 @@ function connect() {
                         var coorDataArray = data.satelliteData.split(",");
                         // Loop each 4 as set
                         var setData = [];
-                        for(var k = 0; k<coorDataArray.length; k=k+4){
-                            setData[0] = coorDataArray[k];
+                        for(var k = 0; k<data.satelliteData.length-1; k=k+4){
+                            setData[0] = data.satelliteData[k];
 
                             // Get distribution
-                            var meanVector = [coorDataArray[k+1], coorDataArray[k+2], coorDataArray[k+3]];
+                            var meanVector = [data.satelliteData[k+1], data.satelliteData[k+2], data.satelliteData[k+3]];
                             var distribution = MultivariateNormal (meanVector, covarianceMatrix);
                             var result = distribution.sample();
                             console.log(distribution.sample());
