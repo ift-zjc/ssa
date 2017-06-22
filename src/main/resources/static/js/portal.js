@@ -688,7 +688,7 @@ function connect() {
 
                             // Get distribution
                             var meanVector = [data.satelliteData[k+1], data.satelliteData[k+2], data.satelliteData[k+3]];
-                            var distribution = MultivariateNormal (meanVector, covarianceMatrix);
+                            var distribution = window.MultivariateNormal.default(meanVector, covarianceMatrix);
                             var result = distribution.sample();
                             console.log(distribution.sample());
                             setData[1] = result[0];
