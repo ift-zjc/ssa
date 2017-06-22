@@ -651,7 +651,7 @@ function connect() {
                         "interpolationAlgorithm": "LAGRANGE",
                         "interpolationDegree": 5,
                         "referenceFrame": "INERTIAL",
-                        "epoch": czml[i].position.epoch,
+                        "epoch": czml[index].position.epoch,
                         "cartesian": []
                     }
                 };
