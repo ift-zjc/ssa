@@ -680,8 +680,7 @@ function connect() {
                 // Generate random data (100 for now)
                 for(var j = 1; j<=100; j++){
                     if(czml[i].id == (data.satelliteId + "__" + j)){
-                        // Get coordinate
-                        var coorDataArray = data.satelliteData.split(",");
+
                         // Loop each 4 as set
                         var setData = [];
                         for(var k = 0; k<data.satelliteData.length-1; k=k+4){
