@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.FileAttribute;
 import java.util.stream.Stream;
 
 /**
@@ -29,6 +31,16 @@ public class FileSystemStorageService implements StorageService {
     public FileSystemStorageService(StorageProperties properties) {
         this.rootLocation = Paths.get(properties.getLocation());
     }
+
+
+    @Override
+    public void store(String file, FileAttribute<?> fileAttribute) throws IOException {
+
+        Path filePath = this.rootLocation.resolve(file);
+        // Create file at rootLocation with path: file.
+        Files.createFile(filePath);
+    }
+
 
     @Override
     public void store(MultipartFile file) {

@@ -15,7 +15,7 @@ public class StorageProperties {
     /**
      * Folder location for storing files location
      */
-    private String location = "/root/ssa/uploads";
+    private String location = "/Users/lastcow_chen/Data";
 
     public String getLocation() {
         return location;

@@ -3,6 +3,7 @@ package com.ift.web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
 import com.ift.domain.czml.*;
+import com.ift.services.StorageService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.file.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +29,24 @@ public class ApiController {
 
     @Autowired
     private SimpMessagingTemplate webSocket;
+    @Autowired
+    private StorageService storageService;
+
+
+    @PostMapping(value = "/startSatelliteData")
+    public @ResponseBody ResponseEntity<?> StartSatelliteData(@RequestParam("uuid") String uuid){
+
+        LOGGER.info("Start new Satellite data file");
+
+        // Create new file under
+        try {
+            storageService.store("czml-"+uuid, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 
     /**
      * Accept data form external source
@@ -35,7 +57,8 @@ public class ApiController {
                                                              @RequestParam("satelliteName") String satelliteName,
                                                              @RequestParam("satelliteDesc") String satelliteDesc,
                                                              @RequestParam("satelliteAvailability") String satelliteAvailability,
-                                                             @RequestParam("satelliteEpoch") String satelliteEpoch){
+                                                             @RequestParam("satelliteEpoch") String satelliteEpoch,
+                                                             @RequestParam("uuid") String uuid){
 
         LOGGER.info("New satellite meta data received");
 
@@ -63,6 +86,15 @@ public class ApiController {
 
         String jsonStr = (new Gson()).toJson(jsonObject);
 
+
+        // Load file
+        Path czmlFilePath = storageService.load("czml-"+uuid);
+        try {
+            Files.write(czmlFilePath, jsonStr.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         /**
          * Write to websocket channel: /topic/statllite/data
          */
@@ -86,8 +118,16 @@ public class ApiController {
                                                           @RequestParam("object2Id") String obj2,
                                                           @RequestParam("name") String name,
                                                           @RequestParam("availability") String availability,
-                                                          @RequestParam("desc") String desc){
+                                                          @RequestParam("desc") String desc,
+                                                          @RequestParam("uuid") String uuid){
         LOGGER.info("New relationship data received");
+
+        // Get data
+        try {
+            String jsonString = new String(Files.readAllBytes(storageService.load("czml-"+uuid)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id", obj1+"/"+obj2);
@@ -151,7 +191,9 @@ public class ApiController {
      */
     @PostMapping(value = "/feedSatelliteData")
     public @ResponseBody ResponseEntity<?> SatelliteData(@RequestParam("satelliteId") String satelliteId,
-                                                         @RequestParam("cartesianData") List<Double> cartesianData
+                                                         @RequestParam("cartesianData") List<Double> cartesianData,
+                                                         @RequestParam("p") List<Double> pMatrix,
+                                                         @RequestParam("uuid") String uuid
                                                          /*@RequestParam("completeFlag") boolean completeFlag*/){
 
         LOGGER.info("Receiving satellite data");
