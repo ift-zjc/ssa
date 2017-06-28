@@ -307,7 +307,7 @@ public class ApiController {
             }
 
             JsonArray randomJsonArray = new JsonArray();
-            RealMatrix cartesianMatrix = new Array2DRowRealMatrix(new double [3][0]);
+            RealMatrix cartesianMatrix = new Array2DRowRealMatrix(new double [3]);
 
             // Check for random number
             if(jsonObjectNode.get("id").getAsString().startsWith(satelliteId+"_")){
