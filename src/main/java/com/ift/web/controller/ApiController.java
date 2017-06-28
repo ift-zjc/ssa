@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
 import com.ift.domain.czml.*;
 import com.ift.services.StorageService;
+import org.apache.commons.math3.linear.Array2DRowRealMatrix;
+import org.apache.commons.math3.linear.EigenDecomposition;
+import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +19,7 @@ import java.nio.file.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by chen3 on 5/9/17.
@@ -38,9 +42,29 @@ public class ApiController {
 
         LOGGER.info("Start new Satellite data file");
 
-        // Create new file under
+
+        // Document data.
+        JsonObject documentJsonObj = new JsonObject();
+        documentJsonObj.addProperty("id", "document");
+        documentJsonObj.addProperty("version", "1.0");
+        JsonObject documentJsonObjClock = new JsonObject();
+        documentJsonObjClock.addProperty("currentTime", "2012-03-15T10:00:00Z");
+        documentJsonObjClock.addProperty("interval", "2012-03-15T10:00:00Z/2012-03-16T10:00:00Z");
+        documentJsonObjClock.addProperty("multiple", 60);
+        documentJsonObjClock.addProperty("range", "LOOP_STOP");
+        documentJsonObjClock.addProperty("step", "SYSTEM_CLOCK_MULTIPLIER");
+        documentJsonObj.add("clock", documentJsonObjClock);
+
+        JsonArray documentJsonArray = new JsonArray();
+        documentJsonArray.add(documentJsonObj);
+
+        String jsonStr = (new Gson()).toJson(documentJsonArray);
+
+        // Create new file under data folder
+        // Load file
+        Path czmlFilePath = storageService.load("czml-"+uuid);
         try {
-            storageService.store("czml-"+uuid, null);
+            Files.write(czmlFilePath, jsonStr.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,33 +86,58 @@ public class ApiController {
 
         LOGGER.info("New satellite meta data received");
 
+        // Get 100 object for each satellite
+        JsonArray satelliteArray = new JsonArray();
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", satelliteId);
-        jsonObject.addProperty("name", satelliteName);
-        jsonObject.addProperty("availability", satelliteAvailability);
-        jsonObject.addProperty("description", satelliteDesc);
+        for(int i = 0; i<101; i++) {
 
-        JsonObject positionJsonObject = new JsonObject();
-        positionJsonObject.addProperty("interpolationAlgorithm", "LAGRANGE");
-        positionJsonObject.addProperty("interpolationDegree", 5);
-        positionJsonObject.addProperty("referenceFrame", "INERTIAL");
-        positionJsonObject.addProperty("epoch", satelliteEpoch);
-        positionJsonObject.add("cartesian", new JsonArray());
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("id", i==0 ? satelliteId : satelliteId+"_"+i);
+            jsonObject.addProperty("name", satelliteName);
+            jsonObject.addProperty("availability", satelliteAvailability);
+            jsonObject.addProperty("description", satelliteDesc);
 
-        JsonObject billboardJsonObject = new JsonObject();
-        billboardJsonObject.addProperty("horizontalOrigin", "CENTER");
-        billboardJsonObject.addProperty("image", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADJSURBVDhPnZHRDcMgEEMZjVEYpaNklIzSEfLfD4qNnXAJSFWfhO7w2Zc0Tf9QG2rXrEzSUeZLOGm47WoH95x3Hl3jEgilvDgsOQUTqsNl68ezEwn1vae6lceSEEYvvWNT/Rxc4CXQNGadho1NXoJ+9iaqc2xi2xbt23PJCDIB6TQjOC6Bho/sDy3fBQT8PrVhibU7yBFcEPaRxOoeTwbwByCOYf9VGp1BYI1BA+EeHhmfzKbBoJEQwn1yzUZtyspIQUha85MpkNIXB7GizqDEECsAAAAASUVORK5CYII=");
+            JsonObject positionJsonObject = new JsonObject();
+            positionJsonObject.addProperty("interpolationAlgorithm", "LAGRANGE");
+            positionJsonObject.addProperty("interpolationDegree", 5);
+            positionJsonObject.addProperty("referenceFrame", "INERTIAL");
+            positionJsonObject.addProperty("epoch", satelliteEpoch);
+            positionJsonObject.add("cartesian", new JsonArray());
+
+            JsonObject billboardJsonObject = new JsonObject();
+            billboardJsonObject.addProperty("horizontalOrigin", "CENTER");
+            billboardJsonObject.addProperty("image", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADJSURBVDhPnZHRDcMgEEMZjVEYpaNklIzSEfLfD4qNnXAJSFWfhO7w2Zc0Tf9QG2rXrEzSUeZLOGm47WoH95x3Hl3jEgilvDgsOQUTqsNl68ezEwn1vae6lceSEEYvvWNT/Rxc4CXQNGadho1NXoJ+9iaqc2xi2xbt23PJCDIB6TQjOC6Bho/sDy3fBQT8PrVhibU7yBFcEPaRxOoeTwbwByCOYf9VGp1BYI1BA+EeHhmfzKbBoJEQwn1yzUZtyspIQUha85MpkNIXB7GizqDEECsAAAAASUVORK5CYII=");
 
 
-        jsonObject.add("billboard", billboardJsonObject);
-        jsonObject.add("position", positionJsonObject);
+            jsonObject.add("billboard", billboardJsonObject);
+            jsonObject.add("position", positionJsonObject);
 
-        String jsonStr = (new Gson()).toJson(jsonObject);
+            satelliteArray.add(jsonObject);
+        }
 
+
+
+
+        // Combine
+        JsonArray documentArray = new JsonArray();
+        documentArray.addAll(satelliteArray);
+
+        // Get JSONObject form file based on UUID
+        JsonArray savedJsonObject = null;
+        try {
+            savedJsonObject = this.getJsonFromFile(uuid);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Add current data to JSON object root.
+        savedJsonObject.addAll(satelliteArray);
+
+        String jsonStr = (new Gson()).toJson(savedJsonObject);
 
         // Load file
         Path czmlFilePath = storageService.load("czml-"+uuid);
+        // Write to file
         try {
             Files.write(czmlFilePath, jsonStr.getBytes());
         } catch (IOException e) {
@@ -98,7 +147,7 @@ public class ApiController {
         /**
          * Write to websocket channel: /topic/statllite/data
          */
-        webSocket.convertAndSend("/topic/satellite/matedata", jsonStr);
+//        webSocket.convertAndSend("/topic/satellite/matedata", jsonStr);
 
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
@@ -193,33 +242,116 @@ public class ApiController {
     public @ResponseBody ResponseEntity<?> SatelliteData(@RequestParam("satelliteId") String satelliteId,
                                                          @RequestParam("cartesianData") List<Double> cartesianData,
                                                          @RequestParam("p") List<Double> pMatrix,
-                                                         @RequestParam("uuid") String uuid
-                                                         /*@RequestParam("completeFlag") boolean completeFlag*/){
+                                                         @RequestParam("uuid") String uuid ){
 
         LOGGER.info("Receiving satellite data");
 
+        // Get JsonObject from file
+        JsonArray savedJsonObject = null;
+        try {
+            savedJsonObject = this.getJsonFromFile(uuid);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        // Get Q from P
+        RealMatrix matrix = new Array2DRowRealMatrix(new double[3][3]);
+        matrix.setEntry(0,0,150.04);
+        matrix.setEntry(0,1,1.3293);
+        matrix.setEntry(0,2,0.8439);
+
+        matrix.setEntry(1,0, 1.3293);
+        matrix.setEntry(1,1,124.36);
+        matrix.setEntry(1,2,0.6936);
+
+        matrix.setEntry(2, 0, 0.8439);
+        matrix.setEntry(2,1,0.6936);
+        matrix.setEntry(2,2, 129.35);
+
+//        int index = 0;
+//        RealMatrix matrix = new Array2DRowRealMatrix(new double[3][3]);
+//        for(int i = 0; i<3; i++){
+//            for(int j=0; j<3; j++){
+//                matrix.setEntry(i,j,pMatrix.get(index++));
+//            }
+//        }
+        EigenDecomposition eigenDecomposition = new EigenDecomposition(matrix);
+        RealMatrix sqrtMatrix = eigenDecomposition.getSquareRoot();
+
+
+        // Get Gaussian
+        RealMatrix gaussianMatrix = new Array2DRowRealMatrix(new  double[3]);
+        Random random = new Random();
+
         // Creating Json object.
-        JsonObject jsonObject = new JsonObject();
         JsonArray cartesianDataArray = new JsonArray();
+
+        // Size must be 4 even, (but matlab not always return 4x data)
+        int dataSize = cartesianData.size() % 4;
         // Fill data array
-        for (double cartesianElement:cartesianData
-             ) {
-            JsonPrimitive cartesianNode = new JsonPrimitive(cartesianElement);
+        for (int n = 0; n<cartesianData.size()-dataSize; n++) {
+            JsonPrimitive cartesianNode = new JsonPrimitive(cartesianData.get(n));
             cartesianDataArray.add(cartesianNode);
         }
-        jsonObject.addProperty("satelliteId", satelliteId);
-        jsonObject.add("satelliteData", cartesianDataArray);
 
-        // Move to seperated API
-//        jsonObject.addProperty("completed", completeFlag);
+        // Loop the json array
+        for (JsonElement satelliteNode: savedJsonObject
+             ) {
+            JsonObject jsonObjectNode = satelliteNode.getAsJsonObject();
+
+            // Add to original data
+            if(jsonObjectNode.get("id").getAsString().equals(satelliteId)){
+                // Add original data.
+                jsonObjectNode.get("position").getAsJsonObject().get("cartesian").getAsJsonArray().addAll(cartesianDataArray);
+            }
+
+            JsonArray randomJsonArray = new JsonArray();
+            RealMatrix cartesianMatrix = new Array2DRowRealMatrix(new double [3][0]);
+
+            // Check for random number
+            if(jsonObjectNode.get("id").getAsString().startsWith(satelliteId+"_")){
+                // Add random data
+
+                // Get point
+                for(int aa = 0; aa<cartesianDataArray.size(); aa+=4){
+                    cartesianMatrix.setEntry(0,0,cartesianDataArray.get(aa+1).getAsDouble());
+                    cartesianMatrix.setEntry(1,0,cartesianDataArray.get(aa+2).getAsDouble());
+                    cartesianMatrix.setEntry(2,0,cartesianDataArray.get(aa+3).getAsDouble());
+
+                    for(int k = 0; k < 3; k++){
+                        gaussianMatrix.setEntry(k, 0, random.nextGaussian());
+                    }
+
+                    // Calculate
+                    RealMatrix matrixMultiple = sqrtMatrix.multiply(gaussianMatrix);
+                    // Calculate random x,y,z
+                    RealMatrix matrixRandom = cartesianMatrix.add(matrixMultiple);
+
+                    // Add to json
+                    randomJsonArray.add(cartesianDataArray.get(aa));
+                    randomJsonArray.add(new JsonPrimitive(matrixRandom.getEntry(0,0)));
+                    randomJsonArray.add(new JsonPrimitive(matrixRandom.getEntry(1,0)));
+                    randomJsonArray.add(new JsonPrimitive(matrixRandom.getEntry(2,0)));
+
+                    jsonObjectNode.get("position").getAsJsonObject().get("cartesian").getAsJsonArray().addAll(randomJsonArray);
+                }
+            }
+        }
 
 
-        String jsonStr = (new Gson()).toJson(jsonObject);
 
-        /**
-         * Write to websocket channel: /topic/satellite/satellitedata
-         */
-        webSocket.convertAndSend("/topic/satellite/satellitedata", jsonStr);
+        String jsonStr = (new Gson()).toJson(savedJsonObject);
+
+        // Load file
+        Path czmlFilePath = storageService.load("czml-"+uuid);
+        // Write to file
+        try {
+            Files.write(czmlFilePath, jsonStr.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
@@ -229,7 +361,8 @@ public class ApiController {
      * @return
      */
     @PostMapping(value = "/feedCompleteFlagData")
-    public @ResponseBody ResponseEntity<?> CompleteFlag(@RequestParam("completeFlag") boolean completeFlag){
+    public @ResponseBody ResponseEntity<?> CompleteFlag(@RequestParam("completeFlag") boolean completeFlag,
+                                                        @RequestParam("uuid") String uuid){
 
         LOGGER.info("Received complete flag, ready to redraw");
 
@@ -271,6 +404,22 @@ public class ApiController {
              ) {
             jsonArray.add(new JsonPrimitive(element));
         }
+
+        return jsonArray;
+    }
+
+    /**
+     * Parse file to JSONObject
+     * @param uuid
+     * @return JsonObject
+     * @throws IOException
+     */
+    private JsonArray getJsonFromFile(String uuid) throws IOException {
+        String content = new String(Files.readAllBytes(storageService.load("czml-"+uuid)));
+        // Convert context to JSONObject
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        JsonArray jsonArray = gson.fromJson(content, JsonArray.class);
 
         return jsonArray;
     }
