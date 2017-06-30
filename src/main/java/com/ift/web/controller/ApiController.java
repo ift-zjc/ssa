@@ -59,7 +59,7 @@ public class ApiController {
 
         // Model jsonObject
         JsonObject modelJsonObject = new JsonObject();
-        modelJsonObject.addProperty("silhouetteColor", "Red");
+        modelJsonObject.addProperty("silhouetteColor", "Color.Red");
         modelJsonObject.addProperty("silhouetteSize", 200);
 
         jsonObject.add("billboard", billboardJsonObject);
