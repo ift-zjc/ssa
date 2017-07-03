@@ -529,11 +529,94 @@ $(function(){
     });
     viewer = new Cesium.Viewer('cesiumContainer', {
         terrainProvider : terrainProvider,
-        baseLayerPicker : false
+        baseLayerPicker : false,
+        shadows: true
     });
 
-    viewer.dataSources.add(Cesium.CzmlDataSource.load(czml)).then(function(ds) {
-        viewer.trackedEntity = ds.entities.getById('path');
+    // viewer.dataSources.add(Cesium.CzmlDataSource.load(czml)).then(function(ds) {
+    //     viewer.trackedEntity = ds.entities.getById('path');
+    // });
+
+
+    var entities = viewer.entities;
+
+    var duration = 100; //seconds
+    var frequency = 100; //hertz
+
+    // var start = Cesium.JulianDate.fromDate(new Date());
+    // var stop = Cesium.JulianDate.addSeconds(start, duration, new Cesium.JulianDate());
+
+    var start = Cesium.JulianDate.fromIso8601('2017-07-30T20:00:00Z');
+    var stop = Cesium.JulianDate.fromIso8601('2017-07-30T20:10:00Z');
+
+    viewer.clock.startTime = start.clone();
+    viewer.clock.stopTime = stop.clone();
+    viewer.clock.currentTime = start.clone();
+    viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP; //Loop at the end
+    viewer.clock.multiplier = 2;
+    viewer.timeline.zoomTo(start, stop);
+
+    // Testing add ground station entity
+    addGroundStation("abc", new Cesium.Cartesian3(-6161038.23150228,1339944.69084834,959470.404438937));
+    addSatellite("s_01", []);
+
+    viewer.zoomTo(viewer.entities);
+
+    // var point = {
+    //     lat: 40.0,
+    //     lon: -75.0
+    // };
+    // var finalPoint = {
+    //     lat: 40.0,
+    //     lon: -175.0
+    // };
+    //
+    // //generate a collection of position samples
+    // var positions = calculatePositionSamples(point, finalPoint, start, duration, frequency);
+    //
+    // //create the entity
+    // var target = entities.add({
+    //     //Use our computed positions
+    //     position: positions,
+    //
+    //     //Automatically compute orientation based on position movement.
+    //     orientation: new Cesium.VelocityOrientationProperty(positions),
+    //
+    //     //Show the path
+    //     path: {
+    //         resolution: 1,
+    //         material: new Cesium.PolylineGlowMaterialProperty({
+    //             glowPower: 0.1,
+    //             color: Cesium.Color.RED
+    //         }),
+    //         width: 5,
+    //         trailTime: duration,
+    //         leadTime: 0
+    //     }
+    // });
+
+
+    var blueEllipse = viewer.entities.add({
+        position: Cesium.Cartesian3.fromDegrees(-95.0, 40.0, 100000.0),
+        name : 'Blue translucent, rotated, and extruded ellipse',
+        ellipse : {
+            semiMinorAxis : 150000.0,
+            semiMajorAxis : 300000.0,
+            extrudedHeight : 200000.0,  //拉伸
+            rotation : Cesium.Math.toRadians(45), //旋转
+            material : Cesium.Color.BLUE.withAlpha(0.7),
+            outline : true
+        }
+    });
+
+    var blueEllipsoid = viewer.entities.add({
+        name : 'Blue ellipsoid',
+        position: Cesium.Cartesian3.fromDegrees(-114.0, 40.0, 300000.0),
+        ellipsoid : {
+            //可以指定三个轴的半径
+            radii : new Cesium.Cartesian3(200000.0, 200000.0, 300000.0),
+            material : Cesium.Color.BLUE
+        }
     });
 
 
@@ -567,6 +650,102 @@ $(function(){
     ajaxInit();
 
 });
+
+/**
+ * Add ground station
+ * @param gsId
+ * @param cartesian3
+ */
+function addGroundStation(gsId, cartesian3){
+    viewer.entities.add({
+        id: gsId,
+        position : cartesian3,
+        billboard:{
+            image: "/image/groundstation.png",
+            show: true
+        }
+    });
+}
+
+
+function addSatellite(sId, cartesian3){
+
+    // var composite = new Cesium.TimeIntervalCollectionProperty()
+    // composite.intervals.addInterval(Cesium.TimeInterval.fromIso8601({
+    //     iso8601 : '2017-07-03T20:00:00.00Z/2017-07-03T20:06:00.00Z',
+    //     isStartIncluded : true,
+    //     isStopIncluded : false,
+    //     data : new Cesium.Cartesian3(4650397.56551457,-3390535.52275848,-4087729.48877329)
+    // }));
+    // composite.intervals.addInterval(Cesium.TimeInterval.fromIso8601({
+    //     iso8601 : '2017-07-03T20:06:00.00Z/2017-07-03T20:12:00.00Z',
+    //     isStartIncluded : true,
+    //     isStopIncluded : false,
+    //     data : new Cesium.Cartesian3(-3133066.67299684,2720467.78933698,5704180.01803677)
+    // }));
+
+    var property = new Cesium.SampledPositionProperty();
+    property.addSample(Cesium.JulianDate.fromIso8601('2017-07-30T20:00:00Z'), new Cesium.Cartesian3(4650397.56551457,-3390535.52275848,-4087729.48877329));
+    property.addSample(Cesium.JulianDate.fromIso8601('2017-07-30T20:05:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
+    property.addSample(Cesium.JulianDate.fromIso8601('2017-07-30T20:10:00Z'), new Cesium.Cartesian3(1369743.14695017,-1903662.23809705,-6663952.07552171));
+
+    property.setInterpolationOptions({
+        interpolationDegree : 5,
+        interpolationAlgorithm : Cesium.LagrangePolynomialApproximation
+    });
+
+    var entity = viewer.entities.add({
+        id: sId,
+        billboard:{
+            image: "/image/satellite.png",
+            show: true
+        },
+        position: property,
+        //Automatically compute orientation based on position movement.
+        orientation: new Cesium.VelocityOrientationProperty(property),
+
+        //Show the path
+        path: {
+            resolution: 1200,
+            material: new Cesium.PolylineGlowMaterialProperty({
+                glowPower: 0.16,
+                color: Cesium.Color.RED
+            }),
+            width: 5,
+            trailTime: 1e10,
+            leadTime: 1e10
+        }
+
+    });
+
+
+}
+
+/**
+ * @param point {{lat:number, lon:number }}
+ * @param endPoint {{lat:number, lon:number }}
+ * @param startTime {Cesium.JulianDate}
+ * @param duration {number} Seconds to calculate for
+ * @param intervalCount {number}
+ * @return property {Cesium.SampledPositionProperty}
+ */
+function calculatePositionSamples(point, endPoint, startTime, duration, intervalCount) {
+    var property = new Cesium.SampledPositionProperty();
+    var deltaStep = duration / (intervalCount > 0 ? intervalCount : 1);
+
+    var delta = {
+        lon: (endPoint.lon - point.lon) / intervalCount,
+        lat: (endPoint.lat - point.lat) / intervalCount
+    };
+
+    for (var since = 0; since <= duration; since += deltaStep) {
+        property.addSample(
+            Cesium.JulianDate.addSeconds(startTime, since, new Cesium.JulianDate()),
+            Cesium.Cartesian3.fromDegrees(point.lon += delta.lon, point.lat += delta.lat)
+        );
+    }
+    return property;
+}
 
 
 function ajaxInit() {
