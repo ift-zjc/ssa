@@ -165,14 +165,19 @@ public class ApiController {
         // Creating Json object.
         JsonObject jsonObject = new JsonObject();
         JsonArray cartesianDataArray = new JsonArray();
+        JsonArray timeDataArray = new JsonArray();
         // Fill data array
         for (double cartesianElement:cartesianData
                 ) {
             JsonPrimitive cartesianNode = new JsonPrimitive(cartesianElement);
             cartesianDataArray.add(cartesianNode);
         }
+        for(String timeDataElement:timeData){
+            JsonPrimitive timeDataNode = new JsonPrimitive(timeDataElement);
+        }
         jsonObject.addProperty("satelliteId", satelliteId);
         jsonObject.add("satelliteData", cartesianDataArray);
+        jsonObject.add("timeData", timeDataArray);
 
         // Move to seperated API
 //        jsonObject.addProperty("completed", completeFlag);
