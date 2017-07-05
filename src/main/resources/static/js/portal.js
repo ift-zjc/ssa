@@ -547,8 +547,8 @@ $(function(){
     // var start = Cesium.JulianDate.fromDate(new Date());
     // var stop = Cesium.JulianDate.addSeconds(start, duration, new Cesium.JulianDate());
 
-    var start = Cesium.JulianDate.fromIso8601('2017-07-30T20:00:00Z');
-    var stop = Cesium.JulianDate.fromIso8601('2017-07-30T20:10:00Z');
+    var start = Cesium.JulianDate.fromIso8601('2012-03-15T09:00:00Z');
+    var stop = Cesium.JulianDate.fromIso8601('2012-03-16T03:00:00Z');
 
     viewer.clock.startTime = start.clone();
     viewer.clock.stopTime = stop.clone();
