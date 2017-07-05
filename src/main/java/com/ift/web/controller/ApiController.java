@@ -156,7 +156,8 @@ public class ApiController {
      */
     @PostMapping(value = "/feedSatelliteData")
     public @ResponseBody ResponseEntity<?> SatelliteData(@RequestParam("satelliteId") String satelliteId,
-                                                         @RequestParam("cartesianData") List<Double> cartesianData
+                                                         @RequestParam("cartesianData") List<Double> cartesianData,
+                                                         @RequestParam("timeData") List<String> timeData
                                                          /*@RequestParam("completeFlag") boolean completeFlag*/){
 
         LOGGER.info("Receiving satellite data");
