@@ -41,7 +41,7 @@ public class ApiController {
 
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", satelliteId);
+        jsonObject.addProperty("satelliteId", satelliteId);
         jsonObject.addProperty("name", satelliteName);
         jsonObject.addProperty("availability", satelliteAvailability);
         jsonObject.addProperty("description", satelliteDesc);
