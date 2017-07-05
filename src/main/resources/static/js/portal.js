@@ -831,16 +831,15 @@ function connect() {
         // Subscribe to metadata feeder
         // 100 random point's metadata added.
         stompClient.subscribe('/topic/satellite/matedata', function (matedata) {
-            this.addSatellite()
             data = JSON.parse(matedata.body);
-            czml.push(data);
+            this.addSatellite(data)
 
         });
 
         // Subscribe to relation data feeder
         stompClient.subscribe('/topic/satellite/relatedata', function (refdata){
             data = JSON.parse(refdata.body);
-            czml.push(data);
+            this.addSatellite(data)
         });
 
         // Subscribe to satellite data feeder
@@ -848,14 +847,7 @@ function connect() {
             console.log("Data received");
             data = JSON.parse(satellitedata.body);
 
-            // Add to czml.
-            // Find data object for this satelliteId
-            for(var i = 0; i < czml.length; i++){
-                if(czml[i].id == data.satelliteId){
-                    // Push data
-                    czml[i].position.cartesian.push.apply(czml[i].position.cartesian, data.satelliteData);
-                }
-            }
+            this.addSatellite(data)
 
             console.log("data process completed");
         });
