@@ -719,10 +719,20 @@ function addSatellite(satelliteJson){
 
         // Add sample data.
         var position = entity.position;
+
+        // Loop timedata array
+        var index = 0;
+        _.each(timeDataArray, function(timeData){
+            cartesianData = cartesian3DataArray.slice(index, index+2);
+            index = index+3;
+
+            // Add to position
+            position.addSample(Cesium.JulianDate.fromIso8601(timeData), new Cesium.Cartesian3(cartesianData[0], cartesianData[1], cartesianData[2]));
+        });
         // Set position and orientation.
-        position.addSample(Cesium.JulianDate.fromIso8601('2017-07-30T20:00:00Z'), new Cesium.Cartesian3(4650397.56551457,-3390535.52275848,-4087729.48877329));
-        position.addSample(Cesium.JulianDate.fromIso8601('2017-07-30T20:05:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
-        position.addSample(Cesium.JulianDate.fromIso8601('2017-07-30T20:10:00Z'), new Cesium.Cartesian3(1369743.14695017,-1903662.23809705,-6663952.07552171));
+        //
+        // position.addSample(Cesium.JulianDate.fromIso8601('2017-07-30T20:05:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
+        // position.addSample(Cesium.JulianDate.fromIso8601('2017-07-30T20:10:00Z'), new Cesium.Cartesian3(1369743.14695017,-1903662.23809705,-6663952.07552171));
         // entity.orientation = new Cesium.VelocityOrientationProperty(property);
     }
 
