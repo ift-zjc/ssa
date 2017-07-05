@@ -688,6 +688,7 @@ function addSatellite(satelliteJson, init){
 
         entity = viewer.entities.add({
             id: sId,
+            availability: satelliteJson.availability,
             billboard:{
                 image: "/image/satellite.png",
                 show: true
@@ -731,8 +732,12 @@ function addSatellite(satelliteJson, init){
         // });
         // Set position and orientation.
         //
-        position.addSample(Cesium.JulianDate.fromIso8601('2012-03-05T10:01:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
-        position.addSample(Cesium.JulianDate.fromIso8601('2012-03-05T10:07:00Z'), new Cesium.Cartesian3(1369743.14695017,-1903662.23809705,-6663952.07552171));
+        var index = 0;
+        for(var k = 0, len = timeDataArray.length; k<len; k++){
+            position.addSample(Cesium.JulianDate.fromIso8601(timeDataArray[k]), new Cesium.Cartesian3(cartesian3DataArray[index++], cartesian3DataArray[index++], cartesian3DataArray[index++]));
+        }
+        // position.addSample(Cesium.JulianDate.fromIso8601('2012-03-05T10:01:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
+        // position.addSample(Cesium.JulianDate.fromIso8601('2012-03-05T10:07:00Z'), new Cesium.Cartesian3(1369743.14695017,-1903662.23809705,-6663952.07552171));
         // entity.orientation = new Cesium.VelocityOrientationProperty(property);
     }
 
