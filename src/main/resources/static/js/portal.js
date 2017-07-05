@@ -705,7 +705,7 @@ function addSatellite(satelliteJson, init){
                     color: Cesium.Color.RED
                 }),
                 width: 5,
-                trailTime: 300,
+                trailTime: 3600,
                 leadTime: 0
             }
 
