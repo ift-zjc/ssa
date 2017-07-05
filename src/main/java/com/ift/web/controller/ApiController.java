@@ -174,6 +174,7 @@ public class ApiController {
         }
         for(String timeDataElement:timeData){
             JsonPrimitive timeDataNode = new JsonPrimitive(timeDataElement);
+            timeDataArray.add(timeDataNode);
         }
         jsonObject.addProperty("satelliteId", satelliteId);
         jsonObject.add("satelliteData", cartesianDataArray);
