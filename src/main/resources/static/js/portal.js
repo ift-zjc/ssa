@@ -715,7 +715,7 @@ function addSatellite(satelliteJson, init){
 
     }else{
         var timeDataArray = _.words(satelliteJson.timeData);
-        var cartesian3DataArray = _.words(satelliteJson.cartesianData);
+        var cartesian3DataArray = _.words(satelliteJson.satelliteData);
 
         // Add sample data.
         var position = entity.position;
