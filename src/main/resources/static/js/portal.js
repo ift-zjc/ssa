@@ -695,7 +695,7 @@ function addSatellite(satelliteJson, init){
             },
             position: emptyProperty,
             // Automatically compute orientation based on position movement.
-            // orientation: new Cesium.VelocityOrientationProperty(emptyProperty),
+            orientation: new Cesium.VelocityOrientationProperty(emptyProperty),
 
             //Show the path
             path: {
@@ -705,8 +705,8 @@ function addSatellite(satelliteJson, init){
                     color: Cesium.Color.RED
                 }),
                 width: 5,
-                trailTime: 1e10,
-                leadTime: 1e10
+                trailTime: 300,
+                leadTime: 0
             }
 
         });
