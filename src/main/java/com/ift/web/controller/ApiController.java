@@ -95,7 +95,7 @@ public class ApiController {
         LOGGER.info("New relationship data received");
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", obj1+"/"+obj2);
+        jsonObject.addProperty("satelliteId", obj1+"/"+obj2);
         jsonObject.addProperty("name", name);
         jsonObject.addProperty("description", desc);
         jsonObject.addProperty("availability", availability);

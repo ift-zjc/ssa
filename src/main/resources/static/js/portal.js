@@ -675,7 +675,7 @@ function addGroundStation(gsId, cartesian3){
  */
 function addSatellite(satelliteJson, init){
 
-    var sId = satelliteJson.id;
+    var sId = satelliteJson.satelliteId;
     // Check for whether entity available.
     entity = viewer.entities.getById(sId);
 
