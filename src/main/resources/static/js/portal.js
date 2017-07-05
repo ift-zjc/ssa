@@ -688,14 +688,13 @@ function addSatellite(satelliteJson, init){
 
         entity = viewer.entities.add({
             id: sId,
-            availability: satelliteJson.availability,
             billboard:{
                 image: "/image/satellite.png",
                 show: true
             },
             position: emptyProperty,
             // Automatically compute orientation based on position movement.
-            orientation: new Cesium.VelocityOrientationProperty(emptyProperty),
+            // orientation: new Cesium.VelocityOrientationProperty(emptyProperty),
 
             //Show the path
             path: {
