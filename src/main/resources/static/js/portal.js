@@ -673,7 +673,7 @@ function addGroundStation(gsId, cartesian3){
  * @param sId
  * @param cartesian3
  */
-function addSatellite(satelliteJson){
+function addSatellite(satelliteJson, init){
 
     var sId = satelliteJson.id;
     // Check for whether entity available.
@@ -711,7 +711,7 @@ function addSatellite(satelliteJson){
         });
     }
 
-    if(_.isNull(cartesian3)){
+    if(init){
 
     }else{
         var timeDataArray = _.words(satelliteJson.timeData);
@@ -826,20 +826,19 @@ function connect() {
 
     stompClient.connect({}, function (frame) {
         // setConnected(true);
-        console.log('Connected: ' + frame);
 
         // Subscribe to metadata feeder
         // 100 random point's metadata added.
         stompClient.subscribe('/topic/satellite/matedata', function (matedata) {
             data = JSON.parse(matedata.body);
-            this.addSatellite(data)
+            this.addSatellite(data, true);
 
         });
 
         // Subscribe to relation data feeder
         stompClient.subscribe('/topic/satellite/relatedata', function (refdata){
             data = JSON.parse(refdata.body);
-            this.addSatellite(data)
+            this.addSatellite(data, false);
         });
 
         // Subscribe to satellite data feeder
@@ -847,19 +846,19 @@ function connect() {
             console.log("Data received");
             data = JSON.parse(satellitedata.body);
 
-            this.addSatellite(data)
+            this.addSatellite(data, false);
 
             console.log("data process completed");
         });
 
-        // Subscribe to data flag completed feeder
-        stompClient.subscribe('/topic/satellite/datacompleted', function (completedFlag){
-            data = JSON.parse(completedFlag.body);
-
-            // Reload CZML file if completed
-            if(data.completed){
-                viewer.dataSources.add(Cesium.CzmlDataSource.load(czml));
-            }
-        })
+        // // Subscribe to data flag completed feeder
+        // stompClient.subscribe('/topic/satellite/datacompleted', function (completedFlag){
+        //     data = JSON.parse(completedFlag.body);
+        //
+        //     // Reload CZML file if completed
+        //     if(data.completed){
+        //         viewer.dataSources.add(Cesium.CzmlDataSource.load(czml));
+        //     }
+        // })
     });
 }
