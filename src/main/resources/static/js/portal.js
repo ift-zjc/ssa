@@ -688,7 +688,7 @@ function addSatellite(satelliteJson, init){
 
         entity = viewer.entities.add({
             id: sId,
-            availability: satelliteJson.availability,
+            // availability: satelliteJson.availability,
             billboard:{
                 image: "/image/satellite.png",
                 show: true
