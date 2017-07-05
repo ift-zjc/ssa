@@ -723,7 +723,7 @@ function addSatellite(satelliteJson, init){
         // Loop timedata array
         var index = 0;
         _.each(timeDataArray, function(timeData){
-            cartesianData = cartesian3DataArray.slice(index, index+2);
+            cartesianData = cartesian3DataArray.slice(index, index+3);
             index = index+3;
 
             // Add to position
