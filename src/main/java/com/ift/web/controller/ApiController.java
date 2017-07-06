@@ -156,6 +156,10 @@ public class ApiController {
      */
     @PostMapping(value = "/feedSatelliteData")
     public @ResponseBody ResponseEntity<?> SatelliteData(@RequestParam("satelliteId") String satelliteId,
+                                                         @RequestParam("satelliteName") String satelliteName,
+                                                         @RequestParam("satelliteDesc") String satelliteDesc,
+                                                         @RequestParam("satelliteAvailability") String satelliteAvailability,
+                                                         @RequestParam("satelliteEpoch") String satelliteEpoch,
                                                          @RequestParam("cartesianData") List<Double> cartesianData,
                                                          @RequestParam("timeData") List<String> timeData
                                                          /*@RequestParam("completeFlag") boolean completeFlag*/){
@@ -177,6 +181,10 @@ public class ApiController {
             timeDataArray.add(timeDataNode);
         }
         jsonObject.addProperty("satelliteId", satelliteId);
+        jsonObject.addProperty("satellitename", satelliteName);
+        jsonObject.addProperty("satelliteDesc", satelliteDesc);
+        jsonObject.addProperty("satelliteAvailability", satelliteAvailability);
+        jsonObject.addProperty("satelliteEpoch", satelliteEpoch);
         jsonObject.add("satelliteData", cartesianDataArray);
         jsonObject.add("timeData", timeDataArray);
 

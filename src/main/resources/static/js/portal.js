@@ -673,7 +673,7 @@ function addGroundStation(gsId, cartesian3){
  * @param sId
  * @param cartesian3
  */
-function addSatellite(satelliteJson, init){
+function addSatellite(satelliteJson){
 
     var sId = satelliteJson.satelliteId;
     // Check for whether entity available.
@@ -712,36 +712,31 @@ function addSatellite(satelliteJson, init){
         });
     }
 
-    if(init){
 
-    }else{
-        var timeDataArray = satelliteJson.timeData.toString().split(",");
-        var cartesian3DataArray = satelliteJson.satelliteData.toString().split(",");
+    var timeDataArray = satelliteJson.timeData.toString().split(",");
+    var cartesian3DataArray = satelliteJson.satelliteData.toString().split(",");
 
-        // Add sample data.
-        var position = entity.position;
+    // Loop timedata array
+    var index = 0;
+    _.each(timeDataArray, function(timeData){
+        cartesianData = cartesian3DataArray.slice(index, index+3);
+        index = index+3;
 
-        // // Loop timedata array
-        var index = 0;
-        _.each(timeDataArray, function(timeData){
-            cartesianData = cartesian3DataArray.slice(index, index+3);
-            index = index+3;
+        //position.addSample(Cesium.JulianDate.fromIso8601('2012-03-15T10:01:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
+        // Add to position
+        entity.position.addSample(Cesium.JulianDate.fromIso8601(_.trim(timeData, "\"")), new Cesium.Cartesian3(cartesianData[0], cartesianData[1], cartesianData[2]));
+    });
+    // Set position and orientation.
+    //
+    // var index = 0;
+    // for(var k = 0, len = timeDataArray.length; k<len; k++){
+    //     //position.addSample(Cesium.JulianDate.fromIso8601('2012-03-15T10:01:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
+    //     position.addSample(Cesium.JulianDate.fromIso8601(timeDataArray[k]), new Cesium.Cartesian3(cartesian3DataArray[index++], cartesian3DataArray[index++], cartesian3DataArray[index++]));
+    // }
+    // position.addSample(Cesium.JulianDate.fromIso8601('2012-03-15T10:01:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
+    // position.addSample(Cesium.JulianDate.fromIso8601('2012-03-15T10:07:00Z'), new Cesium.Cartesian3(1369743.14695017,-1903662.23809705,-6663952.07552171));
+    // entity.orientation = new Cesium.VelocityOrientationProperty(property);
 
-            //position.addSample(Cesium.JulianDate.fromIso8601('2012-03-15T10:01:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
-            // Add to position
-            entity.position.addSample(Cesium.JulianDate.fromIso8601(_.trim(timeData, "\"")), new Cesium.Cartesian3(cartesianData[0], cartesianData[1], cartesianData[2]));
-        });
-        // Set position and orientation.
-        //
-        // var index = 0;
-        // for(var k = 0, len = timeDataArray.length; k<len; k++){
-        //     //position.addSample(Cesium.JulianDate.fromIso8601('2012-03-15T10:01:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
-        //     position.addSample(Cesium.JulianDate.fromIso8601(timeDataArray[k]), new Cesium.Cartesian3(cartesian3DataArray[index++], cartesian3DataArray[index++], cartesian3DataArray[index++]));
-        // }
-        // position.addSample(Cesium.JulianDate.fromIso8601('2012-03-15T10:01:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
-        // position.addSample(Cesium.JulianDate.fromIso8601('2012-03-15T10:07:00Z'), new Cesium.Cartesian3(1369743.14695017,-1903662.23809705,-6663952.07552171));
-        // entity.orientation = new Cesium.VelocityOrientationProperty(property);
-    }
 
 }
 
@@ -836,11 +831,11 @@ function connect() {
 
         // Subscribe to metadata feeder
         // 100 random point's metadata added.
-        stompClient.subscribe('/topic/satellite/matedata', function (matedata) {
-            data = JSON.parse(matedata.body);
-            this.addSatellite(data, true);
-
-        });
+        // stompClient.subscribe('/topic/satellite/matedata', function (matedata) {
+        //     data = JSON.parse(matedata.body);
+        //     this.addSatellite(data, true);
+        //
+        // });
 
         // Subscribe to relation data feeder
         stompClient.subscribe('/topic/satellite/relatedata', function (refdata){
@@ -853,7 +848,7 @@ function connect() {
             console.log("Data received");
             data = JSON.parse(satellitedata.body);
 
-            this.addSatellite(data, false);
+            this.addSatellite(data);
 
             console.log("data process completed");
         });
