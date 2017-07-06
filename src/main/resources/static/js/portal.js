@@ -679,12 +679,28 @@ function addSatellite(satelliteJson){
     // Check for whether entity available.
     entity = viewer.entities.getById(sId);
 
+    var positions = new Cesium.SampledPositionProperty();
+    positions.setInterpolationOptions({
+        interpolationDegree : 5,
+        interpolationAlgorithm : Cesium.LagrangePolynomialApproximation
+    });
+    var timeDataArray = satelliteJson.timeData.toString().split(",");
+    var cartesian3DataArray = satelliteJson.satelliteData.toString().split(",");
+
+    // Loop timedata array
+    var index = 0;
+    _.each(timeDataArray, function(timeData){
+        cartesianData = cartesian3DataArray.slice(index, index+3);
+        index = index+3;
+
+        //position.addSample(Cesium.JulianDate.fromIso8601('2012-03-15T10:01:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
+        // Add to position
+        positions.addSample(Cesium.JulianDate.fromIso8601(_.trim(timeData, "\"")), new Cesium.Cartesian3(cartesianData[0], cartesianData[1], cartesianData[2]));
+    });
+
+
+
     if(_.isUndefined(entity)){
-        var emptyProperty = new Cesium.SampledPositionProperty();
-        emptyProperty.setInterpolationOptions({
-            interpolationDegree : 5,
-            interpolationAlgorithm : Cesium.LagrangePolynomialApproximation
-        });
 
         entity = viewer.entities.add({
             id: sId,
@@ -693,9 +709,9 @@ function addSatellite(satelliteJson){
                 image: "/image/satellite.png",
                 show: true
             },
-            position: emptyProperty,
+            position: positions,
             // Automatically compute orientation based on position movement.
-            orientation: new Cesium.VelocityOrientationProperty(emptyProperty),
+            orientation: new Cesium.VelocityOrientationProperty(positions),
 
             //Show the path
             path: {
@@ -712,20 +728,6 @@ function addSatellite(satelliteJson){
         });
     }
 
-
-    var timeDataArray = satelliteJson.timeData.toString().split(",");
-    var cartesian3DataArray = satelliteJson.satelliteData.toString().split(",");
-
-    // Loop timedata array
-    var index = 0;
-    _.each(timeDataArray, function(timeData){
-        cartesianData = cartesian3DataArray.slice(index, index+3);
-        index = index+3;
-
-        //position.addSample(Cesium.JulianDate.fromIso8601('2012-03-15T10:01:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
-        // Add to position
-        entity.position.addSample(Cesium.JulianDate.fromIso8601(_.trim(timeData, "\"")), new Cesium.Cartesian3(cartesianData[0], cartesianData[1], cartesianData[2]));
-    });
     // Set position and orientation.
     //
     // var index = 0;
