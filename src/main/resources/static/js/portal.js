@@ -783,7 +783,7 @@ function addSatellite(satelliteJson){
 
         //position.addSample(Cesium.JulianDate.fromIso8601('2012-03-15T10:01:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
         // Add to position
-        positions.addSample(Cesium.JulianDate.fromIso8601(_.trim(timeData, "\"")), new Cesium.fromDegrees(nodePosition[0], nodePosition[1], nodePosition[2]));
+        positions.addSample(Cesium.JulianDate.fromIso8601(_.trim(timeData, "\"")), Cesium.Cartesian3.fromDegrees(nodePosition[0], nodePosition[1], nodePosition[2]));
     });
 
     // Compute entity
