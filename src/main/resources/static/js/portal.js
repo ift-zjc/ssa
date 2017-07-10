@@ -678,15 +678,8 @@ $(function(){
  * @param gsId
  * @param cartesian3
  */
-function addGroundStation(gsId, cartesian3){
-    viewer.entities.add({
-        id: gsId,
-        position : cartesian3,
-        billboard:{
-            image: "/image/groundstation.png",
-            show: true
-        }
-    });
+function addGroundStation(gsData){
+
 }
 
 
@@ -869,6 +862,11 @@ function connect() {
         //     this.addSatellite(data, true);
         //
         // });
+
+        stompClient.subscribe('/topic/satellite/groundstations', function (gsdata){
+           data = JSON.parse(gsdata);
+           this.addGroundStation(data);
+        });
 
         // Subscribe to relation data feeder
         stompClient.subscribe('/topic/satellite/relatedata', function (refdata){
