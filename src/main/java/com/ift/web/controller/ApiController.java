@@ -85,7 +85,7 @@ public class ApiController {
     @PostMapping(value = "/feedGroundStationData")
     public @ResponseBody ResponseEntity<?> GroundStationData(@RequestParam("gsData") String gsJsonData){
 
-        webSocket.convertAndSend("/tpoic/satellite/groundstations", gsJsonData);
+        webSocket.convertAndSend("/topic/satellite/groundstations", gsJsonData);
         return new ResponseEntity<Object>(null, HttpStatus.OK);
     }
 
