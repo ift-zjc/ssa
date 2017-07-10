@@ -560,77 +560,6 @@ $(function(){
     viewer.clock.multiplier = 10;
     viewer.timeline.zoomTo(start, stop);
 
-
-    var sId = 'test';
-    var entity = new Cesium.Entity({id: sId});
-
-//Set timeline to simulation bounds
-    viewer.timeline.zoomTo(start, stop);
-
-// Availability
-    entity.availability = new Cesium.TimeIntervalCollection([new Cesium.TimeInterval({
-        start : start,
-        stop : stop
-    })]);
-
-// Billboard
-    entity.billboard = new Cesium.BillboardGraphics();
-    entity.billboard.image = "/image/satellite.png";
-    entity.billboard.show = true;
-
-//Generate a random circular pattern with varying heights.
-    function computeCircularFlight(lon, lat, radius) {
-        var property = new Cesium.SampledPositionProperty();
-        for (var i = 0; i <= 360; i += 45) {
-            var radians = Cesium.Math.toRadians(i);
-            var time = Cesium.JulianDate.addSeconds(start, i, new Cesium.JulianDate());
-            var position = Cesium.Cartesian3.fromDegrees(lon + (radius * 1.5 * Math.cos(radians)), lat + (radius * Math.sin(radians)), 1000);
-            property.addSample(time, position);
-
-            //Also create a point for each sample we generate.
-            viewer.entities.add({
-                position : position,
-                point : {
-                    pixelSize : 8,
-                    color : Cesium.Color.TRANSPARENT,
-                    outlineColor : Cesium.Color.YELLOW,
-                    outlineWidth : 3
-                }
-            });
-        }
-        return property;
-    }
-
-// Position
-    entity.position = computeCircularFlight(-112.110693, 36.0994841, 0.3);
-    entity.orientation = new Cesium.VelocityOrientationProperty(entity.position);
-
-    var fadedLine = new Cesium.StripeMaterialProperty({
-        evenColor: Cesium.Color.YELLOW,
-        oddColor: Cesium.Color.BLACK,
-        repeat: 1,
-        offset: 0.2,
-        orientation: Cesium.StripeOrientation.VERTICAL
-    });
-
-    var path = new Cesium.PathGraphics();
-    path.material = fadedLine;
-    path.leadTime = new Cesium.ConstantProperty(0);
-    path.trailTime = new Cesium.ConstantProperty(3600 * 4);
-
-    entity.path = path;
-
-// Make a smooth path
-    entity.position.setInterpolationOptions({
-        interpolationDegree : 5,
-        interpolationAlgorithm : Cesium.LagrangePolynomialApproximation
-    });
-
-    // viewer.entities.add(entity);
-    // viewer.zoomTo(viewer.entities);
-
-
-
     // Testing add ground station entity
     addGroundStation("abc", new Cesium.Cartesian3(-6161038.23150228,1339944.69084834,959470.404438937));
     // addSatellite({
@@ -816,7 +745,7 @@ function addSatellite(satelliteJson){
     var path = new Cesium.PathGraphics();
     path.material = fadedLine;
     path.leadTime = new Cesium.ConstantProperty(0);
-    path.trailTime = new Cesium.ConstantProperty(3600 * 4);
+    path.trailTime = new Cesium.ConstantProperty(3600 * 1);
 
     entity.path = path;
 
