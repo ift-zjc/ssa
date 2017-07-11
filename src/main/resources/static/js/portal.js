@@ -892,7 +892,7 @@ function connect() {
         // });
 
         stompClient.subscribe('/topic/satellite/groundstations', function (gsdata){
-           data = JSON.parse(gsdata);
+           data = JSON.parse(gsdata.body);
            this.addGroundStation(data);
         });
 
