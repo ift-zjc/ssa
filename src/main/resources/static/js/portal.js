@@ -694,18 +694,22 @@ function addSatellite(satelliteJson){
 
     // Compute position
     var positions = new Cesium.SampledPositionProperty();
+    var predefindedPositions = new Cesium.SampledPositionProperty();
     var timeDataArray = satelliteJson.timeData.toString().split(",");
     var cartesian3DataArray = satelliteJson.satelliteData.toString().split(",");
+    var predefindedDataArray = satelliteJson.predefindedData.toString().split(",");
 
     // Loop timedata array
     var index = 0;
     _.each(timeDataArray, function(timeData){
         var nodePosition = cartesian3DataArray.slice(index, index+3);
+        var predefindedNodePosition = predefindedDataArray.slice(index, index+3);
         index = index+3;
 
         //position.addSample(Cesium.JulianDate.fromIso8601('2012-03-15T10:01:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
         // Add to position
         positions.addSample(Cesium.JulianDate.fromIso8601(_.trim(timeData, "\"")), Cesium.Cartesian3.fromDegrees(nodePosition[0], nodePosition[1], nodePosition[2]));
+        predefindedPositions.addSample(Cesium.JulianDate.fromIso8601(_.trim(timeData, "\"")), Cesium.Cartesian3.fromDegrees(predefindedNodePosition[0], predefindedNodePosition[1], predefindedNodePosition[2]));
     });
 
     // Compute entity
@@ -763,33 +767,57 @@ function addSatellite(satelliteJson){
 
     viewer.entities.add(entity);
 
+    // Compute predefined entity
 
-}
+    var entity = new Cesium.Entity({id: sId+"_predefined"});
 
-/**
- * @param point {{lat:number, lon:number }}
- * @param endPoint {{lat:number, lon:number }}
- * @param startTime {Cesium.JulianDate}
- * @param duration {number} Seconds to calculate for
- * @param intervalCount {number}
- * @return property {Cesium.SampledPositionProperty}
- */
-function calculatePositionSamples(point, endPoint, startTime, duration, intervalCount) {
-    var property = new Cesium.SampledPositionProperty();
-    var deltaStep = duration / (intervalCount > 0 ? intervalCount : 1);
+    // Billboard
+    entity.billboard = new Cesium.BillboardGraphics();
+    entity.billboard.image = "/image/satellite.png";
+    entity.billboard.show = true;
 
-    var delta = {
-        lon: (endPoint.lon - point.lon) / intervalCount,
-        lat: (endPoint.lat - point.lat) / intervalCount
-    };
+    // Position
+    entity.position = predefindedPositions;
+    entity.orientation = new Cesium.VelocityOrientationProperty(positions);
 
-    for (var since = 0; since <= duration; since += deltaStep) {
-        property.addSample(
-            Cesium.JulianDate.addSeconds(startTime, since, new Cesium.JulianDate()),
-            Cesium.Cartesian3.fromDegrees(point.lon += delta.lon, point.lat += delta.lat)
-        );
-    }
-    return property;
+    var fadedLine = new Cesium.StripeMaterialProperty({
+        evenColor: Cesium.Color.RED,
+        oddColor: Cesium.Color.BLACK,
+        repeat: 1,
+        offset: 0.2,
+        orientation: Cesium.StripeOrientation.VERTICAL
+    });
+
+    var path = new Cesium.PathGraphics();
+    path.material = fadedLine;
+    path.leadTime = new Cesium.ConstantProperty(0);
+    path.trailTime = new Cesium.ConstantProperty(3600 * 1);
+
+    entity.path = path;
+
+    // // Path
+    // entity.path = new Cesium.PathGraphics({
+    //     resolution: 1200,
+    //
+    //     material: new Cesium.PolylineGlowMaterialProperty({
+    //                     glowPower: 0.16,
+    //                     color: Cesium.Color.RED
+    //                 }),
+    //     width: new Cesium.ConstantProperty(10),
+    //     leadTime: new Cesium.ConstantProperty(1e10),
+    //     trailTime: new Cesium.ConstantProperty(1e10)
+    // });
+
+    // Make a smooth path
+    entity.position.setInterpolationOptions({
+        interpolationDegree : 5,
+        interpolationAlgorithm : Cesium.LagrangePolynomialApproximation
+    });
+
+    viewer.entities.add(entity);
+
+
+
 }
 
 

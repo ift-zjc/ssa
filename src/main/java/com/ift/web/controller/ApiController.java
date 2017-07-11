@@ -174,6 +174,7 @@ public class ApiController {
                                                          @RequestParam("satelliteAvailability") String satelliteAvailability,
                                                          @RequestParam("satelliteEpoch") String satelliteEpoch,
                                                          @RequestParam("cartesianData") List<Double> cartesianData,
+                                                         @RequestParam("preDefindedData") List<Double> predefinedData,
                                                          @RequestParam("timeData") List<String> timeData
                                                          /*@RequestParam("completeFlag") boolean completeFlag*/){
 
@@ -182,12 +183,17 @@ public class ApiController {
         // Creating Json object.
         JsonObject jsonObject = new JsonObject();
         JsonArray cartesianDataArray = new JsonArray();
+        JsonArray predefinededDataArray = new JsonArray();
         JsonArray timeDataArray = new JsonArray();
         // Fill data array
         for (double cartesianElement:cartesianData
                 ) {
             JsonPrimitive cartesianNode = new JsonPrimitive(cartesianElement);
             cartesianDataArray.add(cartesianNode);
+        }
+        for (double predefindedElemenet: predefinedData){
+            JsonPrimitive predefindedNode = new JsonPrimitive(predefindedElemenet);
+            predefinededDataArray.add(predefindedNode);
         }
         for(String timeDataElement:timeData){
             JsonPrimitive timeDataNode = new JsonPrimitive(timeDataElement);
@@ -199,6 +205,7 @@ public class ApiController {
         jsonObject.addProperty("satelliteAvailability", satelliteAvailability);
         jsonObject.addProperty("satelliteEpoch", satelliteEpoch);
         jsonObject.add("satelliteData", cartesianDataArray);
+        jsonObject.add("predefindedData", predefinededDataArray);
         jsonObject.add("timeData", timeDataArray);
 
         // Move to seperated API
