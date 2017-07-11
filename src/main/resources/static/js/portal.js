@@ -561,7 +561,7 @@ $(function(){
     viewer.timeline.zoomTo(start, stop);
 
     // Testing add ground station entity
-    addGroundStation("abc", new Cesium.Cartesian3(-6161038.23150228,1339944.69084834,959470.404438937));
+
     // addSatellite({
     //     satelliteId: "abc1",
     //     satellitename: "abc1 name",
@@ -678,8 +678,15 @@ $(function(){
  * @param gsId
  * @param cartesian3
  */
-function addGroundStation(gsData){
-
+function addGroundStation(gsId, cartesian3){
+    viewer.entities.add({
+        id: gsId,
+        position : cartesian3,
+        billboard:{
+            image: "/image/groundstation.png",
+            show: true
+        }
+    });
 }
 
 
@@ -893,7 +900,8 @@ function connect() {
 
         stompClient.subscribe('/topic/satellite/groundstations', function (gsdata){
            data = JSON.parse(gsdata.body);
-           this.addGroundStation(data);
+            var cartesian3DataArray = data.gsData.toString().split(",");
+            addGroundStation(data.gsId, new Cesium.Cartesian3(cartesian3DataArray[0], cartesian3DataArray[1], cartesian3DataArray[2]));
         });
 
         // Subscribe to relation data feeder
