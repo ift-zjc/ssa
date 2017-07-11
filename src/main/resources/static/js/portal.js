@@ -901,7 +901,7 @@ function connect() {
         stompClient.subscribe('/topic/satellite/groundstations', function (gsdata){
            data = JSON.parse(gsdata.body);
             var cartesian3DataArray = data.gsData.toString().split(",");
-            addGroundStation(data.gsId, new Cesium.Cartesian3(cartesian3DataArray[0], cartesian3DataArray[1], cartesian3DataArray[2]));
+            addGroundStation(data.gsId, Cesium.Cartesian3.fromDegrees(cartesian3DataArray[0], cartesian3DataArray[1], cartesian3DataArray[2]));
         });
 
         // Subscribe to relation data feeder
