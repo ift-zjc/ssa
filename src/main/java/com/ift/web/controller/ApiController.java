@@ -83,9 +83,25 @@ public class ApiController {
      * @return
      */
     @PostMapping(value = "/feedGroundStationData")
-    public @ResponseBody ResponseEntity<?> GroundStationData(@RequestParam("gsData") String gsJsonData){
+    public @ResponseBody ResponseEntity<?> GroundStationData(@RequestParam("gsId") String gsId,
+                                                             @RequestParam("gsData") List<Double> gsJsonData){
 
-        webSocket.convertAndSend("/topic/satellite/groundstations", gsJsonData);
+        JsonObject jsonObject = new JsonObject();
+
+        JsonArray gsDataArray = new JsonArray();
+        // Fill data array
+        for (double gsElement:gsJsonData
+                ) {
+            JsonPrimitive cartesianNode = new JsonPrimitive(gsElement);
+            gsDataArray.add(cartesianNode);
+        }
+
+        jsonObject.addProperty("gsId", gsId);
+        jsonObject.add("gsData", gsDataArray);
+
+        String gsJsonStr = (new Gson()).toJson(jsonObject);
+
+        webSocket.convertAndSend("/topic/satellite/groundstations", gsJsonStr);
         return new ResponseEntity<Object>(null, HttpStatus.OK);
     }
 
@@ -125,19 +141,6 @@ public class ApiController {
 
         showObject.add(showIntervalObject);
         polyLineObj.add("show", showObject);
-
-        // Material
-//        JsonObject materialObj = new JsonObject();
-//
-////        materialObj.add("solidColor", )
-//        JsonArray rgbaArray = computeJsonArray(0, 255,255,255);
-//        JsonObject colorObj = new JsonObject();
-//        colorObj.add("rgba", rgbaArray);
-//        JsonObject solidColorObj = new JsonObject();
-//        solidColorObj.add("color", solidColorObj);
-//        materialObj.add("solidColor", solidColorObj);
-//
-//        polyLineObj.add("material", materialObj);
 
         // Positions
         JsonObject positionsObj = new JsonObject();
