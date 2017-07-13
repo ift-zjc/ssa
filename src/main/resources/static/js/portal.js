@@ -930,6 +930,7 @@ function connect() {
         // Subscribe to relation data feeder
         stompClient.subscribe('/topic/satellite/relatedata', function (refdata){
             data = JSON.parse(refdata.body);
+            // Add tracking object , the array always has one element for now.
             this.addTrackingLine(data.satelliteId, data.gsId, data.availability[0]);
         });
 
