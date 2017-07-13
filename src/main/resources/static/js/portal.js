@@ -827,22 +827,45 @@ function addSatellite(satelliteJson){
 
 }
 
+/**
+ * Add tracking line (dynamic)
+ * @param obj1Id
+ * @param obj2Id
+ * @param availability
+ */
+function addTrackingLine(obj1Id, obj2Id, availability){
 
+    var trackEntity = cesiumViewer.entities.add({
+        id: obj1Id + "/" + obj2Id,
+
+        polyline: {
+            followSurface: false,
+            positions: new Cesium.PositionPropertyArray([
+                new Cesium.ReferenceProperty(
+                    viewer.entities,
+                    viewer.entities.getById(obj1Id),
+                    [ 'position' ]
+                ),
+                new Cesium.ReferenceProperty(
+                    cesiumViewer.entities,
+                    viewer.entities.getById(obj2Id),
+                    [ 'position' ]
+                )
+            ]),
+            material: new Cesium.ColorMaterialProperty(
+                Cesium.Color.YELLOW.withAlpha( 0.25 )
+            )
+        }
+    });
+
+
+}
+
+
+/**
+ * File uploader init
+ */
 function ajaxInit() {
-
-    // $('#formSatellitesRefresh').on('submit', function(e){
-    //     e.preventDefault();
-    //     $.post("/satelliteDataRequest", function(data){
-    //        console.log(data);
-    //
-    //         viewer.dataSources.add(Cesium.CzmlDataSource.load(data));
-    //     });
-    //
-    //     // viewer.dataSources.add(Cesium.CzmlDataSource.load('/data/simple.czml'));
-    //
-    //     return false;
-    // })
-
 
     $('#btnFileUploadSubmit').click(function(e){
         e.preventDefault();
@@ -907,7 +930,7 @@ function connect() {
         // Subscribe to relation data feeder
         stompClient.subscribe('/topic/satellite/relatedata', function (refdata){
             data = JSON.parse(refdata.body);
-            this.addSatellite(data, false);
+            this.addTrackingLine(data.satelliteId, data.gsId, data.availability[0]);
         });
 
         // Subscribe to satellite data feeder
