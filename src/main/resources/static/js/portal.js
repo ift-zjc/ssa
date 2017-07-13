@@ -824,6 +824,11 @@ function addSatellite(satelliteJson){
             [ satelliteJson.uncertainty[6], satelliteJson.uncertainty[7], satelliteJson.uncertainty[8] ],
         ];
 
+    // var covarianceMatrix = [
+    //     [ 1124.0, 0.0, 0.9 ],
+    //     [ 0.0, 1211.0, 0.0 ],
+    //     [ 0.9, 0.0, 1928.0 ],
+    // ];
     // Loop timedata array
     index = 0;
     _.each(timeDataArray, function(timeData){
