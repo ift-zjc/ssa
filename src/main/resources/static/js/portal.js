@@ -228,14 +228,14 @@ function addSatellite(satelliteJson){
         var covarianceMatrix = [
             [ uncertainty[0]*10, uncertainty[1], uncertainty[2] ],
             [ uncertainty[3], uncertainty[4]*10, uncertainty[5] ],
-            [ uncertainty[6], uncertainty[7], uncertainty[8]*100 ]
+            [ uncertainty[6], uncertainty[7], uncertainty[8]*10 ]
         ];
 
         var distribution = window.MultivariateNormal.default([parseFloat(nodePosition[0]), parseFloat(nodePosition[1]), parseFloat(nodePosition[2])], covarianceMatrix);
-        var sampleGenerated = distribution.sample();
 
         // get 100's for each point
         for(var j = 0; j< 100; j++){
+            var sampleGenerated = distribution.sample();
             var sampleEntity = viewer.entities.getOrCreateEntity(sId + "_" + j);
             positions = sampleEntity.position;
             if(_.isUndefined(positions)){
