@@ -835,7 +835,7 @@ function addSatellite(satelliteJson){
  */
 function addTrackingLine(obj1Id, obj2Id, availability){
 
-    var trackEntity = cesiumViewer.entities.add({
+    var trackEntity = viewer.entities.add({
         id: obj1Id + "/" + obj2Id,
 
         polyline: {
