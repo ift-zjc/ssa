@@ -818,11 +818,6 @@ function addSatellite(satelliteJson){
 
     // Creating samples
 
-    var covarianceMatrix = [
-            [ satelliteJson.uncertainty[0], satelliteJson.uncertainty[1], satelliteJson.uncertainty[2] ],
-            [ satelliteJson.uncertainty[3], satelliteJson.uncertainty[4], satelliteJson.uncertainty[5] ],
-            [ satelliteJson.uncertainty[6], satelliteJson.uncertainty[7], satelliteJson.uncertainty[8] ],
-        ];
 
     // var covarianceMatrix = [
     //     [ 1124.0, 0.0, 0.9 ],
@@ -831,9 +826,18 @@ function addSatellite(satelliteJson){
     // ];
     // Loop timedata array
     index = 0;
+    var pIndex = 0
     _.each(timeDataArray, function(timeData){
         var nodePosition = cartesian3DataArray.slice(index, index+3);
-        index = index+3;
+        var uncertainty = satelliteJson.uncertainty.slice(pIndex, pIndex+9);
+        index = index + 3;
+        pIndex = pIndex + 9;
+
+        var covarianceMatrix = [
+            [ uncertainty[0], uncertainty[1], uncertainty[2] ],
+            [ uncertainty[3], uncertainty[4], uncertainty[5] ],
+            [ uncertainty[6], uncertainty[7], uncertainty[8] ]
+        ];
 
         var distribution = window.MultivariateNormal.default(nodePosition, covarianceMatrix);
         var sampleGenerated = distribution.sample();
