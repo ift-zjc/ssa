@@ -102,6 +102,10 @@ function addSatellite(satelliteJson){
     var cartesian3DataArray = satelliteJson.satelliteData.toString().split(",");
     var predefindedDataArray = satelliteJson.predefindedData.toString().split(",");
 
+    var point = new Cesium.PointGraphics({
+        color: Color.RED
+    });
+
     // Loop timedata array
     var index = 0;
     _.each(timeDataArray, function(timeData){
@@ -122,6 +126,7 @@ function addSatellite(satelliteJson){
     // entity.billboard = new Cesium.BillboardGraphics();
     // entity.billboard.image = "/image/satellite.png";
     // entity.billboard.show = true;
+    entity.point = point;
 
     // Position
     entity.position = positions;
@@ -159,6 +164,8 @@ function addSatellite(satelliteJson){
     // entity.billboard = new Cesium.BillboardGraphics();
     // entity.billboard.image = "/image/satellite.png";
     // entity.billboard.show = true;
+
+    entity.point = point;
 
     // Position
     entity.position = predefindedPositions;
@@ -236,6 +243,8 @@ function addSatellite(satelliteJson){
             }
 
             positions.addSample(Cesium.JulianDate.fromIso8601(_.trim(timeData, "\"")), Cesium.Cartesian3.fromDegrees(sampleGenerated[0], sampleGenerated[1], sampleGenerated[2]));
+
+            sampleEntity.point = point;
 
         }
     });
