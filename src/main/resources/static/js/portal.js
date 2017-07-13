@@ -226,9 +226,9 @@ function addSatellite(satelliteJson){
         pIndex = pIndex + 9;
 
         var covarianceMatrix = [
-            [ uncertainty[0], uncertainty[1], uncertainty[2] ],
-            [ uncertainty[3], uncertainty[4], uncertainty[5] ],
-            [ uncertainty[6], uncertainty[7], uncertainty[8] ]
+            [ uncertainty[0]*10, uncertainty[1], uncertainty[2] ],
+            [ uncertainty[3], uncertainty[4]*10, uncertainty[5] ],
+            [ uncertainty[6], uncertainty[7], uncertainty[8]*10 ]
         ];
 
         var distribution = window.MultivariateNormal.default([parseFloat(nodePosition[0]), parseFloat(nodePosition[1]), parseFloat(nodePosition[2])], covarianceMatrix);
