@@ -856,6 +856,13 @@ function addTrackingLine(obj1Id, obj2Id, availability){
         }
     });
 
+    var availabilityArray = availability.split("/");
+    trackEntity.availability = new Cesium.TimeIntervalCollection([
+        new Cesium.TimeInterval({
+            start: Cesium.JulianDate.fromIso8601(availabilityArray[0]),
+            stop: Cesium.JulianDate.fromIso8601(availabilityArray[1])
+        })]);
+
     viewer.entities.add(trackEntity);
 
 
@@ -934,7 +941,7 @@ function connect() {
             try {
                 this.addTrackingLine(data.satelliteId, data.gsId, data.availability[0]);
             }catch(ex){
-                console.log(ex.toString());
+                // console.log(ex.toString());
             }
         });
 
