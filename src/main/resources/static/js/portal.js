@@ -933,8 +933,8 @@ function connect() {
             // Add tracking object , the array always has one element for now.
             try {
                 this.addTrackingLine(data.satelliteId, data.gsId, data.availability[0]);
-            }catch(Exception ex){
-
+            }catch(ex){
+                console.log(ex.toString());
             }
         });
 
