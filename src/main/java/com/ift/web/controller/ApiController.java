@@ -19,7 +19,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api")
-public class ApiController {
+public class
+ApiController {
 
     private static final Logger LOGGER = Logger.getLogger(ApiController.class.getName());
 
@@ -107,53 +108,31 @@ public class ApiController {
 
 
     /**
-     * Relational data
-     * @param obj1
-     * @param obj2
-     * @param name
+     * related data
+     * @param sId
+     * @param gsId
      * @param availability
-     * @param desc
      * @return
      */
     @PostMapping(value = "/feedRelationData")
-    public @ResponseBody ResponseEntity<?> RelationalData(@RequestParam("object1Id") String obj1,
-                                                          @RequestParam("object2Id") String obj2,
-                                                          @RequestParam("name") String name,
-                                                          @RequestParam("availability") String availability,
-                                                          @RequestParam("desc") String desc){
+    public @ResponseBody ResponseEntity<?> RelationalData(@RequestParam("satelliteId") String sId,
+                                                          @RequestParam("gsId") String gsId,
+                                                          @RequestParam("availability") List<String> availability){
         LOGGER.info("New relationship data received");
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("satelliteId", obj1+"/"+obj2);
-        jsonObject.addProperty("name", name);
-        jsonObject.addProperty("description", desc);
-        jsonObject.addProperty("availability", availability);
+        jsonObject.addProperty("satelliteId", sId);
+        jsonObject.addProperty("gsId", gsId);
 
-        JsonObject polyLineObj = new JsonObject();
-        polyLineObj.addProperty("width", 1);
-        polyLineObj.addProperty("followSurface", false);
+        JsonArray availabilityArray = new JsonArray();
 
-        // Show
-        JsonArray showObject = new JsonArray();
-        JsonObject showIntervalObject = new JsonObject();
-        showIntervalObject.addProperty("interval", availability);
-        showIntervalObject.addProperty("boolean", true);
+        for(String timeDataElement:availability){
+            JsonPrimitive timeDataNode = new JsonPrimitive(timeDataElement);
+            availabilityArray.add(timeDataNode);
+        }
 
-        showObject.add(showIntervalObject);
-        polyLineObj.add("show", showObject);
+        jsonObject.add("availability", availabilityArray);
 
-        // Positions
-        JsonObject positionsObj = new JsonObject();
-        JsonArray referencesObj = new JsonArray();
-        referencesObj.add(new JsonPrimitive(obj1+"#position"));
-        referencesObj.add(new JsonPrimitive(obj2+"#position"));
-        positionsObj.add("references", referencesObj);
-
-        polyLineObj.add("positions", positionsObj);
-
-
-
-        jsonObject.add("polyline", polyLineObj);
         String jsonStr = (new Gson()).toJson(jsonObject);
 
         /**
