@@ -843,12 +843,12 @@ function addTrackingLine(obj1Id, obj2Id, availability){
             positions: new Cesium.PositionPropertyArray([
                 new Cesium.ReferenceProperty(
                     viewer.entities,
-                    viewer.entities.getById(obj1Id),
+                    obj1Id,
                     [ 'position' ]
                 ),
                 new Cesium.ReferenceProperty(
                     viewer.entities,
-                    viewer.entities.getById(obj2Id),
+                    obj2Id,
                     [ 'position' ]
                 )
             ]),
