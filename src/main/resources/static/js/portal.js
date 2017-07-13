@@ -103,7 +103,8 @@ function addSatellite(satelliteJson){
     var predefindedDataArray = satelliteJson.predefindedData.toString().split(",");
 
     var point = new Cesium.PointGraphics({
-        color: Color.RED
+        pixelSize: 5,
+        color: Cesium.Color.RED
     });
 
     // Loop timedata array
