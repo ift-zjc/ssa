@@ -858,6 +858,8 @@ function addTrackingLine(obj1Id, obj2Id, availability){
         }
     });
 
+    viewer.entities.add(trackEntity);
+
 
 }
 
