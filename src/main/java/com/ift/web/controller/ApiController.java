@@ -157,7 +157,8 @@ ApiController {
                                                          @RequestParam("satelliteEpoch") String satelliteEpoch,
                                                          @RequestParam("cartesianData") List<Double> cartesianData,
                                                          @RequestParam("preDefindedData") List<Double> predefinedData,
-                                                         @RequestParam("timeData") List<String> timeData
+                                                         @RequestParam("timeData") List<String> timeData,
+                                                         @RequestParam("p") List<Double> uncertaintyData
                                                          /*@RequestParam("completeFlag") boolean completeFlag*/){
 
         LOGGER.info("Receiving satellite data");
@@ -167,6 +168,7 @@ ApiController {
         JsonArray cartesianDataArray = new JsonArray();
         JsonArray predefinededDataArray = new JsonArray();
         JsonArray timeDataArray = new JsonArray();
+        JsonArray uncertaintyArray = new JsonArray();
         // Fill data array
         for (double cartesianElement:cartesianData
                 ) {
@@ -181,6 +183,10 @@ ApiController {
             JsonPrimitive timeDataNode = new JsonPrimitive(timeDataElement);
             timeDataArray.add(timeDataNode);
         }
+        for(double uncertaintyElement : uncertaintyData){
+            JsonPrimitive uncertaintyNode = new JsonPrimitive(uncertaintyElement);
+            uncertaintyArray.add(uncertaintyNode);
+        }
         jsonObject.addProperty("satelliteId", satelliteId);
         jsonObject.addProperty("satellitename", satelliteName);
         jsonObject.addProperty("satelliteDesc", satelliteDesc);
@@ -189,6 +195,7 @@ ApiController {
         jsonObject.add("satelliteData", cartesianDataArray);
         jsonObject.add("predefindedData", predefinededDataArray);
         jsonObject.add("timeData", timeDataArray);
+        jsonObject.add("uncertainty", uncertaintyArray);
 
         // Move to seperated API
 //        jsonObject.addProperty("completed", completeFlag);

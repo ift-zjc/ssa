@@ -722,13 +722,6 @@ function addSatellite(satelliteJson){
     // Compute entity
     var entity = new Cesium.Entity({id: sId});
 
-    // Availability
-    // entity.availability = new Cesium.TimeIntervalCollection([
-    //     new Cesium.TimeInterval({
-    //         start: Cesium.JulianDate.fromIso8601("2012-03-15T10:00:00Z"),
-    //         stop: Cesium.JulianDate.fromIso8601("2012-03-16T02:40:00Z")
-    //     })]);
-
     // Billboard
     entity.billboard = new Cesium.BillboardGraphics();
     entity.billboard.image = "/image/satellite.png";
@@ -823,7 +816,36 @@ function addSatellite(satelliteJson){
 
     viewer.entities.add(entity);
 
+    // Creating samples
 
+    var covarianceMatrix = [
+            [ satelliteJson.uncertainty[0], satelliteJson.uncertainty[1], satelliteJson.uncertainty[2] ],
+            [ satelliteJson.uncertainty[3], satelliteJson.uncertainty[4], satelliteJson.uncertainty[5] ],
+            [ satelliteJson.uncertainty[6], satelliteJson.uncertainty[7], satelliteJson.uncertainty[8] ],
+        ];
+
+    // Loop timedata array
+    index = 0;
+    _.each(timeDataArray, function(timeData){
+        var nodePosition = cartesian3DataArray.slice(index, index+3);
+        index = index+3;
+
+        var distribution = window.MultivariateNormal.default(nodePosition, covarianceMatrix);
+        var sampleGenerated = distribution.sample();
+
+        // get 100's for each point
+        for(var j = 0; j< 100; j++){
+            var sampleEntity = viewer.entities.getOrCreateEntity(sId + "_" + j);
+            positions = sampleEntity.position;
+            if(_.isUndefined(positions)){
+                positions = new Cesium.SampledPositionProperty();
+                sampleEntity.position = positions;
+            }
+
+            positions.addSample(Cesium.JulianDate.fromIso8601(_.trim(timeData, "\"")), Cesium.Cartesian3.fromDegrees(sampleGenerated[0], sampleGenerated[1], sampleGenerated[2]));
+
+        }
+    });
 
 }
 
