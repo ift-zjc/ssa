@@ -202,7 +202,7 @@ function addSatellite(satelliteJson){
 
     // Make a smooth path
     entity.position.setInterpolationOptions({
-        interpolationDegree : 5,
+        interpolationDegree : 1,
         interpolationAlgorithm : Cesium.LagrangePolynomialApproximation
     });
 
@@ -228,7 +228,7 @@ function addSatellite(satelliteJson){
         var covarianceMatrix = [
             [ uncertainty[0]*10, uncertainty[1], uncertainty[2] ],
             [ uncertainty[3], uncertainty[4]*10, uncertainty[5] ],
-            [ uncertainty[6], uncertainty[7], uncertainty[8]*10 ]
+            [ uncertainty[6], uncertainty[7], uncertainty[8]*100 ]
         ];
 
         var distribution = window.MultivariateNormal.default([parseFloat(nodePosition[0]), parseFloat(nodePosition[1]), parseFloat(nodePosition[2])], covarianceMatrix);
