@@ -839,7 +839,7 @@ function addSatellite(satelliteJson){
             [ uncertainty[6], uncertainty[7], uncertainty[8] ]
         ];
 
-        var distribution = window.MultivariateNormal.default(nodePosition, covarianceMatrix);
+        var distribution = window.MultivariateNormal.default([parseFloat(nodePosition[0]), parseFloat(nodePosition[1]), parseFloat(nodePosition[2])], covarianceMatrix);
         var sampleGenerated = distribution.sample();
 
         // get 100's for each point
@@ -934,12 +934,6 @@ function ajaxInit() {
     });
 }
 
-// dimensions highly correlated, and the second dimension independent.
-var covarianceMatrix = [
-    [ 1.0, 0.0, 0.9 ],
-    [ 0.0, 1.0, 0.0 ],
-    [ 0.9, 0.0, 1.0 ],
-];
 
 /**
  * Web socket connect to /sass-websocket
