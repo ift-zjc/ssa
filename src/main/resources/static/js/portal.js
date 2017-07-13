@@ -156,9 +156,9 @@ function addSatellite(satelliteJson){
     var entity = new Cesium.Entity({id: sId+"_predefined"});
 
     // Billboard
-    entity.billboard = new Cesium.BillboardGraphics();
-    entity.billboard.image = "/image/satellite.png";
-    entity.billboard.show = true;
+    // entity.billboard = new Cesium.BillboardGraphics();
+    // entity.billboard.image = "/image/satellite.png";
+    // entity.billboard.show = true;
 
     // Position
     entity.position = predefindedPositions;
