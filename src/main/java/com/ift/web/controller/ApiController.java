@@ -34,6 +34,7 @@ ApiController {
      * @param endTime
      * @return
      */
+    @PostMapping(value = "/feedCesiumMateData")
     public @ResponseBody ResponseEntity<?> CesiumMateData(@RequestParam("startTime") String startTime,
                                                           @RequestParam("stopTime") String endTime){
 
