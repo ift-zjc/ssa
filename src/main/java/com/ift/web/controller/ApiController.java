@@ -27,6 +27,32 @@ ApiController {
     @Autowired
     private SimpMessagingTemplate webSocket;
 
+
+    /**
+     * Accept cesium mate data
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public @ResponseBody ResponseEntity<?> CesiumMateData(@RequestParam("startTime") String startTime,
+                                                          @RequestParam("stopTime") String endTime){
+
+        LOGGER.info("Receive cesium mate data");
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("startTime", startTime);
+        jsonObject.addProperty("endTime", endTime);
+
+        String jsonStr = (new Gson()).toJson(jsonObject);
+
+        /**
+         * Write to websocket channel: /topic/statllite/data
+         */
+        webSocket.convertAndSend("/topic/satellite/cesiumMateData", jsonStr);
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
     /**
      * Accept data form external source
      * Data format: json

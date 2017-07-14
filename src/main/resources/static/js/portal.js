@@ -49,15 +49,8 @@ $(function(){
     // var start = Cesium.JulianDate.fromDate(new Date());
     // var stop = Cesium.JulianDate.addSeconds(start, duration, new Cesium.JulianDate());
 
-    var start = Cesium.JulianDate.fromIso8601('2012-03-15T09:00:00Z');
-    var stop = Cesium.JulianDate.fromIso8601('2012-03-16T03:00:00Z');
-
-    viewer.clock.startTime = start.clone();
-    viewer.clock.stopTime = stop.clone();
-    viewer.clock.currentTime = start.clone();
     viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP; //Loop at the end
     viewer.clock.multiplier = 10;
-    viewer.timeline.zoomTo(start, stop);
 
     // File input bootstrap style
     $('input[type=file]').bootstrapFileInput();
@@ -227,8 +220,8 @@ function addSatellite(satelliteJson){
 
         var covarianceMatrix = [
             [ uncertainty[0], uncertainty[1], uncertainty[2] ],
-            [ uncertainty[3], uncertainty[4], uncertainty[5] ],
-            [ uncertainty[6], uncertainty[7], uncertainty[8] ]
+            [ uncertainty[1], uncertainty[4], uncertainty[5] ],
+            [ uncertainty[2], uncertainty[5], uncertainty[8] ]
         ];
 
         var distribution = window.MultivariateNormal.default([parseFloat(nodePosition[0]), parseFloat(nodePosition[1]), parseFloat(nodePosition[2])], covarianceMatrix);
@@ -346,6 +339,19 @@ function connect() {
         //     this.addSatellite(data, true);
         //
         // });
+
+        stompClient.subscribe('/topic/satellite/cesiumMateData', function (metadata){
+            data = JSON.parse(metadata.body);
+
+            var start = Cesium.JulianDate.fromIso8601(data.startTime);
+            var stop = Cesium.JulianDate.fromIso8601(data.endTime);
+
+            viewer.clock.startTime = start.clone();
+            viewer.clock.stopTime = stop.clone();
+
+            viewer.timeline.zoomTo(start, stop);
+
+        });
 
         stompClient.subscribe('/topic/satellite/groundstations', function (gsdata){
            data = JSON.parse(gsdata.body);
