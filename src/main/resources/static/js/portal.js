@@ -419,14 +419,14 @@ function ajaxInit() {
         });
 
         var _val = $(this).val();
-        if(_val == allConnection){
+        if(_val == 'all'){
             // Show all connections.
             _.each(allConnectionIds, function(id){
                viewer.entities.getById(id).show = true;
             });
         }
 
-        if(_val == optimizedConnection){
+        if(_val == 'optimized'){
             // Show optimized connections.
             _.each(optConnectionIds, function(id){
                 viewer.entities.getById(id).show = true;
