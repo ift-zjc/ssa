@@ -9,7 +9,11 @@ var entity;
 var entityCollection;
 var satellites = [];
 var satellitesPre = [];
+var allConnectionIds = [];
+var optConnectionIds = [];
 var showPath = false;
+var allConnection = 'a';
+var optimizedConnection = 'o';
 
 $(function(){
 
@@ -264,7 +268,7 @@ function addSatellite(satelliteJson){
  * @param obj2Id
  * @param availability
  */
-function addTrackingLine(obj1Id, obj2Id, availability){
+function addTrackingLine(obj1Id, obj2Id, availability, datatype){
 
     var trackEntity = viewer.entities.add({
         polyline: {
@@ -294,7 +298,16 @@ function addTrackingLine(obj1Id, obj2Id, availability){
             stop: Cesium.JulianDate.fromIso8601(availabilityArray[1])
         })]);
 
+    trackEntity.show = false;
+
     viewer.entities.add(trackEntity);
+
+    // Add to array (id);
+    if(datatype == allConnection){
+        allConnectionIds.push (trackEntity.id);
+    }else if(datatype == optimizedConnection){
+        optConnectionIds.push (trackEntity.id);
+    }
 
 
 }
@@ -393,6 +406,33 @@ function ajaxInit() {
             });
         }
     });
+
+    // Connection type selection
+    $("input:radio[name='connOption']").change(function(){
+
+        _.each(allConnectionIds, function(id){
+            viewer.entities.getById(id).show = false;
+        });
+
+        _.each(optConnectionIds, function(id){
+            viewer.entities.getById(id).show = false;
+        });
+
+        var _val = $(this).val();
+        if(_val == allConnection){
+            // Show all connections.
+            _.each(allConnectionIds, function(id){
+               viewer.entities.getById(id).show = true;
+            });
+        }
+
+        if(_val == optimizedConnection){
+            // Show optimized connections.
+            _.each(optConnectionIds, function(id){
+                viewer.entities.getById(id).show = true;
+            });
+        }
+    });
 }
 
 
@@ -438,7 +478,7 @@ function connect() {
             data = JSON.parse(refdata.body);
             // Add tracking object , the array always has one element for now.
             try {
-                this.addTrackingLine(data.satelliteId, data.gsId, data.availability[0]);
+                this.addTrackingLine(data.satelliteId, data.gsId, data.availability[0], data.datatype);
             }catch(ex){
                 // console.log(ex.toString());
             }

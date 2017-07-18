@@ -24,6 +24,9 @@ ApiController {
 
     private static final Logger LOGGER = Logger.getLogger(ApiController.class.getName());
 
+    private final String DATA_TYPE_ALL = "A";
+    private final String DATA_TYPE_OPTIMIZED = "O";
+
     @Autowired
     private SimpMessagingTemplate webSocket;
 
@@ -144,7 +147,8 @@ ApiController {
     @PostMapping(value = "/feedRelationData")
     public @ResponseBody ResponseEntity<?> RelationalData(@RequestParam("satelliteId") String sId,
                                                           @RequestParam("gsId") String gsId,
-                                                          @RequestParam("availability") List<String> availability){
+                                                          @RequestParam("availability") List<String> availability,
+                                                          @RequestParam("datatype") String dType){
         LOGGER.info("New relationship data received");
 
         JsonObject jsonObject = new JsonObject();
@@ -159,6 +163,7 @@ ApiController {
         }
 
         jsonObject.add("availability", availabilityArray);
+        jsonObject.add("datatype", new JsonPrimitive(dType));
 
         String jsonStr = (new Gson()).toJson(jsonObject);
 
