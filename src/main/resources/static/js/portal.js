@@ -291,6 +291,13 @@ function addTrackingLine(obj1Id, obj2Id, availability, datatype){
         }
     });
 
+    // Add to array (id);
+    if(datatype === allConnection){
+        allConnectionIds.push(trackEntity.id);
+    }else if(datatype === optimizedConnection){
+        optConnectionIds.push(trackEntity.id);
+    }
+
     var availabilityArray = availability.split("/");
     trackEntity.availability = new Cesium.TimeIntervalCollection([
         new Cesium.TimeInterval({
@@ -301,15 +308,6 @@ function addTrackingLine(obj1Id, obj2Id, availability, datatype){
     trackEntity.show = false;
 
     viewer.entities.add(trackEntity);
-
-    // Add to array (id);
-    if(datatype == allConnection){
-        allConnectionIds.push(trackEntity.id);
-    }else if(datatype == optimizedConnection){
-        optConnectionIds.push(trackEntity.id);
-    }
-
-
 }
 
 
