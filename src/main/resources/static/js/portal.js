@@ -7,6 +7,9 @@ var viewer;
 var czml;
 var entity;
 var entityCollection;
+var satellites = [];
+var satellitesPre = [];
+var showPath = false;
 
 $(function(){
 
@@ -87,6 +90,7 @@ function addGroundStation(gsId, cartesian3){
 function addSatellite(satelliteJson){
 
     var sId = satelliteJson.satelliteId;
+    satellites.push(sId);
 
     // Compute position
     var positions = new Cesium.SampledPositionProperty();
@@ -134,12 +138,15 @@ function addSatellite(satelliteJson){
         orientation: Cesium.StripeOrientation.VERTICAL
     });
 
-    var path = new Cesium.PathGraphics();
-    path.material = fadedLine;
-    path.leadTime = new Cesium.ConstantProperty(0);
-    path.trailTime = new Cesium.ConstantProperty(3600 * 1);
+    if(showPath) {
+        var path = new Cesium.PathGraphics();
+        path.material = fadedLine;
+        path.leadTime = new Cesium.ConstantProperty(0);
+        path.trailTime = new Cesium.ConstantProperty(3600 * 1);
 
-    entity.path = path;
+        entity.path = path;
+    }
+
 
 
     // Make a smooth path
@@ -152,12 +159,15 @@ function addSatellite(satelliteJson){
 
     // Compute predefined entity
 
-    var entity = new Cesium.Entity({id: sId+"_predefined"});
+    var preId = sId+"_predefined";
+    var entity = new Cesium.Entity({id: preId});
+    satellitesPre.push(preId);
 
     // Billboard
     // entity.billboard = new Cesium.BillboardGraphics();
     // entity.billboard.image = "/image/satellite.png";
     // entity.billboard.show = true;
+
 
     entity.point = point;
 
@@ -173,12 +183,15 @@ function addSatellite(satelliteJson){
         orientation: Cesium.StripeOrientation.VERTICAL
     });
 
-    var path = new Cesium.PathGraphics();
-    path.material = fadedLine;
-    path.leadTime = new Cesium.ConstantProperty(0);
-    path.trailTime = new Cesium.ConstantProperty(3600 * 1);
+    if(showPath) {
+        var path = new Cesium.PathGraphics();
+        path.material = fadedLine;
+        path.leadTime = new Cesium.ConstantProperty(0);
+        path.trailTime = new Cesium.ConstantProperty(3600 * 1);
 
-    entity.path = path;
+        entity.path = path;
+    }
+
 
     // // Path
     // entity.path = new Cesium.PathGraphics({
@@ -318,6 +331,67 @@ function ajaxInit() {
             $("#btnFileUploadSubmit").prop("disabled", false);
         });
         return false;
+    });
+
+    // Show path action
+    $('#showPath').change(function(){
+        if(this.checked){
+            showPath = true;
+            // Show path
+            // Loop the entities
+            var fadedLine = new Cesium.StripeMaterialProperty({
+                evenColor: Cesium.Color.YELLOW,
+                oddColor: Cesium.Color.BLACK,
+                repeat: 1,
+                offset: 0.2,
+                orientation: Cesium.StripeOrientation.VERTICAL
+            });
+
+            var path = new Cesium.PathGraphics();
+            path.material = fadedLine;
+            path.leadTime = new Cesium.ConstantProperty(0);
+            path.trailTime = new Cesium.ConstantProperty(3600 * 1);
+
+            _.each(satellites, function(sid){
+
+                var entity = viewer.entities.getById(sid);
+                entity.path = path;
+            });
+
+            var fadedLine = new Cesium.StripeMaterialProperty({
+                evenColor: Cesium.Color.RED,
+                oddColor: Cesium.Color.BLACK,
+                repeat: 1,
+                offset: 0.2,
+                orientation: Cesium.StripeOrientation.VERTICAL
+            });
+            var path = new Cesium.PathGraphics();
+            path.material = fadedLine;
+            path.leadTime = new Cesium.ConstantProperty(0);
+            path.trailTime = new Cesium.ConstantProperty(3600 * 1);
+
+            _.each(satellitesPre, function(sid){
+
+                var entity = viewer.entities.getById(sid);
+                entity.path = path;
+            });
+
+        }else{
+            showPath = false;
+            // Hide path
+
+            _.each(satellites, function(sid){
+
+                var entity = viewer.entities.getById(sid);
+                entity.path = null;
+            });
+
+            _.each(satellitesPre, function(sid){
+
+                var entity = viewer.entities.getById(sid);
+                entity.path = null;
+            });
+        }
     });
 }
 
