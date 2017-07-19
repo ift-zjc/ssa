@@ -9,11 +9,11 @@ var entity;
 var entityCollection;
 var satellites = [];
 var satellitesPre = [];
-var allConnectionIds = [];
-var optConnectionIds = [];
 var showPath = false;
 var allConnection = 'a';
 var optimizedConnection = 'o';
+var ecAll = new Cesium.EntityCollection();
+var ecOpt = new Cesium.EntityCollection();
 
 $(function(){
 
@@ -291,12 +291,6 @@ function addTrackingLine(obj1Id, obj2Id, availability, datatype){
         }
     });
 
-    // Add to array (id);
-    if(datatype === allConnection){
-        allConnectionIds.push(trackEntity.id);
-    }else if(datatype === optimizedConnection){
-        optConnectionIds.push(trackEntity.id);
-    }
 
     var availabilityArray = availability.split("/");
     trackEntity.availability = new Cesium.TimeIntervalCollection([
@@ -306,6 +300,13 @@ function addTrackingLine(obj1Id, obj2Id, availability, datatype){
         })]);
 
     trackEntity.show = false;
+
+    // Add to array (id);
+    if(datatype === allConnection){
+        ecAll.add(trackEntity);
+    }else if(datatype === optimizedConnection){
+        ecOpt.add(trackEntity);
+    }
 
     viewer.entities.add(trackEntity);
 }
@@ -408,27 +409,18 @@ function ajaxInit() {
     // Connection type selection
     $("input:radio[name='connOption']").change(function(){
 
-        _.each(allConnectionIds, function(id){
-            viewer.entities.getById(id).show = false;
-        });
-
-        _.each(optConnectionIds, function(id){
-            viewer.entities.getById(id).show = false;
-        });
+        ecAll.show = false;
+        ecOpt.show = false;
 
         var _val = $(this).val();
         if(_val == 'all'){
             // Show all connections.
-            _.each(allConnectionIds, function(id){
-               viewer.entities.getById(id).show = true;
-            });
+            ecAll.show = true;
         }
 
         if(_val == 'optimized'){
             // Show optimized connections.
-            _.each(optConnectionIds, function(id){
-                viewer.entities.getById(id).show = true;
-            });
+            ecOpt.show = true;
         }
     });
 }
