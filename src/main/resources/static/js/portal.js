@@ -17,6 +17,10 @@ var ecOpt = new Cesium.EntityCollection();
 
 $(function(){
 
+    // Set EntityCollection's show = false
+    ecAll.show = false;
+    ecOpt.show = false;
+
     czml = [{
         "id": "document",
         "name": "SSA Project Data Visualization",
