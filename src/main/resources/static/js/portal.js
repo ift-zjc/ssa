@@ -299,7 +299,7 @@ function addTrackingLine(obj1Id, obj2Id, availability, datatype){
             stop: Cesium.JulianDate.fromIso8601(availabilityArray[1])
         })]);
 
-    trackEntity.show = false;
+    trackEntity.show = true;
 
     // Add to array (id);
     if(datatype === allConnection){
