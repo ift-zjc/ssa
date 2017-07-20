@@ -2,19 +2,29 @@
 This javascript is worker that used for show different connections between base station and satellite
  */
 
+importScripts('/js/underscore-min.js');
+
 self.onmessage = function(msg){
 
-    msg.data.ecAll.show = false;
-    msg.data.ecOpt.show = false;
-
+    
     switch(msg.data.show){
         case 'all':
-            msg.data.ecAll.show = true;
+            var processed = 0;
+            var total = msg.data.allIds.length;
+            _.each(msg.data.allIds, function(id){
+                postMessage({id: id, progress: processed, total: total});
+                processed++;
+            });
             break;
 
 
         case 'optimized':
-            msg.data.ecOpt.show = true;
+            var processed = 0;
+            var total = msg.data.allIds.length;
+            _.each(msg.data.allIds, function(id){
+                postMessage({id: id, progress: processed, total: total});
+                processed++;
+            });
             break;
 
         default:

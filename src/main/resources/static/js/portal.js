@@ -14,6 +14,8 @@ var allConnection = 'a';
 var optimizedConnection = 'o';
 var ecAll = new Cesium.EntityCollection();
 var ecOpt = new Cesium.EntityCollection();
+var allIds = [];
+var optIds = [];
 var workerShowConnection;
 
 $(function(){
@@ -310,9 +312,11 @@ function addTrackingLine(obj1Id, obj2Id, availability, datatype){
 
     // Add to array (id);
     if(datatype === allConnection){
-        ecAll.add(trackEntity);
+        allIds.push(trackEntity.id);
+        // ecAll.add(trackEntity);
     }else if(datatype === optimizedConnection){
-        ecOpt.add(trackEntity);
+        optIds.push(trackEntity.id);
+        // ecOpt.add(trackEntity);
     }
 
     viewer.entities.add(trackEntity);
@@ -422,15 +426,20 @@ function ajaxInit() {
         var _val = $(this).val();
         if(_val == 'all'){
             // Show all connections.
-            workerShowConnection.postMessage({show: 'all', ecAll: ecAll, ecOpt: ecOpt});
+            workerShowConnection.postMessage({show: 'all', allIds: allIds, optIds: optIds});
+            // workerShowConnection.postMessage(ecAll, [ecAll]);
             // ecAll.show = true;
         }
 
         if(_val == 'optimized'){
             // Show optimized connections.
-            workerShowConnection.postMessage({show: 'optimized', ecAll: ecAll, ecOpt: ecOpt});
+            workerShowConnection.postMessage({show: 'optimized', allIds: allIds, optIds: optIds});
         }
     });
+
+    workerShowConnection.onMessage = function(event){
+        console.log(event.data);
+    }
 }
 
 
