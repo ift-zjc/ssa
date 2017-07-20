@@ -308,7 +308,7 @@ function addTrackingLine(obj1Id, obj2Id, availability, datatype){
             stop: Cesium.JulianDate.fromIso8601(availabilityArray[1])
         })]);
 
-    trackEntity.show = true;
+    trackEntity.show = false;
 
     // Add to array (id);
     if(datatype === allConnection){
@@ -437,12 +437,22 @@ function ajaxInit() {
         }
     });
 
+    /**
+     * Worker callback
+     * @param event
+     */
     workerShowConnection.onmessage = function(event){
-        $('#progress').html = event.data.progress;
-        $('#total').html = event.data.total;
 
-        // Show line
-        viewer.entities.getById(event.data.id).show = true;
+        if(!event.data.show){
+            // Show line
+            viewer.entities.getById(event.data.id).show = false;
+        }else {
+            $('#progress').html = event.data.progress;
+            $('#total').html = event.data.total;
+
+            // Show line
+            viewer.entities.getById(event.data.id).show = true;
+        }
     }
 }
 
