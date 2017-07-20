@@ -6,6 +6,7 @@ importScripts('/js/underscore-min.js');
 
 self.onmessage = function(msg){
 
+    throw 'Start';
     
     switch(msg.data.show){
         case 'all':
