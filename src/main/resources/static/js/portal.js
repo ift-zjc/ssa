@@ -437,7 +437,7 @@ function ajaxInit() {
         }
     });
 
-    workerShowConnection.onMessage = function(event){
+    workerShowConnection.onmessage = function(event){
         console.log(event.data);
     }
 }
