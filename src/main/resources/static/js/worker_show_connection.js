@@ -5,8 +5,6 @@ This javascript is worker that used for show different connections between base 
 importScripts('/js/underscore-min.js');
 
 self.onmessage = function(msg){
-
-    throw 'Start';
     
     switch(msg.data.show){
         case 'all':
