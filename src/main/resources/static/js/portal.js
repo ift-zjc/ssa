@@ -438,7 +438,11 @@ function ajaxInit() {
     });
 
     workerShowConnection.onmessage = function(event){
-        console.log(event.data);
+        $('#progress').html = event.data.progress;
+        $('#total').html = event.data.total;
+
+        // Show line
+        viewer.entities.getById(event.data.id).show = true;
     }
 }
 

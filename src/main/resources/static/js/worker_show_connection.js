@@ -11,8 +11,7 @@ self.onmessage = function(msg){
             var processed = 0;
             var total = msg.data.allIds.length;
             _.each(msg.data.allIds, function(id){
-                postMessage({id: id, progress: processed, total: total});
-                processed++;
+                postMessage({id: id, progress: ++processed, total: total});
             });
             break;
 
@@ -21,8 +20,7 @@ self.onmessage = function(msg){
             var processed = 0;
             var total = msg.data.allIds.length;
             _.each(msg.data.allIds, function(id){
-                postMessage({id: id, progress: processed, total: total});
-                processed++;
+                postMessage({id: id, progress: ++processed, total: total});
             });
             break;
 
