@@ -447,8 +447,8 @@ function ajaxInit() {
             // Show line
             viewer.entities.getById(event.data.id).show = false;
         }else {
-            $('#progress').html = event.data.progress;
-            $('#total').html = event.data.total;
+            $('#progress').html(event.data.progress);
+            $('#total').html(event.data.total);
 
             // Show line
             viewer.entities.getById(event.data.id).show = true;
