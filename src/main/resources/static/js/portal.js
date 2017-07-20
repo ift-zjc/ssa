@@ -14,12 +14,15 @@ var allConnection = 'a';
 var optimizedConnection = 'o';
 var ecAll = new Cesium.EntityCollection();
 var ecOpt = new Cesium.EntityCollection();
+var workerShowConnection;
 
 $(function(){
 
     // Set EntityCollection's show = false
     ecAll.show = false;
     ecOpt.show = false;
+
+    workerShowConnection = new Worker("/js/worker_show_connection.js");
 
     czml = [{
         "id": "document",
@@ -413,18 +416,19 @@ function ajaxInit() {
     // Connection type selection
     $("input:radio[name='connOption']").change(function(){
 
-        ecAll.show = false;
-        ecOpt.show = false;
+        // ecAll.show = false;
+        // ecOpt.show = false;
 
         var _val = $(this).val();
         if(_val == 'all'){
             // Show all connections.
-            ecAll.show = true;
+            workerShowConnection.postMessage({show: 'all', ecAll: ecAll, ecOpt: ecOpt});
+            // ecAll.show = true;
         }
 
         if(_val == 'optimized'){
             // Show optimized connections.
-            ecOpt.show = true;
+            workerShowConnection.postMessage({show: 'optimized', ecAll: ecAll, ecOpt: ecOpt});
         }
     });
 }
