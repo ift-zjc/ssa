@@ -16,15 +16,12 @@ var ecAll = new Cesium.EntityCollection();
 var ecOpt = new Cesium.EntityCollection();
 var allIds = [];
 var optIds = [];
-var workerShowConnection;
 
 $(function(){
 
     // Set EntityCollection's show = false
     ecAll.show = false;
     ecOpt.show = false;
-
-    workerShowConnection = new Worker("/js/worker_show_connection.js");
 
     czml = [{
         "id": "document",
@@ -328,6 +325,8 @@ function addTrackingLine(obj1Id, obj2Id, availability, datatype){
  */
 function ajaxInit() {
 
+    makeConnection().then(result => console.log(result));
+
     $('#btnFileUploadSubmit').click(function(e){
         e.preventDefault();
 
@@ -424,36 +423,9 @@ function ajaxInit() {
         // ecOpt.show = false;
 
         var _val = $(this).val();
-        if(_val == 'all'){
-            // Show all connections.
-            workerShowConnection.postMessage({show: 'all', allIds: allIds, optIds: optIds});
-            // workerShowConnection.postMessage(ecAll, [ecAll]);
-            // ecAll.show = true;
-        }
-
-        if(_val == 'optimized'){
-            // Show optimized connections.
-            workerShowConnection.postMessage({show: 'optimized', allIds: allIds, optIds: optIds});
-        }
+        makeConnection(_val).then(result=>console.log(result));
     });
 
-    /**
-     * Worker callback
-     * @param event
-     */
-    workerShowConnection.onmessage = function(event){
-
-        if(!event.data.show){
-            // Show line
-            viewer.entities.getById(event.data.id).show = false;
-        }else {
-            $('#progress').html(event.data.progress);
-            $('#total').html(event.data.total);
-
-            // Show line
-            viewer.entities.getById(event.data.id).show = true;
-        }
-    }
 }
 
 
@@ -525,4 +497,33 @@ function connect() {
         //     }
         // })
     });
+}
+
+/**
+ * Make connection
+ */
+async function makeConnection(option){
+
+    switch(option){
+        case: 'all':
+            _.each(optIds, function(id){
+                viewer.entities.getById(id).show = false;
+            });
+            _.each(allIds, function(id){
+                viewer.entities.getById(id).show = true;
+            });
+            break;
+        case: 'optimized':
+            _.each(allIds, function(id){
+                viewer.entities.getById(id).show = false;
+            });
+            _.each(optIds, function(id){
+                viewer.entities.getById(id).show = true;
+            });
+            break;
+        default:
+            break;
+    }
+
+    return "done";
 }
