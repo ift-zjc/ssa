@@ -505,7 +505,7 @@ function connect() {
 async function makeConnection(option){
 
     switch(option){
-        case: 'all':
+        case 'all':
             _.each(optIds, function(id){
                 viewer.entities.getById(id).show = false;
             });
@@ -513,7 +513,7 @@ async function makeConnection(option){
                 viewer.entities.getById(id).show = true;
             });
             break;
-        case: 'optimized':
+        case 'optimized':
             _.each(allIds, function(id){
                 viewer.entities.getById(id).show = false;
             });
