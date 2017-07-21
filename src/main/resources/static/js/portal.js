@@ -325,8 +325,6 @@ function addTrackingLine(obj1Id, obj2Id, availability, datatype){
  */
 function ajaxInit() {
 
-    makeConnection().then(result => console.log(result));
-
     $('#btnFileUploadSubmit').click(function(e){
         e.preventDefault();
 
