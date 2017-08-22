@@ -108,6 +108,16 @@ ApiController {
     }
 
 
+    @PostMapping(value = "/feedCollisionData")
+    public ResponseEntity<?> CollisionData(@RequestParam("sid1") String sid1,
+                                                         @RequestParam("sid2") String sid2,
+                                                         @RequestParam("timeData") String timeData,
+                                                         @RequestParam("collisionData") String collisionData){
+
+        return ResponseEntity.ok(null);
+    }
+
+
     /**
      * Ground station data
      * @param gsJsonData
