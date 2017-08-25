@@ -24,6 +24,9 @@
     <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
@@ -87,6 +90,20 @@
                             </div>
                             <div class="col-md-6">
                                 <span>Processed <span id="progress"></span> of <span id="total"></span></span>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+                            <lable>Satellite</lable>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <select class="form-control" id="satellite1DropDown">
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control" id="satellite2DropDown">
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>

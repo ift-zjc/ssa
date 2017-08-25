@@ -73,6 +73,9 @@ $(function(){
 
     ajaxInit();
 
+    $('#satellite1DropDown').select2();
+    $('#satellite2DropDown').select2();
+
 });
 
 /**
@@ -100,6 +103,16 @@ function addGroundStation(gsId, cartesian3){
 function addSatellite(satelliteJson){
 
     var sId = satelliteJson.satelliteId;
+    var sName = satelliteJson.satelliteName;
+    $('#satellite1DropDown').append($('<option>', {
+        value: sId,
+        text: sName
+    }));
+    $('#satellite2DropDown').append($('<option>', {
+        value: sId,
+        text: sName
+    }))
+
     satellites.push(sId);
 
     // Compute position
@@ -424,6 +437,14 @@ function ajaxInit() {
         makeConnection(_val).then(result=>console.log(result));
     });
 
+}
+
+/**
+ * Collision, get satellite information.
+ * 
+ */
+function Collision() {
+    
 }
 
 

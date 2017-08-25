@@ -230,7 +230,7 @@ ApiController {
             uncertaintyArray.add(uncertaintyNode);
         }
         jsonObject.addProperty("satelliteId", satelliteId);
-        jsonObject.addProperty("satellitename", satelliteName);
+        jsonObject.addProperty("satelliteName", satelliteName);
         jsonObject.addProperty("satelliteDesc", satelliteDesc);
         jsonObject.addProperty("satelliteAvailability", satelliteAvailability);
         jsonObject.addProperty("satelliteEpoch", satelliteEpoch);
