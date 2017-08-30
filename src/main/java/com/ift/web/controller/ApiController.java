@@ -114,7 +114,36 @@ ApiController {
                                                          @RequestParam("timeData") String timeData,
                                                          @RequestParam("collisionData") String collisionData){
 
-        return ResponseEntity.ok(null);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("sid1", sid1);
+        jsonObject.addProperty("sid2", sid2);
+
+        String[] timeDataArray = timeData.split(",");
+        String[] collisionDataArray = collisionData.split(",");
+
+        JsonArray timeDataJsonArray = new JsonArray();
+        for(String tData : timeDataArray){
+            JsonPrimitive td = new JsonPrimitive(tData);
+            timeDataJsonArray.add(td);
+        }
+
+        JsonArray collisionDataJsonArray = new JsonArray();
+        for(String cData : collisionDataArray){
+            JsonPrimitive cd = new JsonPrimitive(cData);
+            collisionDataJsonArray.add(cd);
+        }
+
+        jsonObject.add("timeData", timeDataJsonArray);
+        jsonObject.add("collisionData", collisionDataJsonArray);
+
+        String jsonStr = (new Gson()).toJson(jsonObject);
+
+        /**
+         * Write to websocket channel: /topic/statllite/collisiondata
+         */
+        webSocket.convertAndSend("/topic/satellite/collisiondata", jsonStr);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+
     }
 
 
