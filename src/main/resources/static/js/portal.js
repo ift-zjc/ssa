@@ -136,9 +136,9 @@ function handleTick(clock){
     var p = p*100;
 
     if(p>80){
-        $('.progress-bar').addClass('bg-danger');
+        $('.progress-bar').css('background-color', '#A52A2A');
     }else {
-        $('.progress-bar').removeClass('bg-danger');
+        $('.progress-bar').css('background-color', '#3990ce');
     }
     $('.progress-bar').css('width', p.toFixed(2)+'%').attr('aria-valuenow', p.toFixed(2));
     $('.progress-bar').html(p.toFixed(2) + '%');
