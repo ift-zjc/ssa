@@ -101,7 +101,7 @@ function handleTick(clock){
         return;
     }
 
-    var currentTime = colock.currentTime;
+    var currentTime = clock.currentTime;
     // Find the corresponding index for time line (Only 1)
     var leftIndex = -1;
     var rightIndex = -1;
@@ -145,7 +145,7 @@ function handleTick(clock){
 
 
 
-    console.log(Cesium.JulianDate.greaterThanOrEquals(clock.currentTime, Cesium.JulianDate.fromIso8601('2018-03-15T10:01:00Z')));
+    // console.log(Cesium.JulianDate.greaterThanOrEquals(clock.currentTime, Cesium.JulianDate.fromIso8601('2018-03-15T10:01:00Z')));
 }
 
 /**
