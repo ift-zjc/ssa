@@ -80,12 +80,69 @@ $(function(){
 
 });
 
+/**
+ * Handle tick
+ * @param clock
+ */
 function handleTick(clock){
+
     // Get satellite id.
     var sid1 = $('#satellite1DropDown').val();
     var sid2 = $('#satellite2DropDown').val();
 
+    if(sid1 === sid2){
+        // Do nothing
+        return;
+    }
+
     // Check for satellite pair
+    var satellitePair = _.filter(collisionData, function(data){return ((data.sid1 === sid1 && data.sid2 === sid2) || (data.sid1 === sid2 && data.sid2 === sid1))});
+    if(satellitePair.length == 0){
+        return;
+    }
+
+    var currentTime = colock.currentTime;
+    // Find the corresponding index for time line (Only 1)
+    var leftIndex = -1;
+    var rightIndex = -1;
+    _.every(satellitePair[0].timeData, function(pdata, k) {
+        var pTime = Cesium.JulianDate.fromIso8601(pdata);
+        var pass = Cesium.JulianDate.greaterThanOrEquals(currentTime, pTime);
+        if(!pass){
+            leftIndex = k-1;
+        }
+        return pass;
+    });
+
+    _.every(satellitePair[0].timeData, function(pdata, k) {
+        var pTime = Cesium.JulianDate.fromIso8601(pdata);
+        var pass = Cesium.JulianDate.greaterThanOrEquals(pTime, currentTime);
+        if(!pass){
+            rightIndex = k;
+        }
+        return pass;
+    });
+
+    // _.each(satellitePair[0].timeData, function(pdata) {
+    //
+    //     var pTime = Cesium.JulianDate.fromIso8601(pdata);
+    //     if (Cesium.JulianDate.greaterThanOrEquals(currentTime, pTime)){
+    //         leftIndex ++;
+    //     }
+    //     if (Cesium.JulianDate.greaterThanOrEquals(pTime, currentTime)){
+    //         rightIndex ++;
+    //     }
+    // });
+
+    // Check for index
+    if(leftIndex == -1 || rightIndex == -1){
+        return;
+    }
+
+    // Got the index for P
+    var p = (satellitePair[0].collisionData[leftIndex] + satellitePair[0].collisionData[rightIndex])/2;
+    console.log(p);
+
 
 
     console.log(Cesium.JulianDate.greaterThanOrEquals(clock.currentTime, Cesium.JulianDate.fromIso8601('2018-03-15T10:01:00Z')));
