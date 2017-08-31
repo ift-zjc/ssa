@@ -16,6 +16,7 @@ var ecAll = new Cesium.EntityCollection();
 var ecOpt = new Cesium.EntityCollection();
 var allIds = [];
 var optIds = [];
+var collisionData = [];
 
 $(function(){
 
@@ -63,7 +64,8 @@ $(function(){
     // var stop = Cesium.JulianDate.addSeconds(start, duration, new Cesium.JulianDate());
 
     viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP; //Loop at the end
-    viewer.clock.multiplier = 10;
+    viewer.clock.multiplier = 0.1;
+    viewer.clock.onTick.addEventListener(handleTick);
 
     // File input bootstrap style
     $('input[type=file]').bootstrapFileInput();
@@ -77,6 +79,14 @@ $(function(){
     $('#satellite2DropDown').select2();
 
 });
+
+function handleTick(clock){
+    // Get satellite id.
+    var sid1 = $('#satellite1DropDown').val();
+    var sid2 = $('#satellite2DropDown').val();
+
+    console.log(Cesium.JulianDate.greaterThanOrEquals(clock.currentTime, Cesium.JulianDate.fromIso8601('2018-03-15T10:01:00Z')));
+}
 
 /**
  * Add ground station
@@ -439,14 +449,6 @@ function ajaxInit() {
 
 }
 
-/**
- * Collision, get satellite information.
- * 
- */
-function Collision() {
-    
-}
-
 
 /**
  * Web socket connect to /sass-websocket
@@ -504,6 +506,14 @@ function connect() {
             this.addSatellite(data);
 
             console.log("data process completed");
+        });
+
+        // Subscribe to satellite collision data feeder
+        stompClient.subscribe('/topic/satellite/collisiondata', function (collisiondata){
+            console.log("Collision Data received");
+            data = JSON.parse(collisiondata.body);
+
+            collisiondata.push(data);
         });
 
         // // Subscribe to data flag completed feeder
