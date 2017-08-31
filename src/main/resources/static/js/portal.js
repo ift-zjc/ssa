@@ -132,7 +132,7 @@ function handleTick(clock){
     }
 
     // Got the index for P
-    var p = (satellitePair[0].collisionData[leftIndex] + satellitePair[0].collisionData[leftIndex+1])/2;
+    var p = (Number(satellitePair[0].collisionData[leftIndex]) + Number(satellitePair[0].collisionData[leftIndex+1]))/2;
     console.log(p);
 
 
