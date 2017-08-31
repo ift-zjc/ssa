@@ -137,9 +137,9 @@ function handleTick(clock){
 
     if(p>80){
         $('.progress-bar').addClass('bg-danger');
-    }else(
+    }else {
         $('.progress-bar').removeClass('bg-danger');
-    )
+    }
     $('.progress-bar').css('width', p.toFixed(2)+'%').attr('aria-valuenow', p.toFixed(2));
     $('.progress-bar').html(p.toFixed(2) + '%');
     console.log(p);
