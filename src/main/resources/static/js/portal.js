@@ -114,14 +114,6 @@ function handleTick(clock){
         return pass;
     });
 
-    _.every(satellitePair[0].timeData, function(pdata, k) {
-        var pTime = Cesium.JulianDate.fromIso8601(pdata);
-        var pass = Cesium.JulianDate.greaterThanOrEquals(pTime, currentTime);
-        if(!pass){
-            rightIndex = k;
-        }
-        return pass;
-    });
 
     // _.each(satellitePair[0].timeData, function(pdata) {
     //
@@ -135,12 +127,12 @@ function handleTick(clock){
     // });
 
     // Check for index
-    if(leftIndex == -1 || rightIndex == -1){
+    if(leftIndex == -1 || leftIndex == satellitePair[0].timeData.length){
         return;
     }
 
     // Got the index for P
-    var p = (satellitePair[0].collisionData[leftIndex] + satellitePair[0].collisionData[rightIndex])/2;
+    var p = (satellitePair[0].collisionData[leftIndex] + satellitePair[0].collisionData[leftIndex+1])/2;
     console.log(p);
 
 
