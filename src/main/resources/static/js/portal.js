@@ -133,6 +133,9 @@ function handleTick(clock){
 
     // Got the index for P
     var p = (Number(satellitePair[0].collisionData[leftIndex]) + Number(satellitePair[0].collisionData[leftIndex+1]))/2;
+    var p = p*100;
+    $('.progress-bar').css('width', p.toFixed(2)+'%').attr('aria-valuenow', p.toFixed(2));
+    $('.progress-bar').html(p.toFixed(2) + '%');
     console.log(p);
 
 
