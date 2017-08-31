@@ -85,6 +85,9 @@ function handleTick(clock){
     var sid1 = $('#satellite1DropDown').val();
     var sid2 = $('#satellite2DropDown').val();
 
+    // Check for satellite pair
+
+
     console.log(Cesium.JulianDate.greaterThanOrEquals(clock.currentTime, Cesium.JulianDate.fromIso8601('2018-03-15T10:01:00Z')));
 }
 
@@ -513,7 +516,7 @@ function connect() {
             console.log("Collision Data received");
             data = JSON.parse(collisiondata.body);
 
-            collisiondata.push(data);
+            collisionData.push(data);
         });
 
         // // Subscribe to data flag completed feeder
