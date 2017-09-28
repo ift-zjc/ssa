@@ -3,6 +3,7 @@ package com.ift.web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
 import com.ift.domain.czml.*;
+import javafx.concurrent.Task;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

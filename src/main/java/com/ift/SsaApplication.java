@@ -1,10 +1,9 @@
 package com.ift;
 
-import com.ift.domain.Satellite;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.List;
+import java.io.File;
 
 @SpringBootApplication
 public class SsaApplication {
