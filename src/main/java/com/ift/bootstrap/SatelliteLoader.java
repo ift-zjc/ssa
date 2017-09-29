@@ -2,6 +2,7 @@ package com.ift.bootstrap;
 
 import com.ift.common.Helper;
 import com.ift.domain.Satellite;
+import com.ift.domain.SatelliteID;
 import com.ift.domain.SatellitePosition;
 import com.ift.services.SatelliteService;
 import com.ift.services.StatusService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.util.ArrayUtils;
 
 import javax.persistence.EntityManager;
 import java.io.*;
@@ -54,7 +56,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
         satelliteService.saveSatellite(satellite);
 
 
-        File file = new File("C:\\Users\\Zhijiang Chen\\Desktop\\SO_info.txt");
+        File file = new File("C:\\Users\\Zhijiang Chen\\Desktop\\SO_info_1.txt");
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             //string information for file.txt
@@ -78,14 +80,19 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 
             while ((line = br.readLine()) != null) {
                 String[] splitSt = line.split(",");
+
                 if (++index == 0) continue;
+
 
                 SatelliteID = splitSt[0];
 
                 for(int i = 1; i<splitSt.length; i++)
                         //set attributes
                     try{
+
+
                     Time = "2012-03-15T10:00:00Z";
+
                     X = splitSt[i++];
                     Y = splitSt[i++];
                     Z = splitSt[i++];
