@@ -63,7 +63,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
             String line;
 
             //set attributes for file.txt
-            String SatelliteID = "";
+            String satelliteID = "";
             String Time = "";
             String X = "";
             String Y = "";
@@ -80,30 +80,29 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 
             while ((line = br.readLine()) != null) {
                 String[] splitSt = line.split(",");
-
+                List newList = new ArrayList();
+                for (int i = 0; i < splitSt.length; i ++){
+                    newList.add(splitSt[i]);
+                }
+                newList.remove("0");
                 if (++index == 0) continue;
 
-
-                SatelliteID = splitSt[0];
-
-                for(int i = 1; i<splitSt.length; i++)
+                satelliteID = String.valueOf(newList.get(0));
+                for(int i = 1; i<newList.size(); i++)
                         //set attributes
                     try{
-
-
                     Time = "2012-03-15T10:00:00Z";
-
-                    X = splitSt[i++];
-                    Y = splitSt[i++];
-                    Z = splitSt[i++];
-                    Vx = splitSt[i++];
-                    Vy = splitSt[i++];
-                    Vz = splitSt[i++];
-
+                    X = String.valueOf(newList.get(i++));
+                    Y = String.valueOf(newList.get(i++));
+                    Z = String.valueOf(newList.get(i++));
+                    Vx = String.valueOf(newList.get(i++));
+                    Vy = String.valueOf(newList.get(i++));
+                    Vz = String.valueOf(newList.get(i++));
+                    i = i -1;
                     //set data to mysql
                     SatellitePosition satellitePosition = new SatellitePosition();
 
-
+//                    satellitePosition.setSatelliteID(satelliteID);
                     satellitePosition.setTime(Time);
                     satellitePosition.setX(Float.parseFloat(X));
                     satellitePosition.setY(Float.parseFloat(Y));
