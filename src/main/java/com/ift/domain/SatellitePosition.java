@@ -10,7 +10,7 @@ import java.util.List;
 
 //create database entity
 @Entity
-public class Status {
+public class SatellitePosition {
 
     //set database attributes
     @Id
@@ -71,6 +71,4 @@ public class Status {
     public float getVz() { return vz; }
     public void setVz(float vz) { this.vz = vz; }
 }
-
-
 

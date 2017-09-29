@@ -2,7 +2,7 @@ package com.ift.bootstrap;
 
 import com.ift.common.Helper;
 import com.ift.domain.Satellite;
-import com.ift.domain.Status;
+import com.ift.domain.SatellitePosition;
 import com.ift.services.SatelliteService;
 import com.ift.services.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,10 @@ import javax.persistence.EntityManager;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -51,7 +54,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
         satelliteService.saveSatellite(satellite);
 
 
-        File file = new File("C:\\Users\\Zhijiang Chen\\Desktop\\SO_info.txt");
+        File file = new File("/Users/tianxiangliu/Desktop/SO_info.txt");
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             //string information for file.txt
@@ -70,52 +73,47 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
             ArrayList list = new ArrayList();
             int index = 0;
             //Begin a transaction
-            List<Status> statusList = new ArrayList<Status>();
+            List<SatellitePosition> statusList = new ArrayList<SatellitePosition>();
 
 
             while ((line = br.readLine()) != null) {
                 String[] splitSt = line.split(",");
                 if (++index == 0) continue;
 
-                    if (splitSt.length < line.length()) {
+                SatelliteID = splitSt[0];
+
+                for(int i = 1; i<splitSt.length; i++)
                         //set attributes
-                        SatelliteID = splitSt[0];
-                        Time = "2012-03-15T10:00:00Z";
-                        X = splitSt[1];
-                        Y = splitSt[2];
-                        Z = splitSt[3];
-                        Vx = splitSt[4];
-                        Vy = splitSt[5];
-                        Vz = splitSt[6];
-                    }
+
+
+                    try{
+                    Time = "2012-03-15T10:00:00Z";
+                    X = splitSt[i++];
+                    Y = splitSt[i++];
+                    Z = splitSt[i++];
+                    Vx = splitSt[i++];
+                    Vy = splitSt[i++];
+                    Vz = splitSt[i++];
+
                     //set data to mysql
-                    Status status = new Status();
+                    SatellitePosition satellitePosition = new SatellitePosition();
 
-                    status.setSatellieID(Float.parseFloat(SatelliteID));
-                    statusService.saveStatus(status);
+                    satellitePosition.setSatellieID(Float.parseFloat(SatelliteID));
+                    satellitePosition.setTime(Time);
+                    satellitePosition.setX(Float.parseFloat(X));
+                    satellitePosition.setY(Float.parseFloat(Y));
+                    satellitePosition.setZ(Float.parseFloat(Z));
+                    satellitePosition.setVx(Float.parseFloat(Vx));
+                    satellitePosition.setVy(Float.parseFloat(Vy));
+                    satellitePosition.setVz(Float.parseFloat(Vz));
 
-                    status.setTime(Time);
-                    statusService.saveStatus(status);
+                    statusService.saveStatus(satellitePosition);
+                    statusList.add(satellitePosition);
 
-                    status.setX(Float.parseFloat(X));
-                    statusService.saveStatus(status);
+                }catch(Exception ex) {break;}
 
-                    status.setY(Float.parseFloat(Y));
-                    statusService.saveStatus(status);
 
-                    status.setZ(Float.parseFloat(Z));
-                    statusService.saveStatus(status);
 
-                    status.setVx(Float.parseFloat(Vx));
-                    statusService.saveStatus(status);
-
-                    status.setVy(Float.parseFloat(Vy));
-                    statusService.saveStatus(status);
-
-                    status.setVz(Float.parseFloat(Vz));
-                    statusService.saveStatus(status);
-
-                    statusList.add(status);
 
                 }
             } catch (IOException e) {
