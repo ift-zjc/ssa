@@ -7,7 +7,8 @@ import java.util.Set;
 @Table(name = "satellite_id")
 public class SatelliteID {
 
-    private int id;
+    @Id
+    private String id;
     private String name;
     @OneToMany(mappedBy = "Satellite")
     private Set<SatellitePosition> satellitePositions;
@@ -22,11 +23,11 @@ public class SatelliteID {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

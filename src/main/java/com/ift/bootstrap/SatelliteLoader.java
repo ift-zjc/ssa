@@ -63,7 +63,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
             String line;
 
             //set attributes for file.txt
-            String satelliteID = "";
+            String satelliteId = "";
             String Time = "";
             String X = "";
             String Y = "";
@@ -82,7 +82,13 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                 String[] splitSt = line.split(",");
                 if (++index == 0) continue;
 
-                satelliteID = splitSt[0];
+                satelliteId = splitSt[0];
+
+                SatelliteID satelliteID = new SatelliteID();
+                satelliteID.setId(satelliteId);
+
+                // TODO add satelliteID service to save satelliteID
+
 
                 for(int i = 2; i<splitSt.length; i++)
                         //set attributes
@@ -106,6 +112,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                     satellitePosition.setVx(Float.parseFloat(Vx));
                     satellitePosition.setVy(Float.parseFloat(Vy));
                     satellitePosition.setVz(Float.parseFloat(Vz));
+                    satellitePosition.setSatelliteID(satelliteID);
 
                     statusService.saveStatus(satellitePosition);
                     statusList.add(satellitePosition);
