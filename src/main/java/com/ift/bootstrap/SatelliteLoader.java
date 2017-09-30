@@ -56,7 +56,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
         satelliteService.saveSatellite(satellite);
 
 
-        File file = new File("C:\\Users\\Zhijiang Chen\\Desktop\\SO_info_1.txt");
+        File file = new File("/Users/tianxiangliu/Desktop/SO_info_1.txt");
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             //string information for file.txt
@@ -80,25 +80,21 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 
             while ((line = br.readLine()) != null) {
                 String[] splitSt = line.split(",");
-                List newList = new ArrayList();
-                for (int i = 0; i < splitSt.length; i ++){
-                    newList.add(splitSt[i]);
-                }
-                newList.remove("0");
                 if (++index == 0) continue;
 
-                satelliteID = String.valueOf(newList.get(0));
-                for(int i = 1; i<newList.size(); i++)
+                satelliteID = splitSt[0];
+
+                for(int i = 2; i<splitSt.length; i++)
                         //set attributes
                     try{
                     Time = "2012-03-15T10:00:00Z";
-                    X = String.valueOf(newList.get(i++));
-                    Y = String.valueOf(newList.get(i++));
-                    Z = String.valueOf(newList.get(i++));
-                    Vx = String.valueOf(newList.get(i++));
-                    Vy = String.valueOf(newList.get(i++));
-                    Vz = String.valueOf(newList.get(i++));
-                    i = i -1;
+                    X = splitSt[i++];
+                    Y = splitSt[i++];
+                    Z = splitSt[i++];
+                    Vx = splitSt[i++];
+                    Vy = splitSt[i++];
+                    Vz = splitSt[i];
+
                     //set data to mysql
                     SatellitePosition satellitePosition = new SatellitePosition();
 
