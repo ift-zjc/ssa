@@ -1,8 +1,7 @@
 package com.ift.bootstrap;
 
-import com.ift.common.Helper;
+
 import com.ift.domain.Satellite;
-import com.ift.domain.SatelliteID;
 import com.ift.domain.SatellitePosition;
 import com.ift.services.SatelliteService;
 import com.ift.services.StatusService;
@@ -10,18 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-import org.thymeleaf.util.ArrayUtils;
-
-import javax.persistence.EntityManager;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Stream;
+
 
 /**
  * Created by zhijiangchen on 3/28/17.
@@ -84,10 +75,8 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 
                 satelliteId = splitSt[0];
 
-                SatelliteID satelliteID = new SatelliteID();
-                satelliteID.setId(satelliteId);
-
                 // TODO add satelliteID service to save satelliteID
+                satellite.setId(satelliteId);
 
 
                 for(int i = 2; i<splitSt.length; i++)
@@ -104,7 +93,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                     //set data to mysql
                     SatellitePosition satellitePosition = new SatellitePosition();
 
-//                    satellitePosition.setSatelliteID(satelliteID);
+
                     satellitePosition.setTime(Time);
                     satellitePosition.setX(Float.parseFloat(X));
                     satellitePosition.setY(Float.parseFloat(Y));
@@ -112,10 +101,11 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                     satellitePosition.setVx(Float.parseFloat(Vx));
                     satellitePosition.setVy(Float.parseFloat(Vy));
                     satellitePosition.setVz(Float.parseFloat(Vz));
-                    satellitePosition.setSatelliteID(satelliteID);
 
+                    satelliteService.saveSatellite(satellite);
                     statusService.saveStatus(satellitePosition);
                     statusList.add(satellitePosition);
+
 
                 }catch(Exception ex) {break;}
 

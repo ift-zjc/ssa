@@ -1,6 +1,6 @@
 package com.ift.services;
 
-import com.ift.domain.SatelliteID;
+
 import com.ift.domain.SatellitePosition;
 import com.ift.domain.repository.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;

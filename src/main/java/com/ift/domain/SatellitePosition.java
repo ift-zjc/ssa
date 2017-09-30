@@ -11,7 +11,7 @@ public class SatellitePosition {
 
     @ManyToOne
     @JoinColumn(name = "satellite_id")
-    private SatelliteID satelliteID;
+    private Satellite satellite;
     private float x;
     private float y;
     private float z;
@@ -28,9 +28,9 @@ public class SatellitePosition {
         this.name = name;
     }
 
-    public SatellitePosition(String name, SatelliteID satelliteID) {
+    public SatellitePosition(String name, Satellite satellite) {
         this.name = name;
-        this.satelliteID = satelliteID;
+        this.satellite = satellite;
     }
 
     @Id
@@ -107,15 +107,6 @@ public class SatellitePosition {
         this.vz = vz;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "satellite_id")
-    public SatelliteID getSatelliteID() {
-        return satelliteID;
-    }
-
-    public void setSatelliteID(SatelliteID satelliteID) {
-        this.satelliteID = satelliteID;
-    }
 }
 
 //    //set database attributes
