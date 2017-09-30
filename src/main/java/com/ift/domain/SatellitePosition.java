@@ -8,6 +8,9 @@ public class SatellitePosition {
     private int id;
     private String name;
     private String time;
+
+    @ManyToOne
+    @JoinColumn(name = "satellite_id")
     private SatelliteID satelliteID;
     private float x;
     private float y;

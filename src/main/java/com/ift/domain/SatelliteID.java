@@ -9,6 +9,7 @@ public class SatelliteID {
 
     private int id;
     private String name;
+    @OneToMany(mappedBy = "Satellite")
     private Set<SatellitePosition> satellitePositions;
 
     public SatelliteID(){
