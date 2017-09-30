@@ -23,7 +23,7 @@ public class Satellite {
 
     private String name;
 
-    @OneToMany(mappedBy = "satelliteId")
+    @OneToMany(mappedBy = "satellite")
     private Set<SatellitePosition> satellitePositions;
 
 
@@ -39,5 +39,13 @@ public class Satellite {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<SatellitePosition> getSatellitePositions() {
+        return satellitePositions;
+    }
+
+    public void setSatellitePositions(Set<SatellitePosition> satellitePositions) {
+        this.satellitePositions = satellitePositions;
     }
 }

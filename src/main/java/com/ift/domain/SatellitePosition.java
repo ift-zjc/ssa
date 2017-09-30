@@ -9,9 +9,9 @@ public class SatellitePosition {
     private String name;
     private String time;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "satellite_id")
-    private Satellite satelliteId;
+    private Satellite satellite;
     private float x;
     private float y;
     private float z;
@@ -19,19 +19,7 @@ public class SatellitePosition {
     private float vy;
     private float vz;
 
-    public SatellitePosition() {
-
-
-    }
-
-    public SatellitePosition(String name) {
-        this.name = name;
-    }
-
-    public SatellitePosition(String name, Satellite satellite) {
-        this.name = name;
-        this.satelliteId = satellite;
-    }
+    public SatellitePosition() {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -107,6 +95,13 @@ public class SatellitePosition {
         this.vz = vz;
     }
 
+    public Satellite getSatellite() {
+        return satellite;
+    }
+
+    public void setSatellite(Satellite satellite) {
+        this.satellite = satellite;
+    }
 }
 
 //    //set database attributes
