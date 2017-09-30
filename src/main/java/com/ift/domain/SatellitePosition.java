@@ -8,7 +8,6 @@ public class SatellitePosition {
     private int id;
     private String name;
     private String time;
-    private SatelliteID satelliteID;
     private float x;
     private float y;
     private float z;
@@ -16,19 +15,10 @@ public class SatellitePosition {
     private float vy;
     private float vz;
 
-    public SatellitePosition() {
+    @ManyToOne
+    @JoinColumn(name = "satellite_id")
+    private Satellite satellite;
 
-
-    }
-
-    public SatellitePosition(String name) {
-        this.name = name;
-    }
-
-    public SatellitePosition(String name, SatelliteID satelliteID) {
-        this.name = name;
-        this.satelliteID = satelliteID;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -104,14 +94,12 @@ public class SatellitePosition {
         this.vz = vz;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "satellite_id")
-    public SatelliteID getSatelliteID() {
-        return satelliteID;
+    public Satellite getSatellite() {
+        return satellite;
     }
 
-    public void setSatelliteID(SatelliteID satelliteID) {
-        this.satelliteID = satelliteID;
+    public void setSatellite(Satellite satellite) {
+        this.satellite = satellite;
     }
 }
 

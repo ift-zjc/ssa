@@ -1,8 +1,6 @@
 package com.ift.bootstrap;
 
-import com.ift.common.Helper;
 import com.ift.domain.Satellite;
-import com.ift.domain.SatelliteID;
 import com.ift.domain.SatellitePosition;
 import com.ift.services.SatelliteService;
 import com.ift.services.StatusService;
@@ -10,19 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
-import org.thymeleaf.util.ArrayUtils;
-
-import javax.persistence.EntityManager;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Stream;
-
 /**
  * Created by zhijiangchen on 3/28/17.
  */
@@ -63,7 +51,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
             String line;
 
             //set attributes for file.txt
-            String satelliteID = "";
+            String Id = "";
             String Time = "";
             String X = "";
             String Y = "";
@@ -77,28 +65,27 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
             //Begin a transaction
             List<SatellitePosition> statusList = new ArrayList<SatellitePosition>();
 
-
             while ((line = br.readLine()) != null) {
                 String[] splitSt = line.split(",");
-                List newList = new ArrayList();
-                for (int i = 0; i < splitSt.length; i ++){
-                    newList.add(splitSt[i]);
-                }
-                newList.remove("0");
                 if (++index == 0) continue;
 
-                satelliteID = String.valueOf(newList.get(0));
-                for(int i = 1; i<newList.size(); i++)
+                Id = splitSt[0];
+                satellite = new Satellite();
+                satellite.setSatellite_id(Id);
+                satelliteService.saveSatellite(satellite);
+
+
+                for(int i = 2; i<splitSt.length; i++)
                         //set attributes
                     try{
                     Time = "2012-03-15T10:00:00Z";
-                    X = String.valueOf(newList.get(i++));
-                    Y = String.valueOf(newList.get(i++));
-                    Z = String.valueOf(newList.get(i++));
-                    Vx = String.valueOf(newList.get(i++));
-                    Vy = String.valueOf(newList.get(i++));
-                    Vz = String.valueOf(newList.get(i++));
-                    i = i -1;
+                    X = splitSt[i++];
+                    Y = splitSt[i++];
+                    Z = splitSt[i++];
+                    Vx = splitSt[i++];
+                    Vy = splitSt[i++];
+                    Vz = splitSt[i];
+
                     //set data to mysql
                     SatellitePosition satellitePosition = new SatellitePosition();
 
