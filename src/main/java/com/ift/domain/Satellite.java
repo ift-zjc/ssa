@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by zhijiangchen on 3/28/17.
@@ -13,19 +14,19 @@ import java.util.List;
 @Entity
 public class Satellite {
 
-    @Id
-    @GeneratedValue(generator="UUID")
-    @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private String satellite_id;
     private String name;
 
-    @OneToMany(mappedBy="satellite")
-    private List<SatellitePosition> satellitePositions;
 
-    public Satellite(){
-        satellitePositions = new ArrayList<SatellitePosition>();
+    public Satellite() {}
+    public Satellite(String name) {
+        this.name = name;
     }
+
+    @Id
+    @GeneratedValue(generator="UUID")
+    @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")
 
     public String getId() {
         return id;
@@ -51,6 +52,8 @@ public class Satellite {
         this.satellite_id = satellite_id;
     }
 
+    @OneToMany(mappedBy = "satellite")
+    private List<SatellitePosition> satellitePositions;
     public List<SatellitePosition> getSatellitePositions() {
         return satellitePositions;
     }
@@ -59,3 +62,4 @@ public class Satellite {
         this.satellitePositions = satellitePositions;
     }
 }
+
