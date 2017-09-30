@@ -9,9 +9,9 @@ public class SatellitePosition {
     private String name;
     private String time;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "satellite_id")
-    private Satellite satellite;
+    private Satellite satelliteId;
     private float x;
     private float y;
     private float z;
@@ -30,7 +30,7 @@ public class SatellitePosition {
 
     public SatellitePosition(String name, Satellite satellite) {
         this.name = name;
-        this.satellite = satellite;
+        this.satelliteId = satellite;
     }
 
     @Id

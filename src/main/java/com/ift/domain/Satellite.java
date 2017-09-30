@@ -6,8 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import java.util.List;
 import java.util.Set;
+
 
 /**
  * Created by zhijiangchen on 3/28/17.
@@ -23,8 +23,8 @@ public class Satellite {
 
     private String name;
 
-    @OneToMany(mappedBy = "satellite_id")
-    private List<SatellitePosition> satellitePosition;
+    @OneToMany(mappedBy = "satelliteId")
+    private Set<SatellitePosition> satellitePositions;
 
 
     public String getId() {
