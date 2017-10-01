@@ -71,7 +71,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 
                 Id = splitSt[0];
                 satellite = new Satellite();
-                satellite.setSatellite_id(Id);
+                satellite.setId(Id);
                 satelliteService.saveSatellite(satellite);
 
 
@@ -97,6 +97,8 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                     satellitePosition.setVx(Float.parseFloat(Vx));
                     satellitePosition.setVy(Float.parseFloat(Vy));
                     satellitePosition.setVz(Float.parseFloat(Vz));
+
+                    satellitePosition.setSatellite(satellite);
 
                     statusService.saveStatus(satellitePosition);
                     statusList.add(satellitePosition);
