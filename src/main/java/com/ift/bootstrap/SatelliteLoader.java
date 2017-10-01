@@ -4,9 +4,15 @@ import com.ift.domain.Satellite;
 import com.ift.domain.SatellitePosition;
 import com.ift.services.SatelliteService;
 import com.ift.services.StatusService;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.format.datetime.DateFormatter;
+import org.springframework.format.datetime.joda.JodaDateTimeFormatAnnotationFormatterFactory;
 import org.springframework.stereotype.Component;
 import java.io.*;
 import java.util.ArrayList;
@@ -44,7 +50,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //        satelliteService.saveSatellite(satellite);
 
 
-        File file = new File("/Users/lastcow_chen/Downloads/test1");
+        File file = new File("/Users/tianxiangliu/Desktop/SO_info_1.txt");
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             //string information for file.txt
@@ -74,11 +80,15 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                 satellite.setId(Id);
                 satelliteService.saveSatellite(satellite);
 
+                String date = "2012-03-15T09:59:00";
+                DateTime dateTime = new DateTime(date);
+                DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
                 for(int i = 2; i<splitSt.length; i++)
                         //set attributes
                     try{
-                    Time = "2012-03-15T10:00:00Z";
+                    dateTime = dateTime.plusMinutes(1);
+                    Time = dateTime.toString(fmt);
                     X = splitSt[i++];
                     Y = splitSt[i++];
                     Z = splitSt[i++];
