@@ -14,19 +14,20 @@ import java.util.Set;
 @Entity
 public class Satellite {
 
+    @Id
     private String id;
     private String satellite_id;
     private String name;
+
+
+    @OneToMany(mappedBy = "satellite")
+    private List<SatellitePosition> satellitePositions;
 
 
     public Satellite() {}
     public Satellite(String name) {
         this.name = name;
     }
-
-    @Id
-    @GeneratedValue(generator="UUID")
-    @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")
 
     public String getId() {
         return id;
@@ -52,8 +53,6 @@ public class Satellite {
         this.satellite_id = satellite_id;
     }
 
-    @OneToMany(mappedBy = "satellite")
-    private List<SatellitePosition> satellitePositions;
     public List<SatellitePosition> getSatellitePositions() {
         return satellitePositions;
     }

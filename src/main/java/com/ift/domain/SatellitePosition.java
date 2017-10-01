@@ -1,11 +1,21 @@
 package com.ift.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 //create database entity
 @Entity
 public class SatellitePosition {
+
+
+    @ManyToOne
+    @JoinColumn(name = "satelliteID")
     private Satellite satellite;
+
+    @Id
+    @GeneratedValue(generator="UUID")
+    @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private String name;
     private String time;
@@ -25,8 +35,6 @@ public class SatellitePosition {
         this.satellite = satellite;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public String getId(){
         return id;
     }
@@ -99,8 +107,6 @@ public class SatellitePosition {
         this.vz = vz;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "satelliteID")
     public Satellite getSatellite() {
         return satellite;
     }

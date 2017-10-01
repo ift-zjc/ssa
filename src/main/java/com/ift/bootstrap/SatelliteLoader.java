@@ -35,16 +35,16 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
-        Satellite satellite = new Satellite();
-        satellite.setName("Satellite 1");
-        satelliteService.saveSatellite(satellite);
+//        Satellite satellite = new Satellite();
+//        satellite.setName("Satellite 1");
+//        satelliteService.saveSatellite(satellite);
+//
+//        satellite = new Satellite();
+//        satellite.setName("Satellite 2");
+//        satelliteService.saveSatellite(satellite);
 
-        satellite = new Satellite();
-        satellite.setName("Satellite 2");
-        satelliteService.saveSatellite(satellite);
 
-
-        File file = new File("C:\\Users\\Zhijiang Chen\\Desktop\\SO_info_1.txt");
+        File file = new File("/Users/lastcow_chen/Downloads/test1");
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             //string information for file.txt
@@ -70,7 +70,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                 if (++index == 0) continue;
 
                 Id = splitSt[0];
-                satellite = new Satellite();
+                Satellite satellite = new Satellite();
                 satellite.setId(Id);
                 satelliteService.saveSatellite(satellite);
 
