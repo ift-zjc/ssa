@@ -50,7 +50,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //        satelliteService.saveSatellite(satellite);
 
 
-        File file = new File("/Users/tianxiangliu/Desktop/SO_info_1.txt");
+        File file = new File("C:\\Users\\Zhijiang Chen\\Desktop\\SO_info_revised.txt");
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             //string information for file.txt
@@ -62,14 +62,11 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
             String X = "";
             String Y = "";
             String Z = "";
-            String Vx = "";
-            String Vy = "";
-            String Vz = "";
 
-            ArrayList list = new ArrayList();
+
             int index = 0;
             //Begin a transaction
-            List<SatellitePosition> statusList = new ArrayList<SatellitePosition>();
+
 
             while ((line = br.readLine()) != null) {
                 String[] splitSt = line.split(",");
@@ -84,45 +81,41 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                 DateTime dateTime = new DateTime(date);
                 DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-                for(int i = 2; i<splitSt.length; i++)
-                        //set attributes
-                    try{
-                    dateTime = dateTime.plusMinutes(1);
-                    Time = dateTime.toString(fmt);
-                    X = splitSt[i++];
-                    Y = splitSt[i++];
-                    Z = splitSt[i++];
-                    Vx = splitSt[i++];
-                    Vy = splitSt[i++];
-                    Vz = splitSt[i];
+                for (int i = 1; i < splitSt.length; i++)
+                    //set attributes
+                    try {
+                        dateTime = dateTime.plusMinutes(1);
+                        Time = dateTime.toString(fmt);
+                        X = splitSt[i++];
+                        Y = splitSt[i++];
+                        Z = splitSt[i];
 
-                    //set data to mysql
-                    SatellitePosition satellitePosition = new SatellitePosition();
+                        //set data to mysql
+                        SatellitePosition satellitePosition = new SatellitePosition();
 
 //                    satellitePosition.setSatelliteID(satelliteID);
-                    satellitePosition.setTime(Time);
-                    satellitePosition.setX(Float.parseFloat(X));
-                    satellitePosition.setY(Float.parseFloat(Y));
-                    satellitePosition.setZ(Float.parseFloat(Z));
-                    satellitePosition.setVx(Float.parseFloat(Vx));
-                    satellitePosition.setVy(Float.parseFloat(Vy));
-                    satellitePosition.setVz(Float.parseFloat(Vz));
+                        satellitePosition.setTime(Time);
+                        satellitePosition.setX(Float.parseFloat(X));
+                        satellitePosition.setY(Float.parseFloat(Y));
+                        satellitePosition.setZ(Float.parseFloat(Z));
 
-                    satellitePosition.setSatellite(satellite);
+                        satellitePosition.setSatellite(satellite);
 
-                    statusService.saveStatus(satellitePosition);
-                    statusList.add(satellitePosition);
+                        statusService.saveStatus(satellitePosition);
 
-                }catch(Exception ex) {break;}
+                    } catch (Exception ex) {
+                        break;
+                    }
 
 
-
-
-                }
-            } catch (IOException e) {
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-        }
+}
+//    }
+//}
+
 
 

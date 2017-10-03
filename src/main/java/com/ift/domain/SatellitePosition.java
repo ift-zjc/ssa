@@ -22,9 +22,6 @@ public class SatellitePosition {
     private float x;
     private float y;
     private float z;
-    private float vx;
-    private float vy;
-    private float vz;
 
     public SatellitePosition (){}
     public SatellitePosition(String name) {
@@ -81,30 +78,6 @@ public class SatellitePosition {
 
     public void setZ(float z) {
         this.z = z;
-    }
-
-    public float getVx() {
-        return vx;
-    }
-
-    public void setVx(float vx) {
-        this.vx = vx;
-    }
-
-    public float getVy() {
-        return vy;
-    }
-
-    public void setVy(float vy) {
-        this.vy = vy;
-    }
-
-    public float getVz() {
-        return vz;
-    }
-
-    public void setVz(float vz) {
-        this.vz = vz;
     }
 
     public Satellite getSatellite() {
