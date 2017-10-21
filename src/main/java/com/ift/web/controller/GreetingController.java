@@ -24,6 +24,8 @@ public class GreetingController {
     }
 
 
+
+
     @GetMapping(value = "/index")
     public String showIndex(Model model){
         return "index";

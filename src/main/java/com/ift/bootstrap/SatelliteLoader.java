@@ -50,9 +50,10 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //        satelliteService.saveSatellite(satellite);
 
 
-        File file = new File("C:\\Users\\Zhijiang Chen\\Desktop\\SO_info_revised.txt");
+        File file = new File("SO_info_revised.txt");
+        String absolutePath = file.getAbsolutePath();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(absolutePath))) {
             //string information for file.txt
             String line;
 
@@ -93,7 +94,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                         //set data to mysql
                         SatellitePosition satellitePosition = new SatellitePosition();
 
-//                    satellitePosition.setSatelliteID(satelliteID);
+//                        satellitePosition.setSatelliteID(satelliteID);
                         satellitePosition.setTime(Time);
                         satellitePosition.setX(Float.parseFloat(X));
                         satellitePosition.setY(Float.parseFloat(Y));
@@ -114,8 +115,9 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
         }
     }
 }
-//    }
-//}
+
+
+
 
 
 
