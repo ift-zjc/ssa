@@ -41,13 +41,13 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
-        Satellite satellite = new Satellite();
-        satellite.setName("Satellite 1");
-        satelliteService.saveSatellite(satellite);
-
-        satellite = new Satellite();
-        satellite.setName("Satellite 2");
-        satelliteService.saveSatellite(satellite);
+//        Satellite satellite = new Satellite();
+//        satellite.setName("Satellite 1");
+//        satelliteService.saveSatellite(satellite);
+//
+//        satellite = new Satellite();
+//        satellite.setName("Satellite 2");
+//        satelliteService.saveSatellite(satellite);
 
 
 //        File file = new File("SO_info_revised.txt");
