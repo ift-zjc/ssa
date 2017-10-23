@@ -242,6 +242,12 @@ ApiController {
         JsonArray predefinededDataArray = new JsonArray();
         JsonArray timeDataArray = new JsonArray();
         JsonArray uncertaintyArray = new JsonArray();
+        // Fill data array
+        for (double cartesianElement:cartesianData
+                ) {
+            JsonPrimitive cartesianNode = new JsonPrimitive(cartesianElement);
+            cartesianDataArray.add(cartesianNode);
+        }
         for (double predefindedElemenet: predefinedData){
             JsonPrimitive predefindedNode = new JsonPrimitive(predefindedElemenet);
             predefinededDataArray.add(predefindedNode);
