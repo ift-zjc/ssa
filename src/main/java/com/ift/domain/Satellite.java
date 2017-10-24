@@ -1,11 +1,8 @@
 package com.ift.domain;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 /**
  * Created by zhijiangchen on 3/28/17.

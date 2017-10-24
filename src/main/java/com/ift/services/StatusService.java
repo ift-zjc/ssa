@@ -5,7 +5,6 @@ import com.ift.domain.SatellitePosition;
 import com.ift.domain.repository.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
