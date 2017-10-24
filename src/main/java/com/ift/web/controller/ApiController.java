@@ -2,7 +2,11 @@ package com.ift.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
+import com.ift.domain.Satellite;
+import com.ift.domain.SatellitePosition;
 import com.ift.domain.czml.*;
+import com.ift.requestobj.SatelliteDto;
+import com.ift.services.SatelliteService;
 import javafx.concurrent.Task;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by chen3 on 5/9/17.
@@ -31,6 +37,8 @@ ApiController {
 
     @Autowired
     private SimpMessagingTemplate webSocket;
+    @Autowired
+    private SatelliteService satelliteService;
 
 
     /**
@@ -304,6 +312,62 @@ ApiController {
          */
         webSocket.convertAndSend("/topic/satellite/datacompleted", jsonStr);
         return new ResponseEntity<Object>(null, HttpStatus.MULTI_STATUS.OK);
+    }
+
+
+    @PostMapping(value = "/feedPredefindedSatelliteData")
+    public @ResponseBody ResponseEntity<?> LoadPredefindedData(){
+        LOGGER.info("Start load pre-definded data");
+
+        // Get data from database.
+        List<Satellite> satellites = satelliteService.listSatellites();
+        List<SatelliteDto> satelliteDtos = satellites.stream().map(
+                satellite -> {
+                    SatelliteDto satelliteDto = new SatelliteDto();
+                    return satelliteDto;
+                }
+        ).collect(Collectors.toList());
+
+        for(Satellite satellite : satellites) {
+            // Creating Json object.
+            JsonObject jsonObject = new JsonObject();
+            JsonArray cartesianDataArray = new JsonArray();
+            JsonArray timeDataArray = new JsonArray();
+
+            // Fill data array
+
+            for(SatellitePosition satellitePosition : satellite.getSatellitePositions()) {
+                JsonPrimitive cartesianNode = new JsonPrimitive(satellitePosition.getX());
+                cartesianDataArray.add(cartesianNode);
+                cartesianNode = new JsonPrimitive(satellitePosition.getY());
+                cartesianDataArray.add(cartesianNode);
+                cartesianNode = new JsonPrimitive(satellitePosition.getZ());
+                cartesianDataArray.add(cartesianNode);
+
+                JsonPrimitive timeDataNode = new JsonPrimitive(satellitePosition.getTime());
+                timeDataArray.add(timeDataNode);
+            }
+
+            jsonObject.addProperty("satelliteId", satellite.getId());
+            jsonObject.addProperty("satelliteName", satellite.getName());
+            jsonObject.addProperty("satelliteDesc", "");
+//            jsonObject.addProperty("satelliteAvailability", satelliteAvailability);
+//            jsonObject.addProperty("satelliteEpoch", satelliteEpoch);
+            jsonObject.add("satelliteData", cartesianDataArray);
+            jsonObject.add("timeData", timeDataArray);
+
+            // Move to seperated API
+//        jsonObject.addProperty("completed", completeFlag);
+
+
+            String jsonStr = (new Gson()).toJson(jsonObject);
+
+            /**
+             * Write to websocket channel: /topic/satellite/satellitedata
+             */
+            webSocket.convertAndSend("/topic/satellite/preloadeddata", jsonStr);
+        }
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     /**

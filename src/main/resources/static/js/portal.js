@@ -167,6 +167,77 @@ function addGroundStation(gsId, cartesian3){
 
 
 /**
+ * Add simple satellite (no pre-definded entities)
+ * @param satelliteJson
+ */
+function addSatelliteSimple(satelliteJson){
+
+    var sId = satelliteJson.satelliteId;
+    var sName = satelliteJson.satelliteName;
+
+    satellites.push(sId);
+
+    // Compute position
+    var positions = new Cesium.SampledPositionProperty();
+    var timeDataArray = satelliteJson.timeData.toString().split(",");
+    var cartesian3DataArray = satelliteJson.satelliteData.toString().split(",");
+
+    var point = new Cesium.PointGraphics({
+        pixelSize: 5,
+        color: Cesium.Color.RED
+    });
+
+    // Loop timedata array
+    var index = 0;
+    _.each(timeDataArray, function(timeData){
+        var nodePosition = cartesian3DataArray.slice(index, index+3);
+        index = index+3;
+
+        //position.addSample(Cesium.JulianDate.fromIso8601('2012-03-15T10:01:00Z'), new Cesium.Cartesian3(3169722.12564676,-2787480.80604407,-5661647.74541255));
+        // Add to position
+        positions.addSample(Cesium.JulianDate.fromIso8601(_.trim(timeData, "\"")), Cesium.Cartesian3.fromDegrees(nodePosition[0], nodePosition[1], nodePosition[2]));
+    });
+
+    // Compute entity
+    var entity = new Cesium.Entity({id: sId});
+
+    entity.point = point;
+
+    // Position
+    entity.position = positions;
+    entity.orientation = new Cesium.VelocityOrientationProperty(positions);
+
+    var fadedLine = new Cesium.StripeMaterialProperty({
+        evenColor: Cesium.Color.YELLOW,
+        oddColor: Cesium.Color.BLACK,
+        repeat: 1,
+        offset: 0.2,
+        orientation: Cesium.StripeOrientation.VERTICAL
+    });
+
+    if(showPath) {
+        var path = new Cesium.PathGraphics();
+        path.material = fadedLine;
+        path.leadTime = new Cesium.ConstantProperty(0);
+        path.trailTime = new Cesium.ConstantProperty(3600 * 1);
+
+        entity.path = path;
+    }
+
+
+
+    // Make a smooth path
+    entity.position.setInterpolationOptions({
+        interpolationDegree : 5,
+        interpolationAlgorithm : Cesium.LagrangePolynomialApproximation
+    });
+
+    viewer.entities.add(entity);
+
+}
+
+
+/**
  * Add satellite data
  * @param sId
  * @param cartesian3
@@ -577,6 +648,12 @@ function connect() {
             collisionData.push(data);
         });
 
+        // Subscribe to satellite collision data feeder
+        stompClient.subscribe('/topic/satellite/preloadeddata', function (satellitedata){
+
+            data = JSON.parse(satellitedata.body);
+            this.addSatelliteSimple(data);
+        })
         // // Subscribe to data flag completed feeder
         // stompClient.subscribe('/topic/satellite/datacompleted', function (completedFlag){
         //     data = JSON.parse(completedFlag.body);
