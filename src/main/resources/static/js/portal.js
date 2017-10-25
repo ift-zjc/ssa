@@ -529,8 +529,13 @@ function ajaxInit() {
 
             _.each(satellites, function(sid){
 
-                var entity = viewer.entities.getById(sid);
-                entity.path = path;
+                if(sid.startsWith("pre_")) {}
+
+                else {
+                    var entity = viewer.entities.getById(sid);
+                    entity.path = path;
+                }
+
             });
 
             var fadedLine = new Cesium.StripeMaterialProperty({
