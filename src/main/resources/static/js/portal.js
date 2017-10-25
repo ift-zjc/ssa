@@ -184,7 +184,7 @@ function addSatelliteSimple(satelliteJson){
 
     var point = new Cesium.PointGraphics({
         pixelSize: 5,
-        color: Cesium.Color.RED
+        color: Cesium.Color.YELLOW
     });
 
     // Loop timedata array
