@@ -50,69 +50,69 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //        satelliteService.saveSatellite(satellite);
 
 
-        File file = new File("SO_info_revised.txt");
-        String absolutePath = file.getAbsolutePath();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(absolutePath))) {
-            //string information for file.txt
-            String line;
-
-            //set attributes for file.txt
-            String Id = "";
-            String Time = "";
-            String X = "";
-            String Y = "";
-            String Z = "";
-
-
-            int index = 0;
-            //Begin a transaction
-
-
-            while ((line = br.readLine()) != null) {
-                String[] splitSt = line.split(",");
-                if (++index == 0) continue;
-
-                Id = splitSt[0];
-                Satellite satellite = new Satellite();
-                satellite.setId("pre_" + Id);
-                satelliteService.saveSatellite(satellite);
-
-                String date = "2017-10-26T09:59:00";
-                DateTime dateTime = new DateTime(date);
-                DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-                for (int i = 1; i < splitSt.length; i++)
-                    //set attributes
-                    try {
-                        dateTime = dateTime.plusMinutes(1);
-                        Time = dateTime.toString(fmt);
-                        X = splitSt[i++];
-                        Y = splitSt[i++];
-                        Z = splitSt[i];
-
-                        //set data to mysql
-                        SatellitePosition satellitePosition = new SatellitePosition();
-
-//                        satellitePosition.setSatelliteID(satelliteID);
-                        satellitePosition.setTime(Time);
-                        satellitePosition.setX(Float.parseFloat(X) * 1);
-                        satellitePosition.setY(Float.parseFloat(Y) * 1);
-                        satellitePosition.setZ(Float.parseFloat(Z) * 1);
-
-                        satellitePosition.setSatellite(satellite);
-
-                        statusService.saveStatus(satellitePosition);
-
-                    } catch (Exception ex) {
-                        break;
-                    }
-
-
-            }
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+//        File file = new File("SO_info_revised.txt");
+//        String absolutePath = file.getAbsolutePath();
+//
+//        try (BufferedReader br = new BufferedReader(new FileReader(absolutePath))) {
+//            //string information for file.txt
+//            String line;
+//
+//            //set attributes for file.txt
+//            String Id = "";
+//            String Time = "";
+//            String X = "";
+//            String Y = "";
+//            String Z = "";
+//
+//
+//            int index = 0;
+//            //Begin a transaction
+//
+//
+//            while ((line = br.readLine()) != null) {
+//                String[] splitSt = line.split(",");
+//                if (++index == 0) continue;
+//
+//                Id = splitSt[0];
+//                Satellite satellite = new Satellite();
+//                satellite.setId("pre_" + Id);
+//                satelliteService.saveSatellite(satellite);
+//
+//                String date = "2017-10-26T09:59:00";
+//                DateTime dateTime = new DateTime(date);
+//                DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+//
+//                for (int i = 1; i < splitSt.length; i++)
+//                    //set attributes
+//                    try {
+//                        dateTime = dateTime.plusMinutes(1);
+//                        Time = dateTime.toString(fmt);
+//                        X = splitSt[i++];
+//                        Y = splitSt[i++];
+//                        Z = splitSt[i];
+//
+//                        //set data to mysql
+//                        SatellitePosition satellitePosition = new SatellitePosition();
+//
+////                        satellitePosition.setSatelliteID(satelliteID);
+//                        satellitePosition.setTime(Time);
+//                        satellitePosition.setX(Float.parseFloat(X) * 1);
+//                        satellitePosition.setY(Float.parseFloat(Y) * 1);
+//                        satellitePosition.setZ(Float.parseFloat(Z) * 1);
+//
+//                        satellitePosition.setSatellite(satellite);
+//
+//                        statusService.saveStatus(satellitePosition);
+//
+//                    } catch (Exception ex) {
+//                        break;
+//                    }
+//
+//
+//            }
+//        }catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }
 
