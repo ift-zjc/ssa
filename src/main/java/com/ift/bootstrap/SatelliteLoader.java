@@ -78,7 +78,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //                satellite.setId("pre_" + Id);
 //                satelliteService.saveSatellite(satellite);
 //
-//                String date = "2017-10-26T09:59:00";
+//                String date = "2017-10-27T09:59:00";
 //                DateTime dateTime = new DateTime(date);
 //                DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 //

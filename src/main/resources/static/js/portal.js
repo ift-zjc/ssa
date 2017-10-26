@@ -672,6 +672,17 @@ function connect() {
 }
 
 /**
+ *  auto load data from database
+ */
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', "/api/feedPredefindedSatelliteData", true);
+    xhr.send();
+
+
+
+
+/**
  * Make connection
  */
 async function makeConnection(option){
