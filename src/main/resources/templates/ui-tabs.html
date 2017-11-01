@@ -25,10 +25,8 @@
     <link href="/assets/css/style.css" rel="stylesheet" type="text/css">
     <!-- Head Libs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <!-- Latest compiled and minified CSS -->
+    <!-- Cesium add-on -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -45,14 +43,11 @@
 
     <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
-    <!-- Cesium add-on -->
     <title th:text="#{title.portal}">Title</title>
     <script th:src="@{/js/underscore-min.js}"></script>
     <script th:src="@{/js/multivariate-normal.min.js}"></script>
@@ -68,6 +63,7 @@
 
     <script src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></script>
     <script src="https://www.promisejs.org/polyfills/promise-done-7.0.4.min.js"></script>
+
 </head>
 
 <body class="header-light sidebar-dark sidebar-expand">
@@ -130,22 +126,18 @@
             <!-- =================================== -->
             <div class="widget-list">
                 <div class="row">
-                    <div class="col-lg-9">
-                        <div class="panel panel-default">
-                            <div id="cesiumContainer"></div>
-                        </div>
-                    </div>
                     <!-- Tabs Vertical Left -->
                     <div class="col-md-12 widget-holder">
                         <div class="widget-bg">
                             <div class="widget-body clearfix">
                                 <h5 class="box-title">Cesium</h5>
 
-                                <!--<div class="col-lg-9">-->
-                                    <!--<div class="panel panel-default">-->
-                                        <!--<div id="cesiumContainer"></div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
+                                <div class="col-md-8 widget-holder">
+                                    <div class="panel panel-default">
+                                        <div id="cesiumContainer"></div>
+                                    </div>
+                                </div>
+
                                 <!--<div class="tabs tabs-vertical">-->
                                     <!--<ul class="nav nav-tabs flex-column">-->
                                         <!--<li class="nav-item active"><a class="nav-link" href="#home-tab-v1" data-toggle="tab" aria-expanded="true">Home</a></li>-->
@@ -175,6 +167,7 @@
                                     <!--&lt;!&ndash; /.tab-content &ndash;&gt;-->
                                 <!--</div>-->
                                 <!-- /.tabs -->
+                            </div>
                             </div>
                             <!-- /.widget-body -->
                         </div>
