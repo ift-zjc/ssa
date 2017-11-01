@@ -12,8 +12,8 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title th:text="#{title.portal}">Title</title>
     <!-- CSS -->
-    <link href="../static/assets/vendors/material-icons/material-icons.css" rel="stylesheet" type="text/css">
-    <link href="../static/assets/vendors/mono-social-icons/monosocialiconsfont.css" rel="stylesheet" type="text/css">
+    <link href="/assets/vendors/material-icons/material-icons.css" rel="stylesheet" type="text/css">
+    <link href="/assets/vendors/mono-social-icons/monosocialiconsfont.css" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.4/sweetalert2.css" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.1.3/mediaelementplayer.min.css" rel="stylesheet" type="text/css">
@@ -22,19 +22,19 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="../static/assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/style.css" rel="stylesheet" type="text/css">
     <!-- Head Libs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 
     <!-- Cesium add-on -->
     <title th:text="#{title.portal}">Title</title>
     <script th:src="@{/js/underscore-min.js}"></script>
-    <script th:src="@{js/multivariate-normal.min.js}"></script>
-    <script th:src="@{Cesium/Cesium.js}"></script>
-    <script th:src="@{js/bootstrap.file-input.js}"></script>
-    <script th:src="@{js/portal.js}"></script>
+    <script th:src="@{/js/multivariate-normal.min.js}"></script>
+    <script th:src="@{/Cesium/Cesium.js}"></script>
+    <script th:src="@{/js/bootstrap.file-input.js}"></script>
+    <script th:src="@{/js/portal.js}"></script>
     <style>
-        @import url(../static/Cesium/Widgets/widgets.css);
+        @import url(/Cesium/Widgets/widgets.css);
         #cesiumContainer {
             width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
         }
