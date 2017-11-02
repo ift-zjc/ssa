@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <link rel="stylesheet" href="../templates/assets/css/pace.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<head lang="en">
+    <!--<link rel="stylesheet" href="/assets/css/pace.css">-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>-->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <link rel="icon" type="image/png" sizes="16x16" href="../templates/assets/demo/favicon.png">
+
+    <!--<link rel="icon" type="image/png" sizes="16x16" href="/assets/demo/favicon.png">-->
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Tabs</title>
+    <title th:text="#{title.portal}">Title</title>
     <!-- CSS -->
-    <link href="../templates/assets/vendors/material-icons/material-icons.css" rel="stylesheet" type="text/css">
-    <link href="../templates/assets/vendors/mono-social-icons/monosocialiconsfont.css" rel="stylesheet" type="text/css">
+    <link href="/assets/vendors/material-icons/material-icons.css" rel="stylesheet" type="text/css">
+    <link href="/assets/vendors/mono-social-icons/monosocialiconsfont.css" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.4/sweetalert2.css" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.1.3/mediaelementplayer.min.css" rel="stylesheet" type="text/css">
@@ -21,9 +22,47 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="../templates/assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/style.css" rel="stylesheet" type="text/css">
     <!-- Head Libs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Cesium add-on -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+    <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+
+    <!-- Optional theme -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"-->
+    <!--integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">-->
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">-->
+
+    <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+    <title th:text="#{title.portal}">Title</title>
+    <script th:src="@{/js/underscore-min.js}"></script>
+    <script th:src="@{/js/multivariate-normal.min.js}"></script>
+    <script th:src="@{/Cesium/Cesium.js}"></script>
+    <script th:src="@{/js/bootstrap.file-input.js}"></script>
+    <script th:src="@{/js/portal.js}"></script>
+    <style>
+        @import url(/Cesium/Widgets/widgets.css);
+        #cesiumContainer {
+            width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+        }
+    </style>
+
+    <script src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></script>
+    <script src="https://www.promisejs.org/polyfills/promise-done-7.0.4.min.js"></script>
 </head>
 
 <body class="header-light sidebar-dark sidebar-expand">
@@ -33,7 +72,7 @@
         <!-- Logo Area -->
         <div class="navbar-header">
             <a class="navbar-brand">
-                <img class="logo-expand" alt="" src="../templates/assets/demo/IFTLogo_Transparent_300dpi.png">
+                <img class="logo-expand" alt="" src="/assets/demo/IFTLogo_Transparent_300dpi.png">
                 <!--<img class="logo-collapse" alt="" src="../templates/assets/demo/logo-collapse.png">-->
                 <!-- <p>OSCAR</p> -->
             </a>
@@ -49,12 +88,12 @@
             <!-- Sidebar Menu -->
             <nav class="sidebar-nav">
                 <ul class="nav in side-menu">
-                    <li><a href="ui-tabs.html" class="ripple"><i class="list-icon material-icons">network_check</i> <span class="hide-menu">Dashboard</span></a></li>
+                    <li><a href="/portal" class="ripple"><i class="list-icon material-icons">network_check</i> <span class="hide-menu">Dashboard</span></a></li>
 
                     <!--<li class="list-divider"></li>-->
-                    <li><a href="Scenario1.html" class="ripple"><i class="list-icon material-icons">playlist_add</i> <span class="hide-menu">Scenario 1</span></a></li>
+                    <li><a href="/scenario1" class="ripple"><i class="list-icon material-icons">playlist_add</i> <span class="hide-menu">Scenario 1</span></a></li>
                     <li><a href="#" class="ripple"><i class="list-icon material-icons">lightbulb_outline</i> <span class="hide-menu">Scenario 2</span></a></li>
-                    <li><a href="Scenario3.html" class="ripple"><i class="list-icon material-icons">developer_board</i> <span class="hide-menu">Scenario 3</span></a></li>
+                    <li><a href="/scenario3" class="ripple"><i class="list-icon material-icons">developer_board</i> <span class="hide-menu">Scenario 3</span></a></li>
                     <li class="list-divider"></li>
                     <li><a href="#" class="ripple"><i class="list-icon material-icons">notifications_none</i> <span class="hide-menu">Updates</span></a></li>
                 </ul>
@@ -87,48 +126,22 @@
             <div class="widget-list">
                 <div class="row">
                     <!-- Tabs Vertical Left -->
-                    <div class="col-md-12 widget-holder">
+                    <div class="col-md-10 widget-holder">
                         <div class="widget-bg">
                             <div class="widget-body clearfix">
-                                <h5 class="box-title">Cesium</h5>
-                                <div class="tabs tabs-vertical">
-                                    <ul class="nav nav-tabs flex-column">
-                                        <li class="nav-item active"><a class="nav-link" href="#home-tab-v1" data-toggle="tab" aria-expanded="true">Home</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#profile-tab-v1" data-toggle="tab" aria-expanded="true">Profile</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#messages-tab-v1" data-toggle="tab" aria-expanded="true">Messages</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#settings-tab-v1" data-toggle="tab" aria-expanded="true">Settings</a></li>
-                                    </ul>
-                                    <!-- /.nav-tabs -->
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="home-tab-v1">
-                                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet.</p>
-                                            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa.</p>
-                                        </div>
-                                        <div class="tab-pane" id="profile-tab-v1">
-                                            <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.</p>
-                                            <p>Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac.</p>
-                                        </div>
-                                        <div class="tab-pane" id="messages-tab-v1">
-                                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet.</p>
-                                            <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa.</p>
-                                        </div>
-                                        <div class="tab-pane" id="settings-tab-v1">
-                                            <p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.</p>
-                                            <p>Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac.</p>
-                                        </div>
-                                    </div>
-                                    <!-- /.tab-content -->
+                                <!--<h5 class="box-title">Cesium</h5>-->
+                                <div class="panel panel-default">
+                                    <div id="cesiumContainer"></div>
                                 </div>
-                                <!-- /.tabs -->
                             </div>
-                            <!-- /.widget-body -->
                         </div>
-                        <!-- /.widget-bg -->
-                        <!-- /.widget-holder -->
+                        <!-- /.widget-body -->
                     </div>
-                    <!-- /.row -->
+                    <!-- /.widget-bg -->
+                    <!-- /.widget-holder -->
                 </div>
-                <!-- /.widget-list -->
+                <!-- /.row -->
+            </div>
         </main>
         <!-- /.main-wrappper -->
     </div>
@@ -140,14 +153,14 @@
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.2/umd/popper.min.js"></script>
-<script src="../templates/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/4.1.3/mediaelementplayer.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.0/metisMenu.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.7.0/js/perfect-scrollbar.jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.4/sweetalert2.min.js"></script>
-<script src="../templates/assets/js/theme.js"></script>
-<script src="../templates/assets/js/custom.js"></script>
+<script src="/assets/js/theme.js"></script>
+<script src="/assets/js/custom.js"></script>
 </body>
 
 </html>
