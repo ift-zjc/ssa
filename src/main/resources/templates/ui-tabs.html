@@ -89,15 +89,15 @@
             <!-- Sidebar Menu -->
             <nav class="sidebar-nav">
                 <ul class="nav in side-menu">
-                    <li><a href="#" class="ripple"><i class="list-icon material-icons">network_check</i> <span class="hide-menu">Dashboard</span></a></li>
-
                 <!--<li class="list-divider"></li>-->
-                    <li><a href="/scenario1" class="ripple"><i class="list-icon material-icons">playlist_add</i> <span class="hide-menu">Scenario 1</span></a></li>
-                    <li><a href="/scenario2" class="ripple"><i class="list-icon material-icons">lightbulb_outline</i> <span class="hide-menu">Scenario 2</span></a></li>
-                    <li><a href="/scenario3" class="ripple"><i class="list-icon material-icons">developer_board</i> <span class="hide-menu">Scenario 3</span></a></li>
+                    <li><a href="#home-tab-v1" data-toggle="tab" aria-expanded="true" class="ripple"><i class="list-icon material-icons">network_check</i> <span class="hide-menu">Dashboard</span></a></li>
+                    <li><a href="#profile-tab-v1" data-toggle="tab" aria-expanded="true" class="ripple"><i class="list-icon material-icons">playlist_add</i> <span class="hide-menu">Scenario 1</span></a></li>
+                    <li><a href="#messages-tab-v1" data-toggle="tab" aria-expanded="true" class="ripple"><i class="list-icon material-icons">lightbulb_outline</i> <span class="hide-menu">Scenario 2</span></a></li>
+                    <li><a href="#settings-tab-v1" data-toggle="tab" aria-expanded="true" class="ripple"><i class="list-icon material-icons">developer_board</i> <span class="hide-menu">Scenario 3</span></a></li>
                     <li class="list-divider"></li>
                     <li><a href="#" class="ripple"><i class="list-icon material-icons">notifications_none</i> <span class="hide-menu">Updates</span></a></li>
                 </ul>
+
                 <!-- /.side-menu -->
             </nav>
             <!-- /.sidebar-nav -->
@@ -127,7 +127,7 @@
             <div class="widget-list">
                 <div class="row">
                     <!-- Tabs Vertical Left -->
-                    <div class="col-md-10 widget-holder">
+                    <div class="col-md-8 widget-holder">
                         <div class="widget-bg">
                             <div class="widget-body clearfix">
                                 <!--<h5 class="box-title">Cesium</h5>-->
@@ -137,7 +137,53 @@
                             </div>
                         </div>
                             <!-- /.widget-body -->
+
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="home-tab-v1">
+                            <div class="row">
+                            <div class="col-lg-3 col-sm-6 col-12 mr-b-20">
+                                <button class="btn btn-block btn-outline-primary">Upload</button>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12 mr-b-20">
+                                <button class="btn btn-block btn-outline-primary">Dash board</button>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="tab-pane" id="profile-tab-v1">
+                            <div class="row">
+                            <div class="col-lg-3 col-sm-6 col-12 mr-b-20">
+                                <button class="btn btn-block btn-outline-primary">Upload</button>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12 mr-b-20">
+                                <button class="btn btn-block btn-outline-primary">Scenario 1</button>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="messages-tab-v1">
+                            <div class="row">
+                            <div class="col-lg-3 col-sm-6 col-12 mr-b-20">
+                                <button class="btn btn-block btn-outline-primary">Upload</button>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12 mr-b-20">
+                                <button class="btn btn-block btn-outline-primary">Scenario 2</button>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="settings-tab-v1">
+                            <div class="row">
+                            <div class="col-lg-3 col-sm-6 col-12 mr-b-20">
+                                <button class="btn btn-block btn-outline-primary">Upload</button>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-12 mr-b-20">
+                                <button class="btn btn-block btn-outline-primary">Scenario 3</button>
+                            </div>
+                        </div>
+                        </div>
                     </div>
+                </div>
+
+
                         <!-- /.widget-bg -->
                     <!-- /.widget-holder -->
                 </div>
