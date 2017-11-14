@@ -30,7 +30,7 @@ public class PortalController {
         satelliteControlForm.setSatelliteList(satelliteService.listSatellites());
         model.addAttribute("satellite", satelliteControlForm);
         LOGGER.info("Start Portal Web Request");
-        return "ui-tabs";
+        return "portal";
     }
 
 
