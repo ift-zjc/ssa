@@ -2,10 +2,7 @@ package com.ift.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -15,11 +12,15 @@ public class MatlabSatellite {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
-    private String satellite_id;
+
+    @Column(unique = true)
+    private String satelliteId;
     private String name;
 
     @OneToMany(mappedBy = "matlabSatellite")
     private List<MonitorSoInfo> monitorSoInfos;
+    @OneToMany(mappedBy = "matlabSatellite")
+    private List<SmSoInfoAll> smSoInfoAlls;
 
     public MatlabSatellite(){}
     public MatlabSatellite(String name) { this.name = name; }
@@ -40,12 +41,12 @@ public class MatlabSatellite {
         this.name = name;
     }
 
-    public String getSatellite_id() {
-        return satellite_id;
+    public String getSatelliteId() {
+        return satelliteId;
     }
 
-    public void setSatellite_id(String satellite_id) {
-        this.satellite_id = satellite_id;
+    public void setSatelliteId(String satelliteId) {
+        this.satelliteId = satelliteId;
     }
 
     public List<MonitorSoInfo> getMonitorSoInfos() {
@@ -54,5 +55,13 @@ public class MatlabSatellite {
 
     public void setMonitorSoInfos(List<MonitorSoInfo> monitorSoInfos) {
         this.monitorSoInfos = monitorSoInfos;
+    }
+
+    public List<SmSoInfoAll> getSmSoInfoAlls() {
+        return smSoInfoAlls;
+    }
+
+    public void setSmSoInfoAlls(List<SmSoInfoAll> smSoInfoAlls) {
+        this.smSoInfoAlls = smSoInfoAlls;
     }
 }

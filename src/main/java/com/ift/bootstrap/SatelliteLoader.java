@@ -1,37 +1,18 @@
 package com.ift.bootstrap;
 
-import com.ift.domain.MatlabSatellite;
-import com.ift.domain.MonitorSoInfo;
-import com.ift.domain.Satellite;
-import com.ift.domain.SatellitePosition;
-import com.ift.services.MatelabSatelliteService;
-import com.ift.services.MonitorSoInfoService;
-import com.ift.services.SatelliteService;
-import com.ift.services.StatusService;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
+import com.ift.domain.*;
+import com.ift.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.format.datetime.DateFormatter;
-import org.springframework.format.datetime.joda.JodaDateTimeFormatAnnotationFormatterFactory;
 import org.springframework.stereotype.Component;
 
-import javax.print.attribute.standard.MediaSize;
-import java.io.*;
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static org.apache.commons.compress.compressors.CompressorStreamFactory.Z;
 
 /**
  * Created by zhijiangchen on 3/28/17.
@@ -44,6 +25,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
     StatusService statusService;
     MonitorSoInfoService monitorSoInfoService;
     MatelabSatelliteService matelabSatelliteService;
+    SmSoInfoAllService smSoInfoAllService;
 
 
     @Autowired
@@ -84,7 +66,15 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                 String PredefinedY = "";
                 String PredefinedZ = "";
                 String Time = "";
-                String P = "";
+                String P1 = "";
+                String P2 = "";
+                String P3 = "";
+                String P4 = "";
+                String P5 = "";
+                String P6 = "";
+                String P7 = "";
+                String P8 = "";
+                String P9 = "";
 
                 ArrayList<String> cartesian = new ArrayList<>();
                 ArrayList<String> cartesianPre = new ArrayList<>();
@@ -142,46 +132,132 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                 }
 
                 MatlabSatellite matlabSatellite = new MatlabSatellite();
-//                MonitorSoInfo monitorSoInfo = new MonitorSoInfo();
 
-                matlabSatellite.setSatellite_id(id);
+
+                matlabSatellite.setSatelliteId(id);
                 matlabSatellite.setName(name);
                 matelabSatelliteService.saveMatlabSatellite(matlabSatellite);
 
 
 
-//                for (int c = 0; c < cartesian.size()-1; c++) {
-//                    CartesianX = cartesian.get(c++);
-//                    CartesianY = cartesian.get(c++);
-//                    CartesianZ = cartesian.get(c);
-//                    for (int pre = 0; pre < cartesianPre.size() - 1; pre++) {
-//                        PredefinedX = cartesianPre.get(pre++);
-//                        PredefinedY = cartesianPre.get(pre++);
-//                        PredefinedZ = cartesianPre.get(pre);
-//                        for (int t = 0; t < timeStamps.size() - 1; t++) {
-//                            Time = timeStamps.get(t++);
-//                            for (int p1 = 0; p1 < p.size() - 1; p1++) {
-//                                P = p.get(p1++);
-//                                monitorSoInfo.setCartesianX(Double.valueOf(CartesianX));
-//                                monitorSoInfo.setCartesianY(Double.valueOf(CartesianY));
-//                                monitorSoInfo.setCartesianZ(Double.valueOf(CartesianZ));
-//                                monitorSoInfo.setPredefinedX(Double.valueOf(PredefinedX));
-//                                monitorSoInfo.setPredefinedY(Double.valueOf(PredefinedY));
-//                                monitorSoInfo.setPredefinedZ(Double.valueOf(PredefinedZ));
-//                                monitorSoInfo.setTimestamp(Time);
-//                                monitorSoInfo.setP(Double.valueOf(P));
-//                                monitorSoInfo.setMatlabSatellite(matlabSatellite);
-//                                monitorSoInfoService.saveStatus(monitorSoInfo);
-//                            }
-//                        }
-//                    }
-//                }
-            });
+                for (int c = 0; c < cartesian.size() - 1; c+=3)
 
+                                try {
+
+                                    //loop here
+                                    CartesianX = cartesian.get(c);
+                                    CartesianY = cartesian.get(c+1);
+                                    CartesianZ = cartesian.get(c+2);
+                                    PredefinedX = cartesianPre.get(c);
+                                    PredefinedY = cartesianPre.get(c+1);
+                                    PredefinedZ = cartesianPre.get(c+2);
+                                    Time = timeStamps.get(c/3);
+                                    P1 = p.get(3*c);
+                                    P2 = p.get(3*c+1);
+                                    P3 = p.get(3*c+2);
+                                    P4 = p.get(3*c+3);
+                                    P5 = p.get(3*c+4);
+                                    P6 = p.get(3*c+5);
+                                    P7 = p.get(3*c+6);
+                                    P8 = p.get(3*c+7);
+                                    P9 = p.get(3*c+8);
+
+
+                                    //save to database
+                                    MonitorSoInfo monitorSoInfo = new MonitorSoInfo();
+                                    monitorSoInfo.setCartesianX(Double.valueOf(CartesianX));
+                                    monitorSoInfo.setCartesianY(Double.valueOf(CartesianY));
+                                    monitorSoInfo.setCartesianZ(Double.valueOf(CartesianZ));
+                                    monitorSoInfo.setPredefinedX(Double.valueOf(PredefinedX));
+                                    monitorSoInfo.setPredefinedY(Double.valueOf(PredefinedY));
+                                    monitorSoInfo.setPredefinedZ(Double.valueOf(PredefinedZ));
+                                    monitorSoInfo.setTimestamp(Time);
+                                    monitorSoInfo.setP1(Double.valueOf(P1));
+                                    monitorSoInfo.setP2(Double.valueOf(P2));
+                                    monitorSoInfo.setP3(Double.valueOf(P3));
+                                    monitorSoInfo.setP4(Double.valueOf(P4));
+                                    monitorSoInfo.setP5(Double.valueOf(P5));
+                                    monitorSoInfo.setP6(Double.valueOf(P6));
+                                    monitorSoInfo.setP7(Double.valueOf(P7));
+                                    monitorSoInfo.setP8(Double.valueOf(P8));
+                                    monitorSoInfo.setP9(Double.valueOf(P9));
+
+                                    monitorSoInfo.setMatlabSatellite(matlabSatellite);
+                                    monitorSoInfoService.saveStatus(monitorSoInfo);
+
+                                    }catch (Exception ex){break;}
+
+            });
 
         }catch(Exception ex){
             ex.printStackTrace();
         }
+
+        //SmSoInfoAll start here
+
+        String fileName2 = "/Users/Timliu/Documents/sm_so_info_all.txt";
+
+        try(Stream<String> stream = Files.lines(Paths.get(fileName2))){
+            List<String> lines = stream.map(line-> {return line;}).collect(Collectors.toList());
+            lines.forEach(record->{
+
+                // To Array
+                String[] data = record.split(",");
+                int length = data.length;
+
+                String SatelliteId = "";
+                String DataType = "";
+                String GsId = "";
+                String StartTime = "";
+                String EndTime = "";
+
+                for(int index = 0; index<length; index++) {
+
+
+
+                    if (data[index].equalsIgnoreCase("datatype")) {
+                        // Following data is id
+                        DataType = data[++index];
+                        continue;
+                    }
+                    if (data[index].equalsIgnoreCase("satelliteId")) {
+                        // Following one data is name
+                        SatelliteId = data[++index];
+                        continue;
+                    }
+                    if (data[index].equalsIgnoreCase("gsId")) {
+                        // Following one data is name
+                        GsId = data[++index];
+                        continue;
+                    }
+                    if (data[index].equalsIgnoreCase("availability")) {
+                        // Following one data is name
+                        String[] time = data[++index].split("/");
+                        StartTime = time[0];
+                        EndTime = time[1];
+                    }
+
+                    MatlabSatellite matlabSatellite = new MatlabSatellite();
+                    matelabSatelliteService.findBySatelliteId(SatelliteId);
+
+                    SmSoInfoAll smSoInfoAll = new SmSoInfoAll();
+                    smSoInfoAll.setDataType(DataType);
+                    smSoInfoAll.setGsId(GsId);
+                    smSoInfoAll.setStartTime(StartTime);
+                    smSoInfoAll.setEndTime(EndTime);
+                    smSoInfoAll.setMatlabSatellite(matlabSatellite);
+                    smSoInfoAllService.saveStatus(smSoInfoAll);
+
+                }
+
+
+                    });
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
+
 
 //        Satellite satellite = new Satellite();
 //        satellite.setName("Satellite 1");
@@ -192,71 +268,6 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //        satelliteService.saveSatellite(satellite);
 
         //new file
-
-//        File file1 = new File("Monitor_SO_info.txt");
-//        String monitorSoPath = file1.getPath();
-//
-//        try (BufferedReader br = new BufferedReader(new FileReader(monitorSoPath))){
-//            String line;
-//            String satellite_id = "";
-//            String Name = "";
-//            String CartesianX = "";
-//            String CartesianY = "";
-//            String CartesianZ = "";
-//            String PredefinedX = "";
-//            String PredefinedY = "";
-//            String PredefinedZ = "";
-//            String Time = "";
-//            String P = "";
-//
-//            int index = 0;
-//
-//
-//
-//            while ((line = br.readLine()) !=null) {
-//
-//
-//                    String[] splitSt = line.split(",");
-//
-//                    if (++index == 0) continue;
-//                    satellite_id = splitSt[1];
-//                    Name = splitSt[3];
-//
-//                    MatlabSatellite matlabSatellite = new MatlabSatellite();
-//                    matlabSatellite.setSatellite_id(satellite_id);
-//                    matlabSatellite.setName(Name);
-//                    matelabSatelliteService.saveMatlabSatellite(matlabSatellite);
-//
-//                    for (int i = 5; i < splitSt.length; i++)
-//                        //set attributes
-//                        try {
-//                            CartesianX = splitSt[i++];
-//                            CartesianY = splitSt[i++];
-//                            CartesianZ = splitSt[i];
-//
-//                            //set data to mysql
-//                            MonitorSoInfo monitorSoInfo = new MonitorSoInfo();
-//
-////                        satellitePosition.setSatelliteID(satelliteID);
-//                            monitorSoInfo.setName(Name);
-//                            monitorSoInfo.setCartesianX(Double.valueOf(CartesianX));
-//                            monitorSoInfo.setCartesianY(Double.valueOf(CartesianY));
-//                            monitorSoInfo.setCartesianZ(Double.valueOf(CartesianZ));
-//                            monitorSoInfo.setMatlabSatellite(matlabSatellite);
-//                            monitorSoInfoService.saveStatus(monitorSoInfo);
-//                        } catch (Exception ex) {
-//                            break;
-//                        }
-//
-//            }
-//
-//        }
-//        catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
-
 //        File file = new File("SO_info_revised.txt");
 //        String absolutePath = file.getAbsolutePath();
 //

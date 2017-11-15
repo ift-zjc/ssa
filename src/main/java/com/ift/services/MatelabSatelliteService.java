@@ -16,4 +16,9 @@ public class MatelabSatelliteService {
     public MatlabSatellite saveMatlabSatellite(MatlabSatellite matlabSatellite) { return matlabSatelliteRepository.save(matlabSatellite); }
 
     public List<MatlabSatellite> listMatlabSatellites() { return matlabSatelliteRepository.findAll(); }
+
+    public MatlabSatellite findBySatelliteId (String satelliteId){
+        return matlabSatelliteRepository.findBySatelliteId(satelliteId);
+    }
+
 }
