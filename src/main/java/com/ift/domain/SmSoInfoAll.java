@@ -11,12 +11,15 @@ public class SmSoInfoAll {
     @JoinColumn(name = "satelliteID")
     private MatlabSatellite matlabSatellite;
 
+    @ManyToOne
+    @JoinColumn(name = "bsid")
+    private BaseStation baseStation;
+
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private String dataType;
-    private String gsId;
     private String startTime;
     private String endTime;
 
@@ -35,14 +38,6 @@ public class SmSoInfoAll {
 
     public void setDataType(String dataType) {
         this.dataType = dataType;
-    }
-
-    public String getGsId() {
-        return gsId;
-    }
-
-    public void setGsId(String gsId) {
-        this.gsId = gsId;
     }
 
     public String getStartTime() {
@@ -71,4 +66,11 @@ public class SmSoInfoAll {
         this.matlabSatellite = matlabSatellite;
     }
 
+    public BaseStation getBaseStation() {
+        return baseStation;
+    }
+
+    public void setBaseStation(BaseStation baseStation) {
+        this.baseStation = baseStation;
+    }
 }

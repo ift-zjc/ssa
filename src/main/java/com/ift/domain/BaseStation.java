@@ -1,15 +1,45 @@
 package com.ift.domain;
 
-/**
- * Created by chen3 on 6/5/17.
- */
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.util.List;
+
+
+@Entity
 public class BaseStation {
 
+
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    private String id;
+
+    @Column(unique = true)
     private String bsid;
-    private String bsname;
-    private float x;
-    private float y;
-    private float z;
+
+    @OneToMany(mappedBy = "baseStation")
+    private List<SmSoInfoAll> smSoInfoAlls;
+
+    private double x;
+    private double y;
+    private double z;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<SmSoInfoAll> getSmSoInfoAlls() {
+        return smSoInfoAlls;
+    }
+
+    public void setSmSoInfoAlls(List<SmSoInfoAll> smSoInfoAlls) {
+        this.smSoInfoAlls = smSoInfoAlls;
+    }
 
     public String getBsid() {
         return bsid;
@@ -19,35 +49,28 @@ public class BaseStation {
         this.bsid = bsid;
     }
 
-    public String getBsname() {
-        return bsname;
-    }
 
-    public void setBsname(String bsname) {
-        this.bsname = bsname;
-    }
-
-    public float getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(float x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public float getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(float y) {
+    public void setY(double y) {
         this.y = y;
     }
 
-    public float getZ() {
+    public double getZ() {
         return z;
     }
 
-    public void setZ(float z) {
+    public void setZ(double z) {
         this.z = z;
     }
 }

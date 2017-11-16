@@ -25,7 +25,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
     StatusService statusService;
     MonitorSoInfoService monitorSoInfoService;
     MatelabSatelliteService matelabSatelliteService;
-    SmSoInfoAllService smSoInfoAllService;
+
 
 
     @Autowired
@@ -43,6 +43,15 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 
     @Autowired
     void setMatelabSatelliteService(MatelabSatelliteService matelabSatelliteService) { this.matelabSatelliteService = matelabSatelliteService; }
+
+    @Autowired
+    SmSoInfoAllService smSoInfoAllService;
+
+    @Autowired
+    TimeLineService timeLineService;
+
+    @Autowired
+    BaseStationService baseStationService;
 
 
 
@@ -193,6 +202,62 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
             ex.printStackTrace();
         }
 
+        //String base station data here
+        String fileName4 = "/Users/Timliu/Documents/bs_so_info copy.txt";
+
+        try(Stream<String> stream = Files.lines(Paths.get(fileName4))){
+            List<String> lines = stream.map(line-> {return line;}).collect(Collectors.toList());
+            lines.forEach(record->{
+
+                // To Array
+                String[] data = record.split(",");
+                int length = data.length;
+
+                String gsId = "";
+                String x = "";
+                String y = "";
+                String z = "";
+                ArrayList<String> gsData = new ArrayList<>();
+
+                for(int index = 0; index<length; index++) {
+
+                    if (data[index].equalsIgnoreCase("gsId")) {
+                        // Following data is id
+                        gsId = data[++index];
+                        continue;
+                    }
+
+                    if (data[index].equalsIgnoreCase("gsData")) {
+                        int pIndex = ++index;
+                        while (pIndex < length) {
+                            gsData.add(data[pIndex]);
+                            pIndex++;
+                        }
+                        index = pIndex;
+                    }
+                }
+
+                    for (int c = 0; c < gsData.size() - 1; c++)
+                        try {
+                            x = gsData.get(c);
+                            y = gsData.get(c + 1);
+                            z = gsData.get(c + 2);
+
+                            //save to database
+                            BaseStation baseStation = new BaseStation();
+                            baseStation.setBsid(gsId);
+                            baseStation.setX(Double.valueOf(x));
+                            baseStation.setY(Double.valueOf(y));
+                            baseStation.setZ(Double.valueOf(z));
+                            baseStationService.saveBaseStation(baseStation);
+                        } catch (Exception ex) {break;}
+                });
+
+
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+
         //SmSoInfoAll start here
 
         String fileName2 = "/Users/Timliu/Documents/sm_so_info_all.txt";
@@ -207,13 +272,11 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 
                 String SatelliteId = "";
                 String DataType = "";
-                String GsId = "";
+                String bsid = "";
                 String StartTime = "";
                 String EndTime = "";
 
                 for(int index = 0; index<length; index++) {
-
-
 
                     if (data[index].equalsIgnoreCase("datatype")) {
                         // Following data is id
@@ -227,7 +290,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                     }
                     if (data[index].equalsIgnoreCase("gsId")) {
                         // Following one data is name
-                        GsId = data[++index];
+                        bsid = data[++index];
                         continue;
                     }
                     if (data[index].equalsIgnoreCase("availability")) {
@@ -235,27 +298,64 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                         String[] time = data[++index].split("/");
                         StartTime = time[0];
                         EndTime = time[1];
+                        break;
                     }
-
-                    MatlabSatellite matlabSatellite = new MatlabSatellite();
-                    matelabSatelliteService.findBySatelliteId(SatelliteId);
-
-                    SmSoInfoAll smSoInfoAll = new SmSoInfoAll();
-                    smSoInfoAll.setDataType(DataType);
-                    smSoInfoAll.setGsId(GsId);
-                    smSoInfoAll.setStartTime(StartTime);
-                    smSoInfoAll.setEndTime(EndTime);
-                    smSoInfoAll.setMatlabSatellite(matlabSatellite);
-                    smSoInfoAllService.saveStatus(smSoInfoAll);
-
                 }
+                MatlabSatellite matlabSatellite = matelabSatelliteService.findBySatelliteId(SatelliteId);
+                BaseStation baseStation = baseStationService.findByBaseId(bsid);
 
+                SmSoInfoAll smSoInfoAll = new SmSoInfoAll();
+                smSoInfoAll.setDataType(DataType);
+                smSoInfoAll.setStartTime(StartTime);
+                smSoInfoAll.setEndTime(EndTime);
+                smSoInfoAll.setMatlabSatellite(matlabSatellite);
+                smSoInfoAll.setBaseStation(baseStation);
+                smSoInfoAllService.saveStatus(smSoInfoAll);
 
                     });
 
         }catch(Exception ex){
             ex.printStackTrace();
         }
+
+        //String startTime and endTime for timeLine
+        String fileName3 = "/Users/Timliu/Documents/time_info.txt";
+
+        try(Stream<String> stream = Files.lines(Paths.get(fileName3))){
+            List<String> lines = stream.map(line-> {return line;}).collect(Collectors.toList());
+            lines.forEach(record->{
+
+                // To Array
+                String[] data = record.split(",");
+                int length = data.length;
+                String StartTime="";
+                String EndTime="";
+                for(int index = 0; index<length; index++) {
+                    if (data[index].equalsIgnoreCase("startTime")){
+                        StartTime = data[++index];
+                        continue;
+                    }
+                    if (data[index].equalsIgnoreCase("endTime")){
+                        EndTime = data[++index];
+                    }
+                }
+                TimeLine timeLine = new TimeLine();
+                timeLine.setStartTime(StartTime);
+                timeLine.setEndTime(EndTime);
+                timeLineService.saveTimeLine(timeLine);
+
+
+
+            });
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
+
+
+
+
 
 
 
