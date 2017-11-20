@@ -1,14 +1,12 @@
 package com.ift.web.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
-import com.ift.domain.BaseStation;
-import com.ift.domain.Satellite;
-import com.ift.domain.SatellitePosition;
+import com.ift.domain.*;
 import com.ift.domain.czml.*;
 import com.ift.requestobj.SatelliteDto;
-import com.ift.services.BaseStationService;
-import com.ift.services.SatelliteService;
+import com.ift.services.*;
 import javafx.concurrent.Task;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +41,14 @@ ApiController {
     private SatelliteService satelliteService;
     @Autowired
     private BaseStationService baseStationService;
+    @Autowired
+    private MatelabSatelliteService matelabSatelliteService;
+    @Autowired
+    private MonitorSoInfoService monitorSoInfoService;
+    @Autowired
+    private TimeLineService timeLineService;
+    @Autowired
+    private SmSoInfoAllService smSoInfoAllService;
 
 
     /**
@@ -342,6 +348,28 @@ ApiController {
         baseStationList.forEach(baseStation -> {
             loadGroundStationData(baseStation);
         });
+
+        // Load matlab timeline data
+        List<TimeLine> timeLineList = timeLineService.listTimeLine();
+        // Load to front end.
+        timeLineList.forEach(timeLine -> {
+            loadTimeLineData(timeLine);
+        });
+
+        // Load matlab satellite data
+        List<MatlabSatellite> matlabSatelliteList = matelabSatelliteService.listMatlabSatellites();
+        //load to front end
+        matlabSatelliteList.forEach(matlabSatellite -> {
+            loadSatelliteData(matlabSatellite);
+        });
+
+        // Load related data
+        List<SmSoInfoAll> smSoInfoAllList = smSoInfoAllService.listStatus();
+        //load to front end
+        smSoInfoAllList.forEach(smSoInfoAll -> {
+            loadRelatedData(smSoInfoAll);
+        });
+
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
@@ -443,4 +471,113 @@ ApiController {
 
         webSocket.convertAndSend("/topic/satellite/groundstations", gsJsonStr);
     }
+
+    /**
+     * Load basestation to cesium
+     * @param timeLine
+     */
+    private void loadTimeLineData(TimeLine timeLine){
+        JsonObject jsonObject = new JsonObject();
+
+        jsonObject.addProperty("startTime", timeLine.getStartTime());
+        jsonObject.addProperty("endTime", timeLine.getEndTime());
+        String tlJsonStr = (new Gson().toJson(jsonObject));
+
+        webSocket.convertAndSend("/topic/satellite/cesiumMateData", tlJsonStr);
+    }
+
+    /**
+     * Load basestation to cesium
+     * @param matlabSatellite
+     */
+    private void loadSatelliteData(MatlabSatellite matlabSatellite){
+        JsonObject jsonObject = new JsonObject();
+        JsonArray cartesianDataArray = new JsonArray();
+        JsonArray predefinededDataArray = new JsonArray();
+        JsonArray timeDataArray = new JsonArray();
+        JsonArray uncertaintyArray = new JsonArray();
+
+
+        jsonObject.addProperty("satelliteId", matlabSatellite.getSatelliteId());
+        jsonObject.addProperty("satelliteName", matlabSatellite.getName());
+        jsonObject.addProperty("satelliteDesc", "satellite monitoring");
+        jsonObject.addProperty("satelliteAvailability", "2012-03-15T10:00:00Z/2012-03-16T02:40:00Z");
+        jsonObject.addProperty("satelliteEpoch", "2012-03-15T10:00:00Z");
+
+
+        matlabSatellite.getMonitorSoInfos().forEach(record -> {
+            // Fill data array
+
+
+            JsonPrimitive cartesianNode = new JsonPrimitive(record.getCartesianX());
+            cartesianDataArray.add(cartesianNode);
+            cartesianNode = new JsonPrimitive(record.getCartesianY());
+            cartesianDataArray.add(cartesianNode);
+            cartesianNode = new JsonPrimitive(record.getCartesianZ());
+            cartesianDataArray.add(cartesianNode);
+
+            JsonPrimitive predefinededNode = new JsonPrimitive(record.getPredefinedX());
+            predefinededDataArray.add(predefinededNode);
+            predefinededNode = new JsonPrimitive(record.getPredefinedY());
+            predefinededDataArray.add(predefinededNode);
+            predefinededNode = new JsonPrimitive(record.getPredefinedZ());
+            predefinededDataArray.add(predefinededNode);
+
+            JsonPrimitive timeNode = new JsonPrimitive(record.getTimestamp());
+            timeDataArray.add(timeNode);
+
+            JsonPrimitive uncertaintyNode = new JsonPrimitive(record.getP1());
+            uncertaintyArray.add(uncertaintyNode);
+            uncertaintyNode = new JsonPrimitive(record.getP2());
+            uncertaintyArray.add(uncertaintyNode);
+            uncertaintyNode = new JsonPrimitive(record.getP3());
+            uncertaintyArray.add(uncertaintyNode);
+            uncertaintyNode = new JsonPrimitive(record.getP4());
+            uncertaintyArray.add(uncertaintyNode);
+            uncertaintyNode = new JsonPrimitive(record.getP5());
+            uncertaintyArray.add(uncertaintyNode);
+            uncertaintyNode = new JsonPrimitive(record.getP6());
+            uncertaintyArray.add(uncertaintyNode);
+            uncertaintyNode = new JsonPrimitive(record.getP7());
+            uncertaintyArray.add(uncertaintyNode);
+            uncertaintyNode = new JsonPrimitive(record.getP8());
+            uncertaintyArray.add(uncertaintyNode);
+            uncertaintyNode = new JsonPrimitive(record.getP9());
+            uncertaintyArray.add(uncertaintyNode);
+        });
+        jsonObject.add("satelliteData", cartesianDataArray);
+        jsonObject.add("predefindedData", predefinededDataArray);
+        jsonObject.add("timeData", timeDataArray);
+        jsonObject.add("uncertainty", uncertaintyArray);
+
+
+
+        String moJsonStr = (new Gson()).toJson(jsonObject);
+
+        webSocket.convertAndSend("/topic/satellite/satellitedata", moJsonStr);
+    }
+
+    /**
+     * Load basestation to cesium
+     * @param smSoInfoAll
+     */
+    private void loadRelatedData(SmSoInfoAll smSoInfoAll){
+        JsonObject jsonObject = new JsonObject();
+        JsonArray availabilityArray = new JsonArray();
+
+        JsonPrimitive availabilityNode = new JsonPrimitive(smSoInfoAll.getStartTime()+"/"+smSoInfoAll.getEndTime());
+        availabilityArray.add(availabilityNode);
+
+        jsonObject.addProperty("satelliteId", smSoInfoAll.getMatlabSatellite().getSatelliteId());
+        jsonObject.addProperty("gsId", smSoInfoAll.getBaseStation().getBsid());
+        jsonObject.add("availability", availabilityArray);
+        jsonObject.addProperty("datatype", smSoInfoAll.getDataType());
+
+        String jsonStr = (new Gson().toJson(jsonObject));
+
+        webSocket.convertAndSend("/topic/satellite/relatedata", jsonStr);
+    }
+
+
+
 }
