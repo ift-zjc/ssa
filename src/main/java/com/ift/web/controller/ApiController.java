@@ -2,10 +2,12 @@ package com.ift.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
+import com.ift.domain.BaseStation;
 import com.ift.domain.Satellite;
 import com.ift.domain.SatellitePosition;
 import com.ift.domain.czml.*;
 import com.ift.requestobj.SatelliteDto;
+import com.ift.services.BaseStationService;
 import com.ift.services.SatelliteService;
 import javafx.concurrent.Task;
 import org.apache.log4j.Logger;
@@ -39,6 +41,8 @@ ApiController {
     private SimpMessagingTemplate webSocket;
     @Autowired
     private SatelliteService satelliteService;
+    @Autowired
+    private BaseStationService baseStationService;
 
 
     /**
@@ -329,44 +333,15 @@ ApiController {
         ).collect(Collectors.toList());
 
         for(Satellite satellite : satellites) {
-            // Creating Json object.
-            JsonObject jsonObject = new JsonObject();
-            JsonArray cartesianDataArray = new JsonArray();
-            JsonArray timeDataArray = new JsonArray();
-
-            // Fill data array
-
-            for(SatellitePosition satellitePosition : satellite.getSatellitePositions()) {
-                JsonPrimitive cartesianNode = new JsonPrimitive(satellitePosition.getX());
-                cartesianDataArray.add(cartesianNode);
-                cartesianNode = new JsonPrimitive(satellitePosition.getY());
-                cartesianDataArray.add(cartesianNode);
-                cartesianNode = new JsonPrimitive(satellitePosition.getZ());
-                cartesianDataArray.add(cartesianNode);
-
-                JsonPrimitive timeDataNode = new JsonPrimitive(satellitePosition.getTime());
-                timeDataArray.add(timeDataNode);
-            }
-
-            jsonObject.addProperty("satelliteId", satellite.getId());
-            jsonObject.addProperty("satelliteName", satellite.getName());
-            jsonObject.addProperty("satelliteDesc", "");
-//            jsonObject.addProperty("satelliteAvailability", satelliteAvailability);
-//            jsonObject.addProperty("satelliteEpoch", satelliteEpoch);
-            jsonObject.add("satelliteData", cartesianDataArray);
-            jsonObject.add("timeData", timeDataArray);
-
-            // Move to seperated API
-//        jsonObject.addProperty("completed", completeFlag);
-
-
-            String jsonStr = (new Gson()).toJson(jsonObject);
-
-            /**
-             * Write to websocket channel: /topic/satellite/satellitedata
-             */
-            webSocket.convertAndSend("/topic/satellite/preloadeddata", jsonStr);
+            //loadSatelliteData(satellite);
         }
+
+        // Load base station data
+        List<BaseStation> baseStationList = baseStationService.listBaseStation();
+        // Load to front end.
+        baseStationList.forEach(baseStation -> {
+            loadGroundStationData(baseStation);
+        });
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
@@ -397,5 +372,75 @@ ApiController {
         }
 
         return jsonArray;
+    }
+
+    /**
+     * Load satellite data.
+     * @param satellite
+     */
+    private void loadSatelliteData(Satellite satellite){
+        // Creating Json object.
+        JsonObject jsonObject = new JsonObject();
+        JsonArray cartesianDataArray = new JsonArray();
+        JsonArray timeDataArray = new JsonArray();
+
+        // Fill data array
+
+        for(SatellitePosition satellitePosition : satellite.getSatellitePositions()) {
+            JsonPrimitive cartesianNode = new JsonPrimitive(satellitePosition.getX());
+            cartesianDataArray.add(cartesianNode);
+            cartesianNode = new JsonPrimitive(satellitePosition.getY());
+            cartesianDataArray.add(cartesianNode);
+            cartesianNode = new JsonPrimitive(satellitePosition.getZ());
+            cartesianDataArray.add(cartesianNode);
+
+            JsonPrimitive timeDataNode = new JsonPrimitive(satellitePosition.getTime());
+            timeDataArray.add(timeDataNode);
+        }
+
+        jsonObject.addProperty("satelliteId", satellite.getId());
+        jsonObject.addProperty("satelliteName", satellite.getName());
+        jsonObject.addProperty("satelliteDesc", "");
+//            jsonObject.addProperty("satelliteAvailability", satelliteAvailability);
+//            jsonObject.addProperty("satelliteEpoch", satelliteEpoch);
+        jsonObject.add("satelliteData", cartesianDataArray);
+        jsonObject.add("timeData", timeDataArray);
+
+        // Move to seperated API
+//        jsonObject.addProperty("completed", completeFlag);
+
+
+        String jsonStr = (new Gson()).toJson(jsonObject);
+
+        /**
+         * Write to websocket channel: /topic/satellite/satellitedata
+         */
+        webSocket.convertAndSend("/topic/satellite/preloadeddata", jsonStr);
+    }
+
+    /**
+     * Load basestation to cesium
+     * @param baseStation
+     */
+    private void loadGroundStationData(BaseStation baseStation){
+        JsonObject jsonObject = new JsonObject();
+
+        JsonArray gsDataArray = new JsonArray();
+        // Fill data array
+
+        JsonPrimitive cartesianNode = new JsonPrimitive(baseStation.getX());
+        gsDataArray.add(cartesianNode);
+        cartesianNode = new JsonPrimitive(baseStation.getY());
+        gsDataArray.add(cartesianNode);
+        cartesianNode = new JsonPrimitive(baseStation.getZ());
+        gsDataArray.add(cartesianNode);
+
+
+        jsonObject.addProperty("gsId", baseStation.getBsid());
+        jsonObject.add("gsData", gsDataArray);
+
+        String gsJsonStr = (new Gson()).toJson(jsonObject);
+
+        webSocket.convertAndSend("/topic/satellite/groundstations", gsJsonStr);
     }
 }

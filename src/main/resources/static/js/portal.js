@@ -78,6 +78,16 @@ $(function(){
     $('#satellite1DropDown').select2();
     $('#satellite2DropDown').select2();
 
+    $('#btnLoadPreLoadedData').on('click', function(){
+        /**
+         *  auto load data from database
+         */
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', "/api/feedPredefindedSatelliteData", true);
+        xhr.send();
+    });
+
 });
 
 /**
@@ -583,7 +593,6 @@ function ajaxInit() {
         var _val = $(this).val();
         makeConnection(_val).then(result=>console.log(result));
     });
-
 }
 
 
@@ -668,16 +677,10 @@ function connect() {
         //         viewer.dataSources.add(Cesium.CzmlDataSource.load(czml));
         //     }
         // })
+
+
     });
 }
-
-/**
- *  auto load data from database
- */
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', "/api/feedPredefindedSatelliteData", true);
-    xhr.send();
 
 
 
