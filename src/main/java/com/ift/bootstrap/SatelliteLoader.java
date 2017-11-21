@@ -65,7 +65,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
-//        String fileName = "/Users/tianxiangliu/Documents/monitor_so_info.txt";
+//        String fileName = "/Users/Timliu/Documents/monitor_so_info.txt";
 //        try(Stream<String> stream = Files.lines(Paths.get(fileName))){
 //            List<String> lines = stream.map(line-> {return line;}).collect(Collectors.toList());
 //
@@ -188,15 +188,25 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //                                    monitorSoInfo.setPredefinedY(Double.valueOf(PredefinedY));
 //                                    monitorSoInfo.setPredefinedZ(Double.valueOf(PredefinedZ));
 //                                    monitorSoInfo.setTimestamp(Time);
-//                                    monitorSoInfo.setP1(Double.valueOf(P1));
-//                                    monitorSoInfo.setP2(Double.valueOf(P2));
-//                                    monitorSoInfo.setP3(Double.valueOf(P3));
-//                                    monitorSoInfo.setP4(Double.valueOf(P4));
-//                                    monitorSoInfo.setP5(Double.valueOf(P5));
-//                                    monitorSoInfo.setP6(Double.valueOf(P6));
-//                                    monitorSoInfo.setP7(Double.valueOf(P7));
-//                                    monitorSoInfo.setP8(Double.valueOf(P8));
-//                                    monitorSoInfo.setP9(Double.valueOf(P9));
+////                                    monitorSoInfo.setP1(Double.valueOf(P1));
+////                                    monitorSoInfo.setP2(Double.valueOf(P2));
+////                                    monitorSoInfo.setP3(Double.valueOf(P3));
+////                                    monitorSoInfo.setP4(Double.valueOf(P4));
+////                                    monitorSoInfo.setP5(Double.valueOf(P5));
+////                                    monitorSoInfo.setP6(Double.valueOf(P6));
+////                                    monitorSoInfo.setP7(Double.valueOf(P7));
+////                                    monitorSoInfo.setP8(Double.valueOf(P8));
+////                                    monitorSoInfo.setP9(Double.valueOf(P9));
+////
+//                                    monitorSoInfo.setP1(0.0026315);
+//                                    monitorSoInfo.setP2(0.0019536);
+//                                    monitorSoInfo.setP3(-0.86686);
+//                                    monitorSoInfo.setP4(0.0019536);
+//                                    monitorSoInfo.setP5(0.0089521);
+//                                    monitorSoInfo.setP6(-2.0309);
+//                                    monitorSoInfo.setP7(-0.86686);
+//                                    monitorSoInfo.setP8(-2.0309);
+//                                    monitorSoInfo.setP9(863.3642);
 //
 //                                    monitorSoInfo.setMatlabSatellite(matlabSatellite);
 //                                    monitorSoInfoService.saveStatus(monitorSoInfo);
@@ -210,7 +220,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //        }
 //
 //        //String base station data here
-//        String fileName4 = "/Users/tianxiangliu/Documents/bs_so_info.txt";
+//        String fileName4 = "/Users/Timliu/Documents/bs_so_info.txt";
 //
 //        try(Stream<String> stream = Files.lines(Paths.get(fileName4))){
 //            List<String> lines = stream.map(line-> {return line;}).collect(Collectors.toList());
@@ -267,7 +277,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //
 //        //SmSoInfoAll start here
 //
-//        String fileName2 = "/Users/tianxiangliu/Documents/sm_so_info_all.txt";
+//        String fileName2 = "/Users/Timliu/Documents/sm_so_info_all.txt";
 //
 //        try(Stream<String> stream = Files.lines(Paths.get(fileName2))){
 //            List<String> lines = stream.map(line-> {return line;}).collect(Collectors.toList());
@@ -326,7 +336,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //        }
 //
 //        //String startTime and endTime for timeLine
-//        String fileName3 = "/Users/tianxiangliu/Documents/time_info.txt";
+//        String fileName3 = "/Users/Timliu/Documents/time_info.txt";
 //
 //        try(Stream<String> stream = Files.lines(Paths.get(fileName3))){
 //            List<String> lines = stream.map(line-> {return line;}).collect(Collectors.toList());
