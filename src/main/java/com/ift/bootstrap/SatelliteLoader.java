@@ -368,24 +368,24 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //        }catch(Exception ex){
 //            ex.printStackTrace();
 //        }
-
-
-
-
-
-
-
-
-//        Satellite satellite = new Satellite();
-//        satellite.setName("Satellite 1");
-//        satelliteService.saveSatellite(satellite);
 //
-//        satellite = new Satellite();
-//        satellite.setName("Satellite 2");
-//        satelliteService.saveSatellite(satellite);
-
-        //new file
-//        File file = new File("SO_info_revised.txt");
+//
+//
+//
+//
+//
+//
+//
+////        Satellite satellite = new Satellite();
+////        satellite.setName("Satellite 1");
+////        satelliteService.saveSatellite(satellite);
+////
+////        satellite = new Satellite();
+////        satellite.setName("Satellite 2");
+////        satelliteService.saveSatellite(satellite);
+//
+//        //new file
+//        File file = new File("/Users/Timliu/Documents/so_info_revised_500.txt");
 //        String absolutePath = file.getAbsolutePath();
 //
 //        try (BufferedReader br = new BufferedReader(new FileReader(absolutePath))) {
@@ -413,7 +413,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //                satellite.setId("pre_" + Id);
 //                satelliteService.saveSatellite(satellite);
 //
-//                String date = "2017-10-27T09:59:00";
+//                String date = "2017-10-26T09:59:00";
 //                DateTime dateTime = new DateTime(date);
 //                org.joda.time.format.DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 //

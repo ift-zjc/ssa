@@ -49,6 +49,8 @@ ApiController {
     private TimeLineService timeLineService;
     @Autowired
     private SmSoInfoAllService smSoInfoAllService;
+    @Autowired
+    private StatusService statusService;
 
 
     /**
@@ -326,7 +328,7 @@ ApiController {
 
 
     @PostMapping(value = "/feedPredefindedSatelliteData")
-    public @ResponseBody ResponseEntity<?> LoadPredefindedData(){
+    public void LoadPredefindedData(){
         LOGGER.info("Start load pre-definded data");
 
         // Get data from database.
@@ -339,8 +341,14 @@ ApiController {
         ).collect(Collectors.toList());
 
         for(Satellite satellite : satellites) {
-            //loadSatelliteData(satellite);
+            loadSatelliteData(satellite);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
 
         // Load base station data
         List<BaseStation> baseStationList = baseStationService.listBaseStation();
@@ -368,9 +376,14 @@ ApiController {
         //load to front end
         smSoInfoAllList.forEach(smSoInfoAll -> {
             loadRelatedData(smSoInfoAll);
+            try {
+                Thread.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         });
 
-        return new ResponseEntity<>(null, HttpStatus.OK);
+//        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     /**
