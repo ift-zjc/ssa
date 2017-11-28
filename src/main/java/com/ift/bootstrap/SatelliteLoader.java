@@ -65,7 +65,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
 
-//        String fileName = "/Users/Timliu/Documents/monitor_so_info.txt";
+//        String fileName = "/Users/Timliu/Documents/300/monitor_so_info.txt";
 //        try(Stream<String> stream = Files.lines(Paths.get(fileName))){
 //            List<String> lines = stream.map(line-> {return line;}).collect(Collectors.toList());
 //
@@ -220,7 +220,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //        }
 //
 //        //String base station data here
-//        String fileName4 = "/Users/Timliu/Documents/bs_so_info.txt";
+//        String fileName4 = "/Users/Timliu/Documents/300/bs_so_info.txt";
 //
 //        try(Stream<String> stream = Files.lines(Paths.get(fileName4))){
 //            List<String> lines = stream.map(line-> {return line;}).collect(Collectors.toList());
@@ -277,7 +277,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //
 //        //SmSoInfoAll start here
 //
-//        String fileName2 = "/Users/Timliu/Documents/sm_so_info_all.txt";
+//        String fileName2 = "/Users/Timliu/Documents/300/sm_so_info_all.txt";
 //
 //        try(Stream<String> stream = Files.lines(Paths.get(fileName2))){
 //            List<String> lines = stream.map(line-> {return line;}).collect(Collectors.toList());
@@ -318,16 +318,16 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //                        break;
 //                    }
 //                }
-//                MatlabSatellite matlabSatellite = matelabSatelliteService.findBySatelliteId(SatelliteId);
-//                BaseStation baseStation = baseStationService.findByBaseId(bsid);
+//                    MatlabSatellite matlabSatellite = matelabSatelliteService.findBySatelliteId(SatelliteId);
+//                    BaseStation baseStation = baseStationService.findByBaseId(bsid);
 //
-//                SmSoInfoAll smSoInfoAll = new SmSoInfoAll();
-//                smSoInfoAll.setDataType(DataType);
-//                smSoInfoAll.setStartTime(StartTime);
-//                smSoInfoAll.setEndTime(EndTime);
-//                smSoInfoAll.setMatlabSatellite(matlabSatellite);
-//                smSoInfoAll.setBaseStation(baseStation);
-//                smSoInfoAllService.saveStatus(smSoInfoAll);
+//                    SmSoInfoAll smSoInfoAll = new SmSoInfoAll();
+//                    smSoInfoAll.setDataType(DataType);
+//                    smSoInfoAll.setStartTime(StartTime);
+//                    smSoInfoAll.setEndTime(EndTime);
+//                    smSoInfoAll.setMatlabSatellite(matlabSatellite);
+//                    smSoInfoAll.setBaseStation(baseStation);
+//                    smSoInfoAllService.saveStatus(smSoInfoAll);
 //
 //                    });
 //
@@ -336,7 +336,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //        }
 //
 //        //String startTime and endTime for timeLine
-//        String fileName3 = "/Users/Timliu/Documents/time_info.txt";
+//        String fileName3 = "/Users/Timliu/Documents/300/time_info.txt";
 //
 //        try(Stream<String> stream = Files.lines(Paths.get(fileName3))){
 //            List<String> lines = stream.map(line-> {return line;}).collect(Collectors.toList());
