@@ -374,7 +374,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 
         //SmSoInfoAll start here
 
-        String fileName5 = "/Users/Timliu/Documents/cp_so_info_opti";
+        String fileName5 = "/Users/Timliu/Documents/cp_so_info_opti.txt";
 
         try(Stream<String> stream = Files.lines(Paths.get(fileName5))){
             List<String> lines = stream.map(line-> {return line;}).collect(Collectors.toList());
@@ -425,9 +425,21 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
                 MatlabSatellite matlabSatellite = matelabSatelliteService.findBySatelliteId(SatelliteId1);
                 MatlabSatellite matlabSatellite1 = matelabSatelliteService.findBySatelliteId(SatelliteId2);
                 Collision collision = new Collision();
-                collision.setTime(Time);
-                collision.setCollisionData(Double.valueOf(CollisionData));
-                collisionService.saveCollision(collision);
+
+                collision.setSatellite1(matlabSatellite);
+                collision.setSatellite2(matlabSatellite1);
+
+
+                for (int c = 0; c < time.size() - 1; c++)
+                    try {
+                        Time = time.get(c);
+                        CollisionData = collisionData.get(c);
+
+                        collision.setTime(Time);
+                        collision.setCollisionData(Double.valueOf(CollisionData));
+                        collisionService.saveCollision(collision);
+
+                    }catch (Exception ex){break;}
             });
 
         }catch(Exception ex){

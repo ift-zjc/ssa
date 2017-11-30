@@ -51,6 +51,8 @@ ApiController {
     private SmSoInfoAllService smSoInfoAllService;
     @Autowired
     private StatusService statusService;
+    @Autowired
+    private CollisionService collisionService;
 
 
     /**
@@ -383,6 +385,13 @@ ApiController {
             }
         });
 
+        // Load collision data
+        List<Collision> collisionList = collisionService.ListCollision();
+        //load to front end
+        collisionList.forEach(collision -> {
+            loadCollissionData(collision);
+        });
+
 //        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
@@ -589,6 +598,31 @@ ApiController {
         String jsonStr = (new Gson().toJson(jsonObject));
 
         webSocket.convertAndSend("/topic/satellite/relatedata", jsonStr);
+    }
+
+    /**
+     * Load basestation to cesium
+     * @param collision
+     */
+    private void loadCollissionData(Collision collision){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("sid1", collision.getSatellite1().getId());
+        jsonObject.addProperty("sid2", collision.getSatellite2().getId());
+
+        JsonArray timeDataJsonArray = new JsonArray();
+        JsonPrimitive timeDataNode = new JsonPrimitive(collision.getTime());
+        jsonObject.add("timeData", timeDataJsonArray);
+
+        JsonArray collisionDataJsonArray = new JsonArray();
+        JsonPrimitive collisionDataNode = new JsonPrimitive(collision.getCollisionData());
+        jsonObject.add("collisionData", collisionDataJsonArray);
+
+        String jsonStr = (new Gson()).toJson(jsonObject);
+
+        /**
+         * Write to websocket channel: /topic/statllite/collisiondata
+         */
+        webSocket.convertAndSend("/topic/satellite/collisiondata", jsonStr);
     }
 
 

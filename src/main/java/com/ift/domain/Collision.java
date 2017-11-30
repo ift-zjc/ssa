@@ -9,12 +9,12 @@ import javax.persistence.*;
 public class Collision {
 
     @ManyToOne
-    @JoinColumn(name = "satelliteID")
-    private MatlabSatellite satelliteId1;
+    @JoinColumn(name = "satelliteID1")
+    private MatlabSatellite satellite1;
 
     @ManyToOne
-    @JoinColumn(name = "satelliteID")
-    private MatlabSatellite satelliteId2;
+    @JoinColumn(name = "satelliteID2")
+    private MatlabSatellite satellite2;
 
     @Id
     @GeneratedValue(generator="UUID")
@@ -23,20 +23,20 @@ public class Collision {
     private String time;
     private double collisionData;
 
-    public MatlabSatellite getSatelliteId1() {
-        return satelliteId1;
+    public MatlabSatellite getSatellite1() {
+        return satellite1;
     }
 
-    public void setSatelliteId1(MatlabSatellite satelliteId1) {
-        this.satelliteId1 = satelliteId1;
+    public void setSatellite1(MatlabSatellite satellite1) {
+        this.satellite1 = satellite1;
     }
 
-    public MatlabSatellite getSatelliteId2() {
-        return satelliteId2;
+    public MatlabSatellite getSatellite2() {
+        return satellite2;
     }
 
-    public void setSatelliteId2(MatlabSatellite satelliteId2) {
-        this.satelliteId2 = satelliteId2;
+    public void setSatellite2(MatlabSatellite satellite2) {
+        this.satellite2 = satellite2;
     }
 
     public String getId() {

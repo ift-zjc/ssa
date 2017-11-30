@@ -21,9 +21,9 @@ public class MatlabSatellite {
     private List<MonitorSoInfo> monitorSoInfos;
     @OneToMany(mappedBy = "matlabSatellite")
     private List<SmSoInfoAll> smSoInfoAlls;
-    @OneToMany(mappedBy = "satelliteId1")
+    @OneToMany(mappedBy = "satellite1")
     private List<Collision> collisions1;
-    @OneToMany(mappedBy = "satelliteId2")
+    @OneToMany(mappedBy = "satellite2")
     private List<Collision> collisions2;
 
     public MatlabSatellite(){}
