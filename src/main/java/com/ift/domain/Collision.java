@@ -1,6 +1,7 @@
 package com.ift.domain;
 
 
+import javafx.scene.text.Text;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,35 +9,24 @@ import javax.persistence.*;
 @Entity
 public class Collision {
 
-    @ManyToOne
-    @JoinColumn(name = "satelliteID1")
-    private MatlabSatellite satellite1;
 
     @ManyToOne
-    @JoinColumn(name = "satelliteID2")
-    private MatlabSatellite satellite2;
+    @JoinColumn(name = "collectionMetaid")
+    private CollisionId collsionMeta;
 
     @Id
     @GeneratedValue(generator="UUID")
     @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private String time;
-    private double collisionData;
+    private String collisionData;
 
-    public MatlabSatellite getSatellite1() {
-        return satellite1;
+    public CollisionId getCollsionMeta() {
+        return collsionMeta;
     }
 
-    public void setSatellite1(MatlabSatellite satellite1) {
-        this.satellite1 = satellite1;
-    }
-
-    public MatlabSatellite getSatellite2() {
-        return satellite2;
-    }
-
-    public void setSatellite2(MatlabSatellite satellite2) {
-        this.satellite2 = satellite2;
+    public void setCollsionMeta(CollisionId collsionMeta) {
+        this.collsionMeta = collsionMeta;
     }
 
     public String getId() {
@@ -55,11 +45,11 @@ public class Collision {
         this.time = time;
     }
 
-    public double getCollisionData() {
+    public String getCollisionData() {
         return collisionData;
     }
 
-    public void setCollisionData(double collisionData) {
+    public void setCollisionData(String collisionData) {
         this.collisionData = collisionData;
     }
 }

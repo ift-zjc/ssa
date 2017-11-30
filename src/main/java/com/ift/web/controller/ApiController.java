@@ -390,6 +390,11 @@ ApiController {
         //load to front end
         collisionList.forEach(collision -> {
             loadCollissionData(collision);
+            try {
+                Thread.sleep(4);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         });
 
 //        return new ResponseEntity<>(null, HttpStatus.OK);
@@ -606,8 +611,8 @@ ApiController {
      */
     private void loadCollissionData(Collision collision){
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("sid1", collision.getSatellite1().getId());
-        jsonObject.addProperty("sid2", collision.getSatellite2().getId());
+        jsonObject.addProperty("sid1", collision.getCollsionMeta().getId());
+        jsonObject.addProperty("sid2", collision.getCollsionMeta().getId());
 
         JsonArray timeDataJsonArray = new JsonArray();
         JsonPrimitive timeDataNode = new JsonPrimitive(collision.getTime());
