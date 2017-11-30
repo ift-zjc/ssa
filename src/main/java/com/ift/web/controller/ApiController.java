@@ -611,10 +611,12 @@ ApiController {
 
         JsonArray timeDataJsonArray = new JsonArray();
         JsonPrimitive timeDataNode = new JsonPrimitive(collision.getTime());
+        timeDataJsonArray.add(timeDataNode);
         jsonObject.add("timeData", timeDataJsonArray);
 
         JsonArray collisionDataJsonArray = new JsonArray();
         JsonPrimitive collisionDataNode = new JsonPrimitive(collision.getCollisionData());
+        collisionDataJsonArray.add(collisionDataNode);
         jsonObject.add("collisionData", collisionDataJsonArray);
 
         String jsonStr = (new Gson()).toJson(jsonObject);
