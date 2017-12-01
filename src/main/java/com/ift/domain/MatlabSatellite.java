@@ -21,10 +21,7 @@ public class MatlabSatellite {
     private List<MonitorSoInfo> monitorSoInfos;
     @OneToMany(mappedBy = "matlabSatellite")
     private List<SmSoInfoAll> smSoInfoAlls;
-    @OneToMany(mappedBy = "satellite1")
-    private List<CollisionId> collisions1;
-    @OneToMany(mappedBy = "satellite2")
-    private List<CollisionId> collisions2;
+
 
     public MatlabSatellite(){}
     public MatlabSatellite(String name) { this.name = name; }
@@ -69,19 +66,4 @@ public class MatlabSatellite {
         this.smSoInfoAlls = smSoInfoAlls;
     }
 
-    public List<CollisionId> getCollisions1() {
-        return collisions1;
-    }
-
-    public void setCollisions1(List<CollisionId> collisions1) {
-        this.collisions1 = collisions1;
-    }
-
-    public List<CollisionId> getCollisions2() {
-        return collisions2;
-    }
-
-    public void setCollisions2(List<CollisionId> collisions2) {
-        this.collisions2 = collisions2;
-    }
 }

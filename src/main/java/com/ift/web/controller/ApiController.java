@@ -611,17 +611,25 @@ ApiController {
      */
     private void loadCollissionData(Collision collision){
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("sid1", collision.getCollsionMeta().getId());
-        jsonObject.addProperty("sid2", collision.getCollsionMeta().getId());
+        jsonObject.addProperty("sid1", collision.getSatellite1().getSatelliteId());
+        jsonObject.addProperty("sid2", collision.getSatellite2().getSatelliteId());
+
+        String[] timeDataArray = collision.getTime().split(",");
+        String[] collisionDataArray = collision.getCollisionData().split(",");
 
         JsonArray timeDataJsonArray = new JsonArray();
-        JsonPrimitive timeDataNode = new JsonPrimitive(collision.getTime());
-        timeDataJsonArray.add(timeDataNode);
-        jsonObject.add("timeData", timeDataJsonArray);
+        for (String tData : timeDataArray){
+            JsonPrimitive td = new JsonPrimitive(tData);
+            timeDataJsonArray.add(td);
+        }
 
         JsonArray collisionDataJsonArray = new JsonArray();
-        JsonPrimitive collisionDataNode = new JsonPrimitive(collision.getCollisionData());
-        collisionDataJsonArray.add(collisionDataNode);
+        for (String cData : collisionDataArray){
+            JsonPrimitive cd = new JsonPrimitive(cData);
+            collisionDataJsonArray.add(cd);
+        }
+
+        jsonObject.add("timeData", timeDataJsonArray);
         jsonObject.add("collisionData", collisionDataJsonArray);
 
         String jsonStr = (new Gson()).toJson(jsonObject);
