@@ -450,7 +450,7 @@ public class SatelliteLoader implements ApplicationListener<ContextRefreshedEven
 //        satelliteService.saveSatellite(satellite);
 
 //        //new file
-//        File file = new File("/Users/Timliu/Documents/so_info_revised_500.txt");
+//        File file = new File("/Users/Timliu/Documents/so_info_revised_1000.txt");
 //        String absolutePath = file.getAbsolutePath();
 //
 //        try (BufferedReader br = new BufferedReader(new FileReader(absolutePath))) {

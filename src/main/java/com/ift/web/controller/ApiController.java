@@ -379,7 +379,7 @@ ApiController {
         smSoInfoAllList.forEach(smSoInfoAll -> {
             loadRelatedData(smSoInfoAll);
             try {
-                Thread.sleep(2);
+                Thread.sleep(8);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -391,7 +391,7 @@ ApiController {
         collisionList.forEach(collision -> {
             loadCollissionData(collision);
             try {
-                Thread.sleep(4);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
